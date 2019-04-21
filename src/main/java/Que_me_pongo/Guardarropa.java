@@ -1,4 +1,4 @@
-package proyecto;
+package Que_me_pongo;
 
 import java.util.LinkedList;
 import java.util.Map;
@@ -10,6 +10,8 @@ public class Guardarropa {
 		
 	}
 	
-	protected LinkedList<Atuendo> atuendos(){}
+	protected LinkedList<Atuendo> atuendos(){
+		
+	}
 
 }
