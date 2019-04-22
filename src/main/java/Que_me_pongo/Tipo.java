@@ -1,6 +1,10 @@
 package Que_me_pongo;
 
 public enum Tipo {
+	ANTEOJOS,
     REMERAMANGASCORTAS,
-    SHORT
+    BUZO,
+    SHORT,
+    ZAPATOSDETACON
+    
 }
