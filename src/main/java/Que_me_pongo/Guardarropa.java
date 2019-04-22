@@ -20,8 +20,8 @@ public class Guardarropa {
 		
 	}
 	
-	protected List<Atuendo> atuendos(){
-		
-	}
+//	protected List<Atuendo> atuendos(){
+//		
+//	}
 
 }
