@@ -50,16 +50,14 @@ public class PrendaFactory {
     	return crearPrenda(tipo.ZAPATOSDETACON, Categoria.CALZADO, material, colorPrimario, colorSecundario, materiales);
     }
     
-    public Boolean validarColor(Color colorPrimario, Color colorSecundario) {
+    private void validarColor(Color colorPrimario, Color colorSecundario) {
 		if(colorPrimario.equals(colorSecundario))
 			throw new ColoresIgualesException("Los colores son iguales");
-		return true;
 	}
 	
-	public Boolean validarMateriales(Material material, List<Material> materialesValidos) {
-		if(materialesValidos.contains(material))
-			return true;
-		throw new MaterialInvalidoException("Material invalido");
+	private void validarMateriales(Material material, List<Material> materialesValidos) {
+		if(!materialesValidos.contains(material))
+			throw new MaterialInvalidoException("Material invalido");
 	}
 
 }
