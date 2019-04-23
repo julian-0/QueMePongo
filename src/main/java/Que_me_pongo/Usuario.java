@@ -12,6 +12,9 @@ public class Usuario {
 
 	public Usuario(){
 	}
+	public Guardarropa guardarropa(int index){
+		return guardarropas.get(index);
+	}
 
 	public void agregarGuardarropas(){
 		guardarropas.add(new Guardarropa());

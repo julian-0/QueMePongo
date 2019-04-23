@@ -11,7 +11,24 @@ public class Prenda {
 	private Color colorPrimario;
 	private Color colorSecundario;
 
-	public Prenda (Tipo tipo,Categoria categoria, Material material, Color colorPrimario, Color colorSecundario) {
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof Prenda)) return false;
+		Prenda prenda = (Prenda) o;
+		return getTipo() == prenda.getTipo() &&
+				getCategoria() == prenda.getCategoria() &&
+				getMaterial() == prenda.getMaterial() &&
+				getColorPrimario().equals(prenda.getColorPrimario()) &&
+				Objects.equals(getColorSecundario(), prenda.getColorSecundario());
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(getTipo(), getCategoria(), getMaterial(), getColorPrimario(), getColorSecundario());
+	}
+
+	public Prenda (Tipo tipo, Categoria categoria, Material material, Color colorPrimario, Color colorSecundario) {
 		this.tipo = Objects.requireNonNull(tipo, "es obligatorio introducir un tipo");
 		this.categoria = Objects.requireNonNull(categoria, "es obligatorio introducir una categoria");
 		this.material = Objects.requireNonNull(material, "es obligatorio introducir un material");
