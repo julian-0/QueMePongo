@@ -8,7 +8,7 @@ public class Usuario {
 	List<Guardarropa> guardarropas = new LinkedList<Guardarropa>();
 
 //	La forma de instanciar una prenda sería:
-//	Prenda miRemera = new PrendaFactory().crearRemera(Tipo.REMERAMANGASCORTAS, Material.ALGODON, Color.WHITE);
+	//Prenda miRemera = new PrendaFactory().crearRemera(Tipo.REMERAMANGASCORTAS, Material.ALGODON, Color.WHITE, Color.BLACK);
 
 	public Usuario(){
 	}

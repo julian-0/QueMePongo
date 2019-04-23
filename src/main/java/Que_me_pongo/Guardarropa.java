@@ -17,7 +17,8 @@ public class Guardarropa {
 	}
 
 	protected void agregarPrenda(Prenda prenda) {
-		
+		Categoria categoria = prenda.getCategoria();
+		prendas.get(categoria).add(prenda);
 	}
 	
 //	protected List<Atuendo> atuendos(){
