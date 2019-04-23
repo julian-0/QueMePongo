@@ -16,7 +16,7 @@ public class Guardarropa {
 		prendas.put(Categoria.ACCESORIO, new LinkedList<Prenda>());
 	}
 
-	protected void agregarAPrenda(Prenda prenda) {
+	protected void agregarPrenda(Prenda prenda) {
 		
 	}
 	
