@@ -1,32 +1,19 @@
 package Que_me_pongo;
 
-import java.awt.*;
-import java.util.List;
-import java.util.LinkedList;
+import java.util.Set;
+import java.util.HashSet;
 
 public class Usuario {
-	List<Guardarropa> guardarropas = new LinkedList<Guardarropa>();
+	Set<Guardarropa> guardarropas = new HashSet<Guardarropa>();
 
 //	La forma de instanciar una prenda sería:
 	//Prenda miRemera = new PrendaFactory().crearRemera(Tipo.REMERAMANGASCORTAS, Material.ALGODON, Color.WHITE, Color.BLACK);
-
-	public Usuario(){
-	}
-	public Guardarropa guardarropa(int index){
-		return guardarropas.get(index);
-	}
 
 	public void agregarGuardarropas(){
 		guardarropas.add(new Guardarropa());
 	}
 
-	public void validarGuardarropa(Guardarropa guardarropa){
-		if(!guardarropas.contains(guardarropa))
-			throw new GuardarropaInvalidoException("Usted no contiene ese guardarropas");
-	}
-
 	public void agregarPrenda(Prenda prenda,Guardarropa guardarropa){
-		this.validarGuardarropa(guardarropa);
 		guardarropa.agregarPrenda(prenda);
 	}
 

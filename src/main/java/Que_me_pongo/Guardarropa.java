@@ -1,24 +1,28 @@
 package Que_me_pongo;
 
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class Guardarropa {
-	public Map<Categoria,List<Prenda>> prendas = new HashMap<Categoria, List<Prenda>>();
+	public Map<Categoria,Set<Prenda>> prendas = new HashMap<Categoria, Set<Prenda>>();
 	
 	public Guardarropa()
 	{
-		prendas.put(Categoria.SUPERIOR, new LinkedList<Prenda>());
-		prendas.put(Categoria.INFERIOR, new LinkedList<Prenda>());
-		prendas.put(Categoria.CALZADO, new LinkedList<Prenda>());
-		prendas.put(Categoria.ACCESORIO, new LinkedList<Prenda>());
+		prendas.put(Categoria.SUPERIOR, new HashSet<Prenda>());
+		prendas.put(Categoria.INFERIOR, new HashSet<Prenda>());
+		prendas.put(Categoria.CALZADO, new HashSet<Prenda>());
+		prendas.put(Categoria.ACCESORIO, new HashSet<Prenda>());
 	}
 
-	protected void agregarPrenda(Prenda prenda) {
+	public void agregarPrenda(Prenda prenda) {
 		Categoria categoria = prenda.getCategoria();
 		prendas.get(categoria).add(prenda);
+	}
+	
+	public int cantidadPrendasEn(Categoria categoria) {
+		return prendas.get(categoria).size();
 	}
 	
 //	protected List<Atuendo> atuendos(){
