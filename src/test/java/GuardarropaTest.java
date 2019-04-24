@@ -9,14 +9,14 @@ import java.util.Set;
 
 public class GuardarropaTest {
 	PrendaFactory factory = new PrendaFactory();
-	Prenda remera = factory.crearRemera(Tipo.REMERAMANGASCORTAS, Material.SEDA, Color.BLACK, null);
-	Prenda remeraB = factory.crearRemera(Tipo.REMERAMANGASCORTAS, Material.ALGODON, Color.WHITE, null);
-	Prenda pantalonA = factory.crearShort(Tipo.SHORT, Material.ALGODON, Color.BLACK, null);
-	Prenda pantalonB = factory.crearShort(Tipo.SHORT, Material.ALGODON, Color.PINK, null);
-	Prenda accesorioA = factory.crearAnteojos(Tipo.ANTEOJOS, Material.PLASTICO, Color.ORANGE, null);
-	Prenda accesorioB = factory.crearAnteojos(Tipo.ANTEOJOS, Material.PLASTICO, Color.BLUE, null);
-	Prenda zapatoA = factory.crearZapatosDeTacon(Tipo.ZAPATOSDETACON, Material.CUERO, Color.BLUE, null);
-	Prenda zapatoB = factory.crearZapatosDeTacon(Tipo.ZAPATOSDETACON, Material.CUERO, Color.GREEN, null);
+	Prenda remera = factory.crearRemeraMangaCorta(Material.SEDA, Color.BLACK, null);
+	Prenda remeraB = factory.crearRemeraMangaCorta(Material.ALGODON, Color.WHITE, null);
+	Prenda pantalonA = factory.crearShort(Material.ALGODON, Color.BLACK, null);
+	Prenda pantalonB = factory.crearShort(Material.ALGODON, Color.PINK, null);
+	Prenda accesorioA = factory.crearAnteojos(Material.PLASTICO, Color.ORANGE, null);
+	Prenda accesorioB = factory.crearAnteojos(Material.PLASTICO, Color.BLUE, null);
+	Prenda zapatoA = factory.crearZapatosDeTacon(Material.CUERO, Color.BLUE, null);
+	Prenda zapatoB = factory.crearZapatosDeTacon(Material.CUERO, Color.GREEN, null);
 
 	@Test
 	public void CargaGuardarropaEnUsuario() {
