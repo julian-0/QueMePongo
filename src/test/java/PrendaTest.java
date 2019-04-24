@@ -17,26 +17,72 @@ import Que_me_pongo.Tipo;
 public class PrendaTest {
 
 	@Test
-	public void crearRemeraSinSecundario() {
-		Prenda prueba = new Prenda(Tipo.REMERAMANGASCORTAS,Categoria.SUPERIOR, Material.SEDA, Color.BLACK, null);
+	public void crearRemeraMangaCortaSinSecundario() {
+		Prenda remera = new Prenda(Tipo.REMERAMANGASCORTAS,Categoria.SUPERIOR, Material.ALGODON, Color.BLACK, null);
 
-		PrendaFactory factory = new PrendaFactory();
-		Prenda remera = factory.crearRemeraMangaCorta(Material.SEDA, Color.BLACK, null);
+		//PrendaFactory factory = new PrendaFactory();
+		//Prenda remera = factory.crearRemeraMangaCorta(Material.SEDA, Color.BLACK, null);
 
-		Assert.assertEquals(prueba,remera);
+		Assert.assertEquals(Tipo.REMERAMANGASCORTAS, remera.getTipo());
+		Assert.assertEquals(Categoria.SUPERIOR, remera.getCategoria());
+		Assert.assertEquals(Material.ALGODON, remera.getMaterial());
+		Assert.assertEquals(Color.BLACK, remera.getColorPrimario());
+		Assert.assertEquals(null, remera.getColorSecundario());
 	}
 	
 	@Test
-	public void crearRemeraConSecundario() {
-		Prenda prueba = new Prenda(Tipo.REMERAMANGASCORTAS,Categoria.SUPERIOR, Material.SEDA, Color.BLACK, Color.WHITE);
-		PrendaFactory factory = new PrendaFactory();
-		Prenda remera = factory.crearRemeraMangaCorta(Material.SEDA, Color.BLACK, Color.WHITE);
+	public void crearRemeraMangaCortaConSecundario() {
+		Prenda remera = new Prenda(Tipo.REMERAMANGASCORTAS,Categoria.SUPERIOR, Material.ALGODON, Color.BLACK, Color.WHITE);
+		//PrendaFactory factory = new PrendaFactory();
+		//Prenda remera = factory.crearRemeraMangaCorta(Material.SEDA, Color.BLACK, Color.WHITE);
 
-		Assert.assertEquals(prueba,remera);
+		Assert.assertEquals(Tipo.REMERAMANGASCORTAS, remera.getTipo());
+		Assert.assertEquals(Categoria.SUPERIOR, remera.getCategoria());
+		Assert.assertEquals(Material.ALGODON, remera.getMaterial());
+		Assert.assertEquals(Color.BLACK, remera.getColorPrimario());
+		Assert.assertEquals(Color.WHITE, remera.getColorSecundario());
+	}
+	
+	@Test
+	public void crearRemeraMangaCortaConFactory() {
+		Prenda remeraDirecta = new Prenda(Tipo.REMERAMANGASCORTAS,Categoria.SUPERIOR, Material.ALGODON, Color.BLACK, null);
+
+		PrendaFactory factory = new PrendaFactory();
+		Prenda remeraFactory = factory.crearRemeraMangaCorta(Material.ALGODON, Color.BLACK, null);
+		
+		Assert.assertEquals(remeraDirecta, remeraFactory);
 	}
 	
 	@Rule
 	public ExpectedException expectedEx = ExpectedException.none();
+	
+	@Test
+	public void deberiaTirarExcepcionNullPointerPorTipo() throws Exception {
+		expectedEx.expect(NullPointerException.class);
+		
+		new Prenda(null, Categoria.SUPERIOR, Material.ALGODON, Color.BLACK, null);
+	}
+	
+	@Test
+	public void deberiaTirarExcepcionNullPointerPorCategoria() throws Exception {
+		expectedEx.expect(NullPointerException.class);
+		
+		new Prenda(Tipo.REMERAMANGASCORTAS, null, Material.ALGODON, Color.BLACK, null);
+	}
+	
+	@Test
+	public void deberiaTirarExcepcionNullPointerPorMaterial() throws Exception {
+		expectedEx.expect(NullPointerException.class);
+		
+		new Prenda(Tipo.REMERAMANGASCORTAS, Categoria.SUPERIOR, null, Color.BLACK, null);
+	}
+	
+	@Test
+	public void deberiaTirarExcepcionNullPointerPorColorPrincipal() throws Exception {
+		expectedEx.expect(NullPointerException.class);
+		
+		new Prenda(Tipo.REMERAMANGASCORTAS, Categoria.SUPERIOR, Material.ALGODON, null, null);
+	}
 
 	@Test
 	public void deberiaTirarExcepcionColoresIguales() throws Exception {
@@ -44,7 +90,7 @@ public class PrendaTest {
 	    expectedEx.expectMessage("Los colores son iguales");
 	    // Codigo que deberia tirar la excepcion
 	    PrendaFactory factory = new PrendaFactory();
-		Prenda remera = factory.crearRemeraMangaCorta(Material.SEDA, Color.BLACK, Color.BLACK);
+	    Prenda remera = factory.crearRemeraMangaCorta(Material.SEDA, Color.BLACK, Color.BLACK);
 	}
 
 	@Test
@@ -53,11 +99,11 @@ public class PrendaTest {
 	    expectedEx.expectMessage("Material invalido");
 	    // Codigo que deberia tirar la excepcion
 	    PrendaFactory factory = new PrendaFactory();
-		Prenda remera = factory.crearRemeraMangaCorta(Material.CUERO, Color.BLACK, null);
+	    Prenda remera = factory.crearRemeraMangaCorta(Material.CUERO, Color.BLACK, null);
 	}
 	
 	@Test
-	public void crearAnteojos() {
+	public void crearAnteojosConFactory() {
 		Prenda prueba = new Prenda(Tipo.ANTEOJOS,Categoria.ACCESORIO, Material.PLASTICO, Color.BLACK, null);
 		PrendaFactory factory = new PrendaFactory();
 		Prenda anteojos = factory.crearAnteojos(Material.PLASTICO, Color.BLACK, null);
@@ -67,7 +113,7 @@ public class PrendaTest {
 	
 	
 	@Test
-	public void crearShort() {
+	public void crearShortConFactory() {
 		Prenda prueba = new Prenda(Tipo.SHORT,Categoria.INFERIOR, Material.DRIFIT, Color.YELLOW, null);
 		PrendaFactory factory = new PrendaFactory();
 		Prenda shortAmarillo = factory.crearShort(Material.DRIFIT, Color.YELLOW, null);
@@ -76,7 +122,7 @@ public class PrendaTest {
 	}
 	
 	@Test
-	public void crearBuzo() {
+	public void crearBuzoConFactory() {
 		Prenda prueba = new Prenda(Tipo.BUZO,Categoria.SUPERIOR, Material.ALGODON, Color.BLACK, null);
 		PrendaFactory factory = new PrendaFactory();
 		Prenda buzo = factory.crearBuzo(Material.ALGODON, Color.BLACK, null);
@@ -85,7 +131,7 @@ public class PrendaTest {
 	}
 	
 	@Test
-	public void crearZapatosDeTacon() {
+	public void crearZapatosDeTaconConFactory() {
 		Prenda prueba = new Prenda(Tipo.ZAPATOSDETACON,Categoria.CALZADO, Material.CUERO, Color.BLACK, null);
 		PrendaFactory factory = new PrendaFactory();
 		Prenda zapatosDeTacon = factory.crearZapatosDeTacon(Material.CUERO, Color.BLACK, null);
@@ -99,7 +145,7 @@ public class PrendaTest {
 	    expectedEx.expectMessage("Material invalido");
 	    // Codigo que deberia tirar la excepcion
 	    PrendaFactory factory = new PrendaFactory();
-		Prenda zapatosDeTacon = factory.crearZapatosDeTacon(Material.SEDA, Color.BLACK, null);
+	    Prenda zapatosDeTacon = factory.crearZapatosDeTacon(Material.SEDA, Color.BLACK, null);
 	}
 	
 }
