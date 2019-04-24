@@ -20,8 +20,9 @@ public class Usuario {
 	}
 	
 	public Set<Atuendo> atuendos() {
-		
-		return this.guardarropas
+		Set<Atuendo> Resultado = new HashSet<Atuendo>();
+		this.guardarropas.forEach(guardarropa -> guardarropa.atuendos().forEach(atuendo -> Resultado.add(atuendo)));
+		return Resultado;
 	}
 
 }
