@@ -20,19 +20,50 @@ public class Atuendo {
 
 		for (Prenda prenda : listaPrenda) {
 			Categoria cat = prenda.getCategoria();
-			if(cat.equals(Categoria.SUPERIOR)){
-				this.superior = prenda;
-			} else if(cat.equals(Categoria.INFERIOR)){
-				this.inferior = prenda;
-			} else if(cat.equals(Categoria.CALZADO)){
-				this.calzado = prenda;
-			} else{
-				this.accesorio = prenda;
+			switch (cat) {
+				case SUPERIOR:
+					this.superior = prenda;
+					break;
+				case INFERIOR:
+					this.inferior = prenda;
+					break;
+				case CALZADO:
+					this.calzado = prenda;
+					break;
+				default:
+					this.accesorio = prenda;
+					break;
 			}
 		}
 
 	}
-	
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Atuendo atuendo = (Atuendo) o;
+		return superior.equals(atuendo.superior) &&
+				inferior.equals(atuendo.inferior) &&
+				calzado.equals(atuendo.calzado) &&
+				accesorio.equals(atuendo.accesorio);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(superior, inferior, calzado, accesorio);
+	}
+
+	@Override
+	public String toString() {
+		return "Atuendo{" +
+				"superior=" + superior +
+				", inferior=" + inferior +
+				", calzado=" + calzado +
+				", accesorio=" + accesorio +
+				'}';
+	}
+
 	public Prenda getSuperior() {
 		return this.superior;
 	}

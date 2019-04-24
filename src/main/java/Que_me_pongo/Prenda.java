@@ -1,7 +1,6 @@
 package Que_me_pongo;
 
-import java.awt.Color;
-import java.util.List;
+import java.awt.*;
 import java.util.Objects;
 
 public class Prenda {
@@ -26,6 +25,17 @@ public class Prenda {
 	@Override
 	public int hashCode() {
 		return Objects.hash(getTipo(), getCategoria(), getMaterial(), getColorPrimario(), getColorSecundario());
+	}
+
+	@Override
+	public String toString() {
+		return "Prenda{" +
+				"tipo=" + tipo +
+				", categoria=" + categoria +
+				", material=" + material +
+				", colorPrimario=" + colorPrimario +
+				", colorSecundario=" + colorSecundario +
+				'}';
 	}
 
 	public Prenda (Tipo tipo, Categoria categoria, Material material, Color colorPrimario, Color colorSecundario) {

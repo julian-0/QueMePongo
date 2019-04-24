@@ -91,7 +91,11 @@ public class GuardarropaTest {
 		setAtuendos.add(atuendoO);
 		setAtuendos.add(atuendoP);
 
-		Assert.assertEquals(setAtuendos, guardarropa.atuendos());
+        System.out.println(setAtuendos.toString());
+        System.out.println(guardarropa.atuendos().toString());
+
+        Assert.assertEquals(setAtuendos.size(),guardarropa.atuendos().size());
+        setAtuendos.forEach(atuendo -> Assert.assertTrue(guardarropa.atuendos().contains(atuendo)));
 	}
 
 }

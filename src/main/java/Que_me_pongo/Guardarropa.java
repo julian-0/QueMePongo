@@ -36,10 +36,7 @@ public class Guardarropa {
 				prendas.get(Categoria.ACCESORIO)
 				));
 
-		for(List<Prenda> listaPrenda : combinaciones) {
-			Atuendo atuendo = new Atuendo(listaPrenda);
-			atuendosPosibles.add(atuendo);
-		}
+		combinaciones.forEach(combinacion -> atuendosPosibles.add(new Atuendo(combinacion)));
 
 		return atuendosPosibles;
 
