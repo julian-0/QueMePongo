@@ -15,39 +15,39 @@ public class PrendaFactory {
     	return new Prenda(tipo, categoria, material, colorPrimario, colorSecundario);	
     }
     
-    public Prenda crearAnteojos(Tipo tipo, Material material, Color colorPrimario, Color colorSecundario) {
+    public Prenda crearAnteojos(Material material, Color colorPrimario, Color colorSecundario) {
     	List<Material> materiales = new LinkedList<Material>();
     	materiales.add(Material.PLASTICO);
-    	return crearPrenda(tipo.ANTEOJOS, Categoria.ACCESORIO, material, colorPrimario, colorSecundario, materiales);
+    	return crearPrenda(Tipo.ANTEOJOS, Categoria.ACCESORIO, material, colorPrimario, colorSecundario, materiales);
     }
     
-    public Prenda crearRemera(Tipo tipo, Material material, Color colorPrimario, Color colorSecundario) {
+    public Prenda crearRemeraMangaCorta(Material material, Color colorPrimario, Color colorSecundario) {
     	List<Material> materiales = new LinkedList<Material>();
     	materiales.add(Material.ALGODON);
     	materiales.add(Material.SEDA);
     	materiales.add(Material.DRIFIT);
-    	return crearPrenda(tipo.REMERAMANGASCORTAS, Categoria.SUPERIOR, material, colorPrimario, colorSecundario, materiales);
+    	return crearPrenda(Tipo.REMERAMANGASCORTAS, Categoria.SUPERIOR, material, colorPrimario, colorSecundario, materiales);
     }
     
-    public Prenda crearBuzo(Tipo tipo, Material material, Color colorPrimario, Color colorSecundario) {
+    public Prenda crearBuzo(Material material, Color colorPrimario, Color colorSecundario) {
     	List<Material> materiales = new LinkedList<Material>();
     	materiales.add(Material.ALGODON);
     	materiales.add(Material.SEDA);
-    	return crearPrenda(tipo.BUZO, Categoria.SUPERIOR, material, colorPrimario, colorSecundario, materiales);
+    	return crearPrenda(Tipo.BUZO, Categoria.SUPERIOR, material, colorPrimario, colorSecundario, materiales);
     }
     
-    public Prenda crearShort(Tipo tipo, Material material, Color colorPrimario, Color colorSecundario) {
+    public Prenda crearShort(Material material, Color colorPrimario, Color colorSecundario) {
     	List<Material> materiales = new LinkedList<Material>();
     	materiales.add(Material.ALGODON);
     	materiales.add(Material.DRIFIT);
-    	return crearPrenda(tipo.SHORT, Categoria.INFERIOR, material, colorPrimario, colorSecundario, materiales);
+    	return crearPrenda(Tipo.SHORT, Categoria.INFERIOR, material, colorPrimario, colorSecundario, materiales);
     }
     
     
-    public Prenda crearZapatosDeTacon(Tipo tipo, Material material, Color colorPrimario, Color colorSecundario) {
+    public Prenda crearZapatosDeTacon(Material material, Color colorPrimario, Color colorSecundario) {
     	List<Material> materiales = new LinkedList<Material>();
     	materiales.add(Material.CUERO);
-    	return crearPrenda(tipo.ZAPATOSDETACON, Categoria.CALZADO, material, colorPrimario, colorSecundario, materiales);
+    	return crearPrenda(Tipo.ZAPATOSDETACON, Categoria.CALZADO, material, colorPrimario, colorSecundario, materiales);
     }
     
     private void validarColor(Color colorPrimario, Color colorSecundario) {
