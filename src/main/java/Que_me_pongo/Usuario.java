@@ -10,6 +10,10 @@ public class Usuario {
 
 //	La forma de instanciar una prenda sería:
 	//Prenda miRemera = new PrendaFactory().crearRemera(Material.ALGODON, Color.WHITE, Color.BLACK);
+	
+	public Set<Guardarropa> getGuardarropas() {
+		return this.guardarropas;
+	}
 
 	public void agregarGuardarropas(){
 		guardarropas.add(new Guardarropa());
