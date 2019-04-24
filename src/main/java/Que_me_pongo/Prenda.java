@@ -42,7 +42,8 @@ public class Prenda {
 		this.tipo = Objects.requireNonNull(tipo, "es obligatorio introducir un tipo");
 		this.categoria = Objects.requireNonNull(categoria, "es obligatorio introducir una categoria");
 		this.material = Objects.requireNonNull(material, "es obligatorio introducir un material");
-		this.colorPrimario = Objects.requireNonNull(colorPrimario, "es obligatorio introducir un color primario");		
+		this.colorPrimario = Objects.requireNonNull(colorPrimario, "es obligatorio introducir un color primario");
+		this.validarColor(colorPrimario, colorSecundario);
 		this.colorSecundario = colorSecundario;
 		
 	}
@@ -66,5 +67,9 @@ public class Prenda {
 	public Color getColorSecundario() {
 		return colorSecundario;
 	}
-
+	
+	private void validarColor(Color colorPrimario, Color colorSecundario) {
+		if(colorPrimario.equals(colorSecundario))
+			throw new ColoresIgualesException("Los colores son iguales");
+	}
 }

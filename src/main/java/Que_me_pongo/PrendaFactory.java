@@ -12,7 +12,6 @@ public class PrendaFactory {
     }
     
     static private Prenda crearPrenda(Tipo tipo, Categoria categoria, Material material, Color colorPrimario, Color colorSecundario, List<Material> materialesValidos) {
-    	PrendaFactory.validarColor(colorPrimario, colorSecundario);
     	PrendaFactory.validarMateriales(material, materialesValidos);
     	return new Prenda(tipo, categoria, material, colorPrimario, colorSecundario);	
     }
@@ -55,15 +54,10 @@ public class PrendaFactory {
     static public Prenda noAccesorio() {
     	return PrendaFactory.SinAccesorio;
     }
-    
-    static private void validarColor(Color colorPrimario, Color colorSecundario) {
-		if(colorPrimario.equals(colorSecundario))
-			throw new ColoresIgualesException("Los colores son iguales");
-	}
 	
     static private void validarMateriales(Material material, List<Material> materialesValidos) {
 		if(!materialesValidos.contains(material))
 			throw new MaterialInvalidoException("Material invalido");
-	}
+    }
 
 }
