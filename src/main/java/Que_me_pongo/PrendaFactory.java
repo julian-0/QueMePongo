@@ -11,7 +11,7 @@ public class PrendaFactory {
     public PrendaFactory() {
     }
     
-    static public Prenda crearPrenda(Tipo tipo, Categoria categoria, Material material, Color colorPrimario, Color colorSecundario, List<Material> materialesValidos) {
+    static private Prenda crearPrenda(Tipo tipo, Categoria categoria, Material material, Color colorPrimario, Color colorSecundario, List<Material> materialesValidos) {
     	PrendaFactory.validarColor(colorPrimario, colorSecundario);
     	PrendaFactory.validarMateriales(material, materialesValidos);
     	return new Prenda(tipo, categoria, material, colorPrimario, colorSecundario);	
