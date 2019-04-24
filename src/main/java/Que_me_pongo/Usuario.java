@@ -1,13 +1,15 @@
 package Que_me_pongo;
 
 import java.util.Set;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 import java.util.HashSet;
 
 public class Usuario {
-	Set<Guardarropa> guardarropas = new HashSet<Guardarropa>();
+	private Set<Guardarropa> guardarropas = new HashSet<Guardarropa>();
 
 //	La forma de instanciar una prenda sería:
-	//Prenda miRemera = new PrendaFactory().crearRemera(Tipo.REMERAMANGASCORTAS, Material.ALGODON, Color.WHITE, Color.BLACK);
+	//Prenda miRemera = new PrendaFactory().crearRemera(Material.ALGODON, Color.WHITE, Color.BLACK);
 
 	public void agregarGuardarropas(){
 		guardarropas.add(new Guardarropa());
@@ -15,6 +17,11 @@ public class Usuario {
 
 	public void agregarPrenda(Prenda prenda,Guardarropa guardarropa){
 		guardarropa.agregarPrenda(prenda);
+	}
+	
+	public Set<Atuendo> atuendos() {
+		
+		return this.guardarropas
 	}
 
 }
