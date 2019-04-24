@@ -18,8 +18,8 @@ public class Guardarropa {
 	}
 
 	public void agregarPrenda(Prenda prenda) {
-		Categoria categoria = prenda.getCategoria();
-		prendas.get(categoria).add(prenda);
+		Objects.requireNonNull(prenda);
+		prendas.get(prenda.getCategoria()).add(prenda);
 	}
 	
 	public int cantidadPrendasEn(Categoria categoria) {
@@ -38,6 +38,25 @@ public class Guardarropa {
 				));
 
 		combinaciones.forEach(combinacion -> atuendosPosibles.add(new Atuendo(combinacion)));
+
+		return atuendosPosibles;
+
+	}
+	
+	public Set<Atuendo> atuendos2(){
+
+		Set<Atuendo> atuendosPosibles = new HashSet<>();
+
+		for(Prenda sup: prendas.get(Categoria.SUPERIOR)) {
+			for(Prenda inf: prendas.get(Categoria.INFERIOR)) {
+				for(Prenda cal: prendas.get(Categoria.CALZADO)) {
+					for(Prenda acc: prendas.get(Categoria.ACCESORIO)) {
+						atuendosPosibles.add(new Atuendo(sup, inf, cal, acc));
+					}
+				}
+			}
+		}
+
 
 		return atuendosPosibles;
 

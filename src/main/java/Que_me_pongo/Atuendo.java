@@ -13,7 +13,7 @@ public class Atuendo {
 		this.superior = Objects.requireNonNull(superior);
 		this.inferior = Objects.requireNonNull(inferior);
 		this.calzado = Objects.requireNonNull(calzado);
-		this.accesorio = accesorio;
+		this.accesorio = Objects.requireNonNull(accesorio);
 	}
 
 	public Atuendo(List<Prenda> listaPrenda) {
