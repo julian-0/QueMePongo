@@ -56,22 +56,22 @@ public class GuardarropaTest {
 		guardarropa.agregarPrenda(zapatoA);
 		guardarropa.agregarPrenda(zapatoB);
 
-		Atuendo atuendoA = new Atuendo(remera, pantalonA, accesorioA, zapatoA);
-		Atuendo atuendoB = new Atuendo(remera, pantalonA, accesorioA, zapatoB);
-		Atuendo atuendoC = new Atuendo(remera, pantalonA, accesorioB, zapatoA);
-		Atuendo atuendoD = new Atuendo(remera, pantalonA, accesorioB, zapatoB);
-		Atuendo atuendoE = new Atuendo(remera, pantalonB, accesorioA, zapatoA);
-		Atuendo atuendoF = new Atuendo(remera, pantalonB, accesorioA, zapatoB);
-		Atuendo atuendoG = new Atuendo(remera, pantalonB, accesorioB, zapatoA);
-		Atuendo atuendoH = new Atuendo(remera, pantalonB, accesorioB, zapatoB);
-		Atuendo atuendoI = new Atuendo(remeraB, pantalonA, accesorioA, zapatoA);
-		Atuendo atuendoJ = new Atuendo(remeraB, pantalonA, accesorioA, zapatoB);
-		Atuendo atuendoK = new Atuendo(remeraB, pantalonA, accesorioB, zapatoA);
-		Atuendo atuendoL = new Atuendo(remeraB, pantalonA, accesorioB, zapatoB);
-		Atuendo atuendoM = new Atuendo(remeraB, pantalonB, accesorioA, zapatoA);
-		Atuendo atuendoN = new Atuendo(remeraB, pantalonB, accesorioA, zapatoB);
-		Atuendo atuendoO = new Atuendo(remeraB, pantalonB, accesorioB, zapatoA);
-		Atuendo atuendoP = new Atuendo(remeraB, pantalonB, accesorioB, zapatoB);
+		Atuendo atuendoA = new Atuendo(remera, pantalonA, zapatoA, accesorioA);
+		Atuendo atuendoB = new Atuendo(remera, pantalonA, zapatoB, accesorioA);
+		Atuendo atuendoC = new Atuendo(remera, pantalonA, zapatoA, accesorioB);
+		Atuendo atuendoD = new Atuendo(remera, pantalonA, zapatoB, accesorioB);
+		Atuendo atuendoE = new Atuendo(remera, pantalonB, zapatoA, accesorioA);
+		Atuendo atuendoF = new Atuendo(remera, pantalonB, zapatoB, accesorioA);
+		Atuendo atuendoG = new Atuendo(remera, pantalonB, zapatoA, accesorioB);
+		Atuendo atuendoH = new Atuendo(remera, pantalonB, zapatoB, accesorioB);
+		Atuendo atuendoI = new Atuendo(remeraB, pantalonA, zapatoA, accesorioA);
+		Atuendo atuendoJ = new Atuendo(remeraB, pantalonA, zapatoB, accesorioA);
+		Atuendo atuendoK = new Atuendo(remeraB, pantalonA, zapatoA, accesorioB);
+		Atuendo atuendoL = new Atuendo(remeraB, pantalonA, zapatoB, accesorioB);
+		Atuendo atuendoM = new Atuendo(remeraB, pantalonB, zapatoA, accesorioA);
+		Atuendo atuendoN = new Atuendo(remeraB, pantalonB, zapatoB, accesorioA);
+		Atuendo atuendoO = new Atuendo(remeraB, pantalonB, zapatoA, accesorioB);
+		Atuendo atuendoP = new Atuendo(remeraB, pantalonB, zapatoB, accesorioB);
 
 		Set<Atuendo> setAtuendos = new HashSet<>();
 		setAtuendos.add(atuendoA);
@@ -91,11 +91,8 @@ public class GuardarropaTest {
 		setAtuendos.add(atuendoO);
 		setAtuendos.add(atuendoP);
 
-        System.out.println(setAtuendos.toString());
-        System.out.println(guardarropa.atuendos().toString());
-
-        Assert.assertEquals(setAtuendos.size(),guardarropa.atuendos().size());
-        setAtuendos.forEach(atuendo -> Assert.assertTrue(guardarropa.atuendos().contains(atuendo)));
+		Assert.assertEquals(setAtuendos.size(),guardarropa.atuendos().size());
+		setAtuendos.forEach(atuendo -> Assert.assertTrue(guardarropa.atuendos().contains(atuendo)));
 	}
 
 }
