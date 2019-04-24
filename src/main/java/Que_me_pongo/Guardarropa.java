@@ -14,6 +14,7 @@ public class Guardarropa {
 		prendas.put(Categoria.INFERIOR, new HashSet<Prenda>());
 		prendas.put(Categoria.CALZADO, new HashSet<Prenda>());
 		prendas.put(Categoria.ACCESORIO, new HashSet<Prenda>());
+		prendas.get(Categoria.ACCESORIO).add(PrendaFactory.noAccesorio());
 	}
 
 	public void agregarPrenda(Prenda prenda) {

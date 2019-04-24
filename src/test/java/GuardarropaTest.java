@@ -8,25 +8,22 @@ import java.util.Set;
 
 
 public class GuardarropaTest {
-	PrendaFactory factory = new PrendaFactory();
-	Prenda remera = factory.crearRemeraMangaCorta(Material.SEDA, Color.BLACK, null);
-	Prenda remeraB = factory.crearRemeraMangaCorta(Material.ALGODON, Color.WHITE, null);
-	Prenda pantalonA = factory.crearShort(Material.ALGODON, Color.BLACK, null);
-	Prenda pantalonB = factory.crearShort(Material.ALGODON, Color.PINK, null);
-	Prenda accesorioA = factory.crearAnteojos(Material.PLASTICO, Color.ORANGE, null);
-	Prenda accesorioB = factory.crearAnteojos(Material.PLASTICO, Color.BLUE, null);
-	Prenda zapatoA = factory.crearZapatosDeTacon(Material.CUERO, Color.BLUE, null);
-	Prenda zapatoB = factory.crearZapatosDeTacon(Material.CUERO, Color.GREEN, null);
+	Prenda remera = PrendaFactory.crearRemeraMangaCorta(Material.SEDA, Color.BLACK, null);
+	Prenda remeraB = PrendaFactory.crearRemeraMangaCorta(Material.ALGODON, Color.WHITE, null);
+	Prenda pantalonA = PrendaFactory.crearShort(Material.ALGODON, Color.BLACK, null);
+	Prenda pantalonB = PrendaFactory.crearShort(Material.ALGODON, Color.PINK, null);
+	Prenda accesorioA = PrendaFactory.crearAnteojos(Material.PLASTICO, Color.ORANGE, null);
+	Prenda zapatoA = PrendaFactory.crearZapatosDeTacon(Material.CUERO, Color.BLUE, null);
+	Prenda zapatoB = PrendaFactory.crearZapatosDeTacon(Material.CUERO, Color.GREEN, null);
 
 	@Test
-	public void CargaGuardarropaEnUsuario() {
+	public void cargaGuardarropaEnUsuario() {
 		Usuario usuario = new Usuario();
 		usuario.agregarGuardarropas();
 	}
 
 	@Test
-	public void CargaRemeraEnGuardarropa() {
-		
+	public void cargaRemeraEnGuardarropa() {
 		Guardarropa guardarropa = new Guardarropa();
 		Assert.assertEquals(0, guardarropa.cantidadPrendasEn(Categoria.SUPERIOR));
 		guardarropa.agregarPrenda(remera);
@@ -34,8 +31,7 @@ public class GuardarropaTest {
 	}
 	
 	@Test
-	public void NoCargaDosVecesLoMismo() {
-		
+	public void noCargaDosVecesLoMismo() {
 		Guardarropa guardarropa = new Guardarropa();
 		Assert.assertEquals(0, guardarropa.cantidadPrendasEn(Categoria.SUPERIOR));
 		guardarropa.agregarPrenda(remera);
@@ -45,33 +41,32 @@ public class GuardarropaTest {
 	}
 
 	@Test
-	public void prueba() {
+	public void generaCorrectamenteLosAtuendos() {
 		Guardarropa guardarropa = new Guardarropa();
 		guardarropa.agregarPrenda(remera);
 		guardarropa.agregarPrenda(remeraB);
 		guardarropa.agregarPrenda(pantalonA);
 		guardarropa.agregarPrenda(pantalonB);
 		guardarropa.agregarPrenda(accesorioA);
-		guardarropa.agregarPrenda(accesorioB);
 		guardarropa.agregarPrenda(zapatoA);
 		guardarropa.agregarPrenda(zapatoB);
 
 		Atuendo atuendoA = new Atuendo(remera, pantalonA, zapatoA, accesorioA);
 		Atuendo atuendoB = new Atuendo(remera, pantalonA, zapatoB, accesorioA);
-		Atuendo atuendoC = new Atuendo(remera, pantalonA, zapatoA, accesorioB);
-		Atuendo atuendoD = new Atuendo(remera, pantalonA, zapatoB, accesorioB);
+		Atuendo atuendoC = new Atuendo(remera, pantalonA, zapatoA, PrendaFactory.noAccesorio());
+		Atuendo atuendoD = new Atuendo(remera, pantalonA, zapatoB, PrendaFactory.noAccesorio());
 		Atuendo atuendoE = new Atuendo(remera, pantalonB, zapatoA, accesorioA);
 		Atuendo atuendoF = new Atuendo(remera, pantalonB, zapatoB, accesorioA);
-		Atuendo atuendoG = new Atuendo(remera, pantalonB, zapatoA, accesorioB);
-		Atuendo atuendoH = new Atuendo(remera, pantalonB, zapatoB, accesorioB);
+		Atuendo atuendoG = new Atuendo(remera, pantalonB, zapatoA, PrendaFactory.noAccesorio());
+		Atuendo atuendoH = new Atuendo(remera, pantalonB, zapatoB, PrendaFactory.noAccesorio());
 		Atuendo atuendoI = new Atuendo(remeraB, pantalonA, zapatoA, accesorioA);
 		Atuendo atuendoJ = new Atuendo(remeraB, pantalonA, zapatoB, accesorioA);
-		Atuendo atuendoK = new Atuendo(remeraB, pantalonA, zapatoA, accesorioB);
-		Atuendo atuendoL = new Atuendo(remeraB, pantalonA, zapatoB, accesorioB);
+		Atuendo atuendoK = new Atuendo(remeraB, pantalonA, zapatoA, PrendaFactory.noAccesorio());
+		Atuendo atuendoL = new Atuendo(remeraB, pantalonA, zapatoB, PrendaFactory.noAccesorio());
 		Atuendo atuendoM = new Atuendo(remeraB, pantalonB, zapatoA, accesorioA);
 		Atuendo atuendoN = new Atuendo(remeraB, pantalonB, zapatoB, accesorioA);
-		Atuendo atuendoO = new Atuendo(remeraB, pantalonB, zapatoA, accesorioB);
-		Atuendo atuendoP = new Atuendo(remeraB, pantalonB, zapatoB, accesorioB);
+		Atuendo atuendoO = new Atuendo(remeraB, pantalonB, zapatoA, PrendaFactory.noAccesorio());
+		Atuendo atuendoP = new Atuendo(remeraB, pantalonB, zapatoB, PrendaFactory.noAccesorio());
 
 		Set<Atuendo> setAtuendos = new HashSet<>();
 		setAtuendos.add(atuendoA);
@@ -90,9 +85,11 @@ public class GuardarropaTest {
 		setAtuendos.add(atuendoN);
 		setAtuendos.add(atuendoO);
 		setAtuendos.add(atuendoP);
+		
+		Set<Atuendo> atuendos = guardarropa.atuendos();
 
-		Assert.assertEquals(setAtuendos.size(),guardarropa.atuendos().size());
-		setAtuendos.forEach(atuendo -> Assert.assertTrue(guardarropa.atuendos().contains(atuendo)));
+		Assert.assertEquals(setAtuendos.size(), atuendos.size());
+		setAtuendos.forEach(atuendo -> Assert.assertTrue(atuendos.contains(atuendo)));
 	}
 
 }

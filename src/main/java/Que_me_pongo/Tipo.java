@@ -5,6 +5,7 @@ public enum Tipo {
     REMERAMANGASCORTAS,
     BUZO,
     SHORT,
-    ZAPATOSDETACON
+    ZAPATOSDETACON,
+    NOACCESSORIO
     
 }

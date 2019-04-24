@@ -5,5 +5,6 @@ public enum Material {
     ALGODON,
     CUERO,
     DRIFIT,
-    PLASTICO
+    PLASTICO,
+    SINMATERIAL
 }
