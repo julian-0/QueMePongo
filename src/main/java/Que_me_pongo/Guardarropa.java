@@ -1,9 +1,9 @@
 package Que_me_pongo;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Sets;
+
+import java.util.*;
 
 public class Guardarropa {
 	public Map<Categoria,Set<Prenda>> prendas = new HashMap<Categoria, Set<Prenda>>();
@@ -25,8 +25,24 @@ public class Guardarropa {
 		return prendas.get(categoria).size();
 	}
 	
-//	protected List<Atuendo> atuendos(){
-//		
-//	}
+	public Set<Atuendo> atuendos(){
+
+		Set<Atuendo> atuendosPosibles = new HashSet<>();
+
+		Set<List<Prenda>> combinaciones = Sets.cartesianProduct(ImmutableList.of(
+				prendas.get(Categoria.SUPERIOR),
+				prendas.get(Categoria.INFERIOR),
+				prendas.get(Categoria.CALZADO),
+				prendas.get(Categoria.ACCESORIO)
+				));
+
+		for(List<Prenda> listaPrenda : combinaciones) {
+			Atuendo atuendo = new Atuendo(listaPrenda);
+			atuendosPosibles.add(atuendo);
+		}
+
+		return atuendosPosibles;
+
+	}
 
 }
