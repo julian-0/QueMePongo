@@ -47,8 +47,7 @@ public class PrendaTest {
 	public void crearRemeraMangaCortaConFactory() {
 		Prenda remeraDirecta = new Prenda(Tipo.REMERAMANGASCORTAS,Categoria.SUPERIOR, Material.ALGODON, Color.BLACK, null);
 
-		PrendaFactory factory = new PrendaFactory();
-		Prenda remeraFactory = factory.crearRemeraMangaCorta(Material.ALGODON, Color.BLACK, null);
+		Prenda remeraFactory = PrendaFactory.crearRemeraMangaCorta(Material.ALGODON, Color.BLACK, null);
 		
 		Assert.assertEquals(remeraDirecta, remeraFactory);
 	}
@@ -89,8 +88,7 @@ public class PrendaTest {
 	    expectedEx.expect(ColoresIgualesException.class);
 	    expectedEx.expectMessage("Los colores son iguales");
 	    // Codigo que deberia tirar la excepcion
-	    PrendaFactory factory = new PrendaFactory();
-	    Prenda remera = factory.crearRemeraMangaCorta(Material.SEDA, Color.BLACK, Color.BLACK);
+	    PrendaFactory.crearRemeraMangaCorta(Material.SEDA, Color.BLACK, Color.BLACK);
 	}
 
 	@Test
@@ -98,15 +96,13 @@ public class PrendaTest {
 	    expectedEx.expect(MaterialInvalidoException.class);
 	    expectedEx.expectMessage("Material invalido");
 	    // Codigo que deberia tirar la excepcion
-	    PrendaFactory factory = new PrendaFactory();
-	    Prenda remera = factory.crearRemeraMangaCorta(Material.CUERO, Color.BLACK, null);
+	    PrendaFactory.crearRemeraMangaCorta(Material.CUERO, Color.BLACK, null);
 	}
 	
 	@Test
 	public void crearAnteojosConFactory() {
 		Prenda prueba = new Prenda(Tipo.ANTEOJOS,Categoria.ACCESORIO, Material.PLASTICO, Color.BLACK, null);
-		PrendaFactory factory = new PrendaFactory();
-		Prenda anteojos = factory.crearAnteojos(Material.PLASTICO, Color.BLACK, null);
+		Prenda anteojos = PrendaFactory.crearAnteojos(Material.PLASTICO, Color.BLACK, null);
 
 		Assert.assertEquals(prueba,anteojos);
 	}
@@ -115,8 +111,7 @@ public class PrendaTest {
 	@Test
 	public void crearShortConFactory() {
 		Prenda prueba = new Prenda(Tipo.SHORT,Categoria.INFERIOR, Material.DRIFIT, Color.YELLOW, null);
-		PrendaFactory factory = new PrendaFactory();
-		Prenda shortAmarillo = factory.crearShort(Material.DRIFIT, Color.YELLOW, null);
+		Prenda shortAmarillo = PrendaFactory.crearShort(Material.DRIFIT, Color.YELLOW, null);
 
 		Assert.assertEquals(prueba,shortAmarillo);
 	}
@@ -124,8 +119,7 @@ public class PrendaTest {
 	@Test
 	public void crearBuzoConFactory() {
 		Prenda prueba = new Prenda(Tipo.BUZO,Categoria.SUPERIOR, Material.ALGODON, Color.BLACK, null);
-		PrendaFactory factory = new PrendaFactory();
-		Prenda buzo = factory.crearBuzo(Material.ALGODON, Color.BLACK, null);
+		Prenda buzo = PrendaFactory.crearBuzo(Material.ALGODON, Color.BLACK, null);
 
 		Assert.assertEquals(prueba,buzo);
 	}
@@ -133,8 +127,7 @@ public class PrendaTest {
 	@Test
 	public void crearZapatosDeTaconConFactory() {
 		Prenda prueba = new Prenda(Tipo.ZAPATOSDETACON,Categoria.CALZADO, Material.CUERO, Color.BLACK, null);
-		PrendaFactory factory = new PrendaFactory();
-		Prenda zapatosDeTacon = factory.crearZapatosDeTacon(Material.CUERO, Color.BLACK, null);
+		Prenda zapatosDeTacon = PrendaFactory.crearZapatosDeTacon(Material.CUERO, Color.BLACK, null);
 
 		Assert.assertEquals(prueba,zapatosDeTacon);
 	}
@@ -144,8 +137,7 @@ public class PrendaTest {
 	    expectedEx.expect(MaterialInvalidoException.class);
 	    expectedEx.expectMessage("Material invalido");
 	    // Codigo que deberia tirar la excepcion
-	    PrendaFactory factory = new PrendaFactory();
-	    Prenda zapatosDeTacon = factory.crearZapatosDeTacon(Material.SEDA, Color.BLACK, null);
+	    PrendaFactory.crearZapatosDeTacon(Material.SEDA, Color.BLACK, null);
 	}
 	
 }

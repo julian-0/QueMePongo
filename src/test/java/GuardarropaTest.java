@@ -91,5 +91,16 @@ public class GuardarropaTest {
 		Assert.assertEquals(setAtuendos.size(), atuendos.size());
 		setAtuendos.forEach(atuendo -> Assert.assertTrue(atuendos.contains(atuendo)));
 	}
+	
+	@Test
+	public void sinNoTieneSuficientesPrendasGeneraUnaColeccionVacia() {
+		Guardarropa guardarropa = new Guardarropa();
+		
+		guardarropa.agregarPrenda(remera);
+		guardarropa.agregarPrenda(remeraB);
+		guardarropa.agregarPrenda(pantalonA);
+		
+		Assert.assertTrue(guardarropa.atuendos().isEmpty());
+	}
 
 }
