@@ -1,13 +1,9 @@
 package Que_me_pongo;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
-import java.io.Console;
 import java.util.*;
-import java.util.logging.ConsoleHandler;
 import java.util.stream.Collectors;
 
 public class Guardarropa {
@@ -23,6 +19,8 @@ public class Guardarropa {
 
 	public void agregarPrenda(Prenda prenda) {
 		Objects.requireNonNull(prenda);
+		if(prendas.get(prenda.getCategoria()).contains(prenda))
+			throw new PrendaYaEnGuardarropasException();
 		prendas.get(prenda.getCategoria()).add(prenda);
 	}
 	
