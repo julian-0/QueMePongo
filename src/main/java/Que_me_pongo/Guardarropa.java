@@ -36,7 +36,7 @@ public class Guardarropa {
 				));
 		
 		Set<List<Prenda>> accesorios = Sets.powerSet(prendas.get(Categoria.ACCESORIO)).stream()
-				.map(set -> set.stream().collect(Collectors.toList())).collect(Collectors.toSet());
+				.map(set -> new ArrayList<Prenda>(set)).collect(Collectors.toSet());
 		
 		
 		Set<List<List<Prenda>>> paresCombinacionAccesorio = Sets.cartesianProduct(

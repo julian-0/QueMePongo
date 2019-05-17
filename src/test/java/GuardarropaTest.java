@@ -6,8 +6,10 @@ import org.junit.rules.ExpectedException;
 
 import java.awt.Color;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.List;
 
 
@@ -112,13 +114,17 @@ public class GuardarropaTest {
 		guardarropa.agregarPrenda(accesorioB);
 		
 		List<Prenda> atuendoConB1 = Arrays.asList(remera, pantalonA, zapatoA, accesorioB);
-		List<Prenda> atuendoConB2 = Arrays.asList(remera, pantalonA, zapatoA, accesorioA, accesorioB);
+		List<Prenda> atuendoConB2 = Arrays.asList(remera, pantalonA, zapatoA, accesorioB, accesorioA);
 		
 		Set<List<Prenda>> atuendos = guardarropa.atuendos();
 		List<List<Prenda>> setAtuendos = Arrays.asList(atuendoA, atuendoC, atuendoConB1, atuendoConB2);
 		
 		Assert.assertEquals(setAtuendos.size(), atuendos.size());
-		setAtuendos.forEach(atuendo -> Assert.assertTrue(atuendos.contains(atuendo)));
+		atuendos.forEach(atuendoRecibido -> listContainsIgnoreOrder(setAtuendos, atuendoRecibido));
+	}
+	
+	public static <T1, T2> boolean listContainsIgnoreOrder(Collection<List<T1>> list1, List<T2> list2) {
+		return list1.stream().anyMatch(element1 -> new HashSet<>(element1).equals(new HashSet<>(list2)));
 	}
 
 }
