@@ -30,8 +30,8 @@ public class Prenda {
 	@Override
 	public String toString() {
 		return "Prenda{" +
-				"tipo=" + tipo.getTipo() +
-				", categoria=" + tipo.getCategoria() +
+				"tipo=" + getTipo() +
+				", categoria=" + getCategoria() +
 				", material=" + material +
 				", colorPrimario=" + colorPrimario +
 				", colorSecundario=" + colorSecundario +
