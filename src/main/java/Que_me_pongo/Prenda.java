@@ -1,11 +1,11 @@
 package Que_me_pongo;
 
 import java.awt.*;
+import java.util.List;
 import java.util.Objects;
 
 public class Prenda {
-	private Tipo tipo;
-	private Categoria categoria;
+	private TipoDePrenda tipo;
 	private Material material;
 	private Color colorPrimario;
 	private Color colorSecundario;
@@ -30,30 +30,29 @@ public class Prenda {
 	@Override
 	public String toString() {
 		return "Prenda{" +
-				"tipo=" + tipo +
-				", categoria=" + categoria +
+				"tipo=" + tipo.getTipo() +
+				", categoria=" + tipo.getCategoria() +
 				", material=" + material +
 				", colorPrimario=" + colorPrimario +
 				", colorSecundario=" + colorSecundario +
 				'}';
 	}
 
-	public Prenda (Tipo tipo, Categoria categoria, Material material, Color colorPrimario, Color colorSecundario) {
+	public Prenda (TipoDePrenda tipo, Material material, Color colorPrimario, Color colorSecundario) {
 		this.tipo = Objects.requireNonNull(tipo, "es obligatorio introducir un tipo");
-		this.categoria = Objects.requireNonNull(categoria, "es obligatorio introducir una categoria");
+		this.validarMateriales(material);
 		this.material = Objects.requireNonNull(material, "es obligatorio introducir un material");
 		this.colorPrimario = Objects.requireNonNull(colorPrimario, "es obligatorio introducir un color primario");
 		this.validarColor(colorPrimario, colorSecundario);
 		this.colorSecundario = colorSecundario;
-		
 	}
 
 	public Tipo getTipo() {
-		return tipo;
+		return tipo.getTipo();
 	}
 
 	public Categoria getCategoria() {
-		return categoria;
+		return tipo.getCategoria();
 	}
 
 	public Material getMaterial() {
@@ -71,5 +70,10 @@ public class Prenda {
 	private void validarColor(Color colorPrimario, Color colorSecundario) {
 		if(colorPrimario.equals(colorSecundario))
 			throw new ColoresIgualesException("Los colores son iguales");
+	}
+	
+	private void validarMateriales(Material material) {
+		if(!this.tipo.validarMaterial(material))
+			throw new MaterialInvalidoException("Material invalido");
 	}
 }
