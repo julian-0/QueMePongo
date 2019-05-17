@@ -100,38 +100,5 @@ public class GuardarropaTest {
 		
 		Assert.assertTrue(guardarropa.atuendos().isEmpty());
 	}
-	
-	@Test
-	public void generaCorrectamenteLosAtuendosV2() {
-		Guardarropa guardarropa = new Guardarropa();
-		guardarropa.agregarPrenda(remera);
-		guardarropa.agregarPrenda(remeraB);
-		guardarropa.agregarPrenda(pantalonA);
-		guardarropa.agregarPrenda(pantalonB);
-		guardarropa.agregarPrenda(accesorioA);
-		guardarropa.agregarPrenda(zapatoA);
-		guardarropa.agregarPrenda(zapatoB);
-
-		Set<Atuendo> setAtuendos = new HashSet<>();
-		setAtuendos.addAll(Arrays.asList(atuendoA, atuendoB, atuendoC, atuendoD, 
-				atuendoE, atuendoF, atuendoG, atuendoH, atuendoI, atuendoJ, atuendoK,
-				atuendoL, atuendoM, atuendoN, atuendoO, atuendoP));
-		
-		Set<Atuendo> atuendos = guardarropa.atuendos2();
-
-		Assert.assertEquals(setAtuendos.size(), atuendos.size());
-		setAtuendos.forEach(atuendo -> Assert.assertTrue(atuendos.contains(atuendo)));
-	}
-	
-	@Test
-	public void sinNoTieneSuficientesPrendasGeneraUnaColeccionVaciaV2() {
-		Guardarropa guardarropa = new Guardarropa();
-		
-		guardarropa.agregarPrenda(remera);
-		guardarropa.agregarPrenda(remeraB);
-		guardarropa.agregarPrenda(pantalonA);
-		
-		Assert.assertTrue(guardarropa.atuendos2().isEmpty());
-	}
 
 }

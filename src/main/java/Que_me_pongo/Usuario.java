@@ -24,9 +24,15 @@ public class Usuario {
 	}
 	
 	public Set<Atuendo> atuendos() {
-		Set<Atuendo> Resultado = new HashSet<Atuendo>();
-		this.guardarropas.forEach(guardarropa -> guardarropa.atuendos().forEach(atuendo -> Resultado.add(atuendo)));
-		return Resultado;
+		return this.guardarropas.stream().
+				flatMap(guardarropa -> guardarropa.atuendos().stream()).
+				collect(Collectors.toSet());
 	}
+	
+
+	public Set<Atuendo> atuendosDe(Guardarropa guardarropa){
+		return guardarropa.atuendos();
+	}
+
 
 }

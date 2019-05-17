@@ -42,24 +42,4 @@ public class Guardarropa {
 		return atuendosPosibles;
 
 	}
-	
-	public Set<Atuendo> atuendos2(){
-
-		Set<Atuendo> atuendosPosibles = new HashSet<>();
-
-		for(Prenda sup: prendas.get(Categoria.SUPERIOR)) {
-			for(Prenda inf: prendas.get(Categoria.INFERIOR)) {
-				for(Prenda cal: prendas.get(Categoria.CALZADO)) {
-					for(Prenda acc: prendas.get(Categoria.ACCESORIO)) {
-						atuendosPosibles.add(new Atuendo(sup, inf, cal, acc));
-					}
-				}
-			}
-		}
-
-
-		return atuendosPosibles;
-
-	}
-
 }
