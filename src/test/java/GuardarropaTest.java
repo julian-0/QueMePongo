@@ -52,18 +52,16 @@ public class GuardarropaTest {
 		Assert.assertEquals(1, guardarropa.cantidadPrendasEn(Categoria.SUPERIOR));
 	}
 	
-	@Test
-	public void noCargaDosVecesLoMismo() {
-		Guardarropa guardarropa = new Guardarropa();
-		Assert.assertEquals(0, guardarropa.cantidadPrendasEn(Categoria.SUPERIOR));
-		guardarropa.agregarPrenda(remera);
-		Assert.assertEquals(1, guardarropa.cantidadPrendasEn(Categoria.SUPERIOR));
-		guardarropa.agregarPrenda(remera);
-		Assert.assertEquals(1, guardarropa.cantidadPrendasEn(Categoria.SUPERIOR));
-	}
-	
 	@Rule
 	public ExpectedException expectedEx = ExpectedException.none();
+	@Test
+	public void noCargaDosVecesLoMismo() throws Exception {
+		expectedEx.expect(PrendaYaEnGuardarropasException.class);
+		Guardarropa guardarropa = new Guardarropa();
+		guardarropa.agregarPrenda(remera);
+		guardarropa.agregarPrenda(remera);
+	}
+	
 	@Test 
 	public void cargarPrendaConNullGeneraNullPointerException() throws Exception {
 		expectedEx.expect(NullPointerException.class);
@@ -101,6 +99,26 @@ public class GuardarropaTest {
 		guardarropa.agregarPrenda(pantalonA);
 		
 		Assert.assertTrue(guardarropa.atuendos().isEmpty());
+	}
+	
+	@Test
+	public void generaCorrectamenteAtuendosDeVariosAccesorios() {
+		Prenda accesorioB = new Prenda(TipoDePrendaFactory.aros(), Material.PLASTICO, Color.blue, null);
+		Guardarropa guardarropa = new Guardarropa();
+		guardarropa.agregarPrenda(remera);
+		guardarropa.agregarPrenda(pantalonA);
+		guardarropa.agregarPrenda(zapatoA);
+		guardarropa.agregarPrenda(accesorioA);
+		guardarropa.agregarPrenda(accesorioB);
+		
+		List<Prenda> atuendoConB1 = Arrays.asList(remera, pantalonA, zapatoA, accesorioB);
+		List<Prenda> atuendoConB2 = Arrays.asList(remera, pantalonA, zapatoA, accesorioA, accesorioB);
+		
+		Set<List<Prenda>> atuendos = guardarropa.atuendos();
+		List<List<Prenda>> setAtuendos = Arrays.asList(atuendoA, atuendoC, atuendoConB1, atuendoConB2);
+		
+		Assert.assertEquals(setAtuendos.size(), atuendos.size());
+		setAtuendos.forEach(atuendo -> Assert.assertTrue(atuendos.contains(atuendo)));
 	}
 
 }
