@@ -40,8 +40,8 @@ public class Prenda {
 
 	public Prenda (TipoDePrenda tipo, Material material, Color colorPrimario, Color colorSecundario) {
 		this.tipo = Objects.requireNonNull(tipo, "es obligatorio introducir un tipo");
-		this.validarMateriales(material);
 		this.material = Objects.requireNonNull(material, "es obligatorio introducir un material");
+		this.validarMateriales(material);
 		this.colorPrimario = Objects.requireNonNull(colorPrimario, "es obligatorio introducir un color primario");
 		this.validarColor(colorPrimario, colorSecundario);
 		this.colorSecundario = colorSecundario;

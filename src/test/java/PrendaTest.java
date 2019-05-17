@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.util.Arrays;
 
 import org.junit.Assert;
 import org.junit.Rule;
@@ -13,12 +14,13 @@ import Que_me_pongo.MaterialInvalidoException;
 import Que_me_pongo.Prenda;
 import Que_me_pongo.PrendaFactory;
 import Que_me_pongo.Tipo;
+import Que_me_pongo.TipoDePrenda;
 
 public class PrendaTest {
 
 	@Test
 	public void crearRemeraMangaCortaSinSecundario() {
-		Prenda remera = new Prenda(Tipo.REMERAMANGASCORTAS,Categoria.SUPERIOR, Material.ALGODON, Color.BLACK, null);
+		Prenda remera = new Prenda(new TipoDePrenda(Tipo.REMERAMANGASCORTAS, Categoria.SUPERIOR, Arrays.asList(Material.ALGODON)), Material.ALGODON, Color.BLACK, null);
 
 		//PrendaFactory factory = new PrendaFactory();
 		//Prenda remera = factory.crearRemeraMangaCorta(Material.SEDA, Color.BLACK, null);
@@ -32,7 +34,7 @@ public class PrendaTest {
 	
 	@Test
 	public void crearRemeraMangaCortaConSecundario() {
-		Prenda remera = new Prenda(Tipo.REMERAMANGASCORTAS,Categoria.SUPERIOR, Material.ALGODON, Color.BLACK, Color.WHITE);
+		Prenda remera = new Prenda(new TipoDePrenda(Tipo.REMERAMANGASCORTAS, Categoria.SUPERIOR, Arrays.asList(Material.ALGODON)), Material.ALGODON, Color.BLACK, Color.WHITE);
 		//PrendaFactory factory = new PrendaFactory();
 		//Prenda remera = factory.crearRemeraMangaCorta(Material.SEDA, Color.BLACK, Color.WHITE);
 
@@ -45,7 +47,7 @@ public class PrendaTest {
 	
 	@Test
 	public void crearRemeraMangaCortaConFactory() {
-		Prenda remeraDirecta = new Prenda(Tipo.REMERAMANGASCORTAS,Categoria.SUPERIOR, Material.ALGODON, Color.BLACK, null);
+		Prenda remeraDirecta = new Prenda(new TipoDePrenda(Tipo.REMERAMANGASCORTAS, Categoria.SUPERIOR, Arrays.asList(Material.ALGODON)), Material.ALGODON, Color.BLACK, null);
 
 		Prenda remeraFactory = PrendaFactory.crearRemeraMangaCorta(Material.ALGODON, Color.BLACK, null);
 		
@@ -59,28 +61,28 @@ public class PrendaTest {
 	public void deberiaTirarExcepcionNullPointerPorTipo() throws Exception {
 		expectedEx.expect(NullPointerException.class);
 		
-		new Prenda(null, Categoria.SUPERIOR, Material.ALGODON, Color.BLACK, null);
+		new Prenda(new TipoDePrenda(null, Categoria.SUPERIOR, Arrays.asList(Material.ALGODON)), Material.ALGODON, Color.BLACK, null);
 	}
 	
 	@Test
 	public void deberiaTirarExcepcionNullPointerPorCategoria() throws Exception {
 		expectedEx.expect(NullPointerException.class);
 		
-		new Prenda(Tipo.REMERAMANGASCORTAS, null, Material.ALGODON, Color.BLACK, null);
+		new Prenda(new TipoDePrenda(Tipo.REMERAMANGASCORTAS, null, Arrays.asList(Material.ALGODON)), Material.ALGODON, Color.BLACK, null);
 	}
 	
 	@Test
 	public void deberiaTirarExcepcionNullPointerPorMaterial() throws Exception {
 		expectedEx.expect(NullPointerException.class);
 		
-		new Prenda(Tipo.REMERAMANGASCORTAS, Categoria.SUPERIOR, null, Color.BLACK, null);
+		new Prenda(new TipoDePrenda(Tipo.REMERAMANGASCORTAS, Categoria.SUPERIOR, Arrays.asList(Material.ALGODON)), null, Color.BLACK, null);
 	}
 	
 	@Test
 	public void deberiaTirarExcepcionNullPointerPorColorPrincipal() throws Exception {
 		expectedEx.expect(NullPointerException.class);
 		
-		new Prenda(Tipo.REMERAMANGASCORTAS, Categoria.SUPERIOR, Material.ALGODON, null, null);
+		new Prenda(new TipoDePrenda(Tipo.REMERAMANGASCORTAS, Categoria.SUPERIOR, Arrays.asList(Material.ALGODON)), Material.ALGODON, null, null);
 	}
 
 	@Test
@@ -101,7 +103,7 @@ public class PrendaTest {
 	
 	@Test
 	public void crearAnteojosConFactory() {
-		Prenda prueba = new Prenda(Tipo.ANTEOJOS,Categoria.ACCESORIO, Material.PLASTICO, Color.BLACK, null);
+		Prenda prueba = new Prenda(new TipoDePrenda(Tipo.ANTEOJOS,Categoria.ACCESORIO, Arrays.asList(Material.PLASTICO)), Material.PLASTICO, Color.BLACK, null);
 		Prenda anteojos = PrendaFactory.crearAnteojos(Material.PLASTICO, Color.BLACK, null);
 
 		Assert.assertEquals(prueba,anteojos);
@@ -110,7 +112,7 @@ public class PrendaTest {
 	
 	@Test
 	public void crearShortConFactory() {
-		Prenda prueba = new Prenda(Tipo.SHORT,Categoria.INFERIOR, Material.DRIFIT, Color.YELLOW, null);
+		Prenda prueba = new Prenda(new TipoDePrenda(Tipo.SHORT,Categoria.INFERIOR, Arrays.asList(Material.DRIFIT)), Material.DRIFIT, Color.YELLOW, null);
 		Prenda shortAmarillo = PrendaFactory.crearShort(Material.DRIFIT, Color.YELLOW, null);
 
 		Assert.assertEquals(prueba,shortAmarillo);
@@ -118,7 +120,7 @@ public class PrendaTest {
 	
 	@Test
 	public void crearBuzoConFactory() {
-		Prenda prueba = new Prenda(Tipo.BUZO,Categoria.SUPERIOR, Material.ALGODON, Color.BLACK, null);
+		Prenda prueba = new Prenda(new TipoDePrenda(Tipo.BUZO,Categoria.SUPERIOR, Arrays.asList(Material.ALGODON)), Material.ALGODON, Color.BLACK, null);
 		Prenda buzo = PrendaFactory.crearBuzo(Material.ALGODON, Color.BLACK, null);
 
 		Assert.assertEquals(prueba,buzo);
@@ -126,7 +128,7 @@ public class PrendaTest {
 	
 	@Test
 	public void crearZapatosDeTaconConFactory() {
-		Prenda prueba = new Prenda(Tipo.ZAPATOSDETACON,Categoria.CALZADO, Material.CUERO, Color.BLACK, null);
+		Prenda prueba = new Prenda(new TipoDePrenda(Tipo.ZAPATOSDETACON,Categoria.CALZADO,Arrays.asList(Material.CUERO)), Material.CUERO, Color.BLACK, null);
 		Prenda zapatosDeTacon = PrendaFactory.crearZapatosDeTacon(Material.CUERO, Color.BLACK, null);
 
 		Assert.assertEquals(prueba,zapatosDeTacon);
