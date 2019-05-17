@@ -9,7 +9,6 @@ import java.util.Set;
 
 import org.junit.Assert;
 
-import Que_me_pongo.Atuendo;
 import Que_me_pongo.Material;
 import Que_me_pongo.Prenda;
 import Que_me_pongo.PrendaFactory;
@@ -25,22 +24,23 @@ public class UsuarioTest {
 	Prenda zapatoA = PrendaFactory.crearZapatosDeTacon(Material.CUERO, Color.BLUE, null);
 	Prenda zapatoB = PrendaFactory.crearZapatosDeTacon(Material.CUERO, Color.GREEN, null);
 	
-	Atuendo atuendoA = new Atuendo(remeraA, pantalonA, zapatoA, accesorioA);
-	Atuendo atuendoB = new Atuendo(remeraA, pantalonA, zapatoB, accesorioA);
-	Atuendo atuendoC = new Atuendo(remeraA, pantalonA, zapatoA, PrendaFactory.noAccesorio());
-	Atuendo atuendoD = new Atuendo(remeraA, pantalonA, zapatoB, PrendaFactory.noAccesorio());
-	Atuendo atuendoE = new Atuendo(remeraA, pantalonB, zapatoA, accesorioA);
-	Atuendo atuendoF = new Atuendo(remeraA, pantalonB, zapatoB, accesorioA);
-	Atuendo atuendoG = new Atuendo(remeraA, pantalonB, zapatoA, PrendaFactory.noAccesorio());
-	Atuendo atuendoH = new Atuendo(remeraA, pantalonB, zapatoB, PrendaFactory.noAccesorio());
-	Atuendo atuendoI = new Atuendo(remeraB, pantalonA, zapatoA, accesorioA);
-	Atuendo atuendoJ = new Atuendo(remeraB, pantalonA, zapatoB, accesorioA);
-	Atuendo atuendoK = new Atuendo(remeraB, pantalonA, zapatoA, PrendaFactory.noAccesorio());
-	Atuendo atuendoL = new Atuendo(remeraB, pantalonA, zapatoB, PrendaFactory.noAccesorio());
-	Atuendo atuendoM = new Atuendo(remeraB, pantalonB, zapatoA, accesorioA);
-	Atuendo atuendoN = new Atuendo(remeraB, pantalonB, zapatoB, accesorioA);
-	Atuendo atuendoO = new Atuendo(remeraB, pantalonB, zapatoA, PrendaFactory.noAccesorio());
-	Atuendo atuendoP = new Atuendo(remeraB, pantalonB, zapatoB, PrendaFactory.noAccesorio());
+	List<Prenda> atuendoA = Arrays.asList(remeraA, pantalonA, zapatoA, accesorioA);
+	List<Prenda> atuendoB = Arrays.asList(remeraA, pantalonA, zapatoB, accesorioA);
+	List<Prenda> atuendoC = Arrays.asList(remeraA, pantalonA, zapatoA);
+	List<Prenda> atuendoD = Arrays.asList(remeraA, pantalonA, zapatoB);
+	List<Prenda> atuendoE = Arrays.asList(remeraA, pantalonB, zapatoA, accesorioA);
+	List<Prenda> atuendoF = Arrays.asList(remeraA, pantalonB, zapatoB, accesorioA);
+	List<Prenda> atuendoG = Arrays.asList(remeraA, pantalonB, zapatoA);
+	List<Prenda> atuendoH = Arrays.asList(remeraA, pantalonB, zapatoB);
+	List<Prenda> atuendoI = Arrays.asList(remeraB, pantalonA, zapatoA, accesorioA);
+	List<Prenda> atuendoJ = Arrays.asList(remeraB, pantalonA, zapatoB, accesorioA);
+	List<Prenda> atuendoK = Arrays.asList(remeraB, pantalonA, zapatoA);
+	List<Prenda> atuendoL = Arrays.asList(remeraB, pantalonA, zapatoB);
+	List<Prenda> atuendoM = Arrays.asList(remeraB, pantalonB, zapatoA, accesorioA);
+	List<Prenda> atuendoN = Arrays.asList(remeraB, pantalonB, zapatoB, accesorioA);
+	List<Prenda> atuendoO = Arrays.asList(remeraB, pantalonB, zapatoA);
+	List<Prenda> atuendoP = Arrays.asList(remeraB, pantalonB, zapatoB);
+
 	
 	@Test
 	public void usuarioAgregaGuardarropas() {
@@ -57,10 +57,10 @@ public class UsuarioTest {
 		usuario.agregarGuardarropas();
 		usuario.agregarGuardarropas();
 		
-		Set<Atuendo> conjunto1 = new HashSet<>();
+		Set<List<Prenda>> conjunto1 = new HashSet<>();
 		conjunto1.addAll(Arrays.asList(atuendoA, atuendoC));
 		
-		Set<Atuendo> conjunto2 = new HashSet<>();
+		Set<List<Prenda>> conjunto2 = new HashSet<>();
 		conjunto2.addAll(Arrays.asList(atuendoP));
 		
 		List<Guardarropa> guardarropas = new ArrayList<>();
@@ -75,7 +75,7 @@ public class UsuarioTest {
 		guardarropas.get(1).agregarPrenda(pantalonB);
 		guardarropas.get(1).agregarPrenda(zapatoB);
 		
-		Set<Atuendo> atuendos = usuario.atuendos();
+		Set<List<Prenda>> atuendos = usuario.atuendos();
 		
 		Assert.assertEquals(conjunto1.size() + conjunto2.size(), atuendos.size());
 		conjunto1.forEach(atuendo -> Assert.assertTrue(atuendos.contains(atuendo)));
