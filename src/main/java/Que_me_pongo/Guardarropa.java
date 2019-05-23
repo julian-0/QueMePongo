@@ -29,24 +29,61 @@ public class Guardarropa {
 	}
 	
 	public Set<List<Prenda>> atuendos(){
-		Set<List<Prenda>> combinaciones = Sets.cartesianProduct(ImmutableList.of(
-				prendas.get(Categoria.SUPERIOR),
+		Set<List<Prenda>> atuendosMinimos = Sets.cartesianProduct(ImmutableList.of(
+				this.filtrarPorCapa(Categoria.SUPERIOR, 0),
 				prendas.get(Categoria.INFERIOR),
 				prendas.get(Categoria.CALZADO)
 				));
 		
-		Set<List<Prenda>> accesorios = Sets.powerSet(prendas.get(Categoria.ACCESORIO)).stream()
-				.map(set -> new ArrayList<Prenda>(set)).collect(Collectors.toSet());
-		
-		
 		Set<List<List<Prenda>>> paresCombinacionAccesorio = Sets.cartesianProduct(
-				ImmutableList.of(combinaciones, accesorios));
+				ImmutableList.of(atuendosMinimos, this.subConjuntos(prendas.get(Categoria.ACCESORIO))));
 		
-		Set<List<Prenda>> retorno = paresCombinacionAccesorio.stream()
-				.map(par -> par.stream().flatMap(List::stream).collect(Collectors.toList()))
-				.collect(Collectors.toSet());
+		Set<List<Prenda>> atuendosConAccesorios = this.aplanarAtuendos(paresCombinacionAccesorio);
 		
-		return retorno;
+		Set<List<Prenda>> atuendosConSuperiores = this.agregarCapas(Categoria.SUPERIOR, atuendosConAccesorios);
+		
+		return atuendosConSuperiores;
 
+	}
+	
+	private Set<List<Prenda>> subConjuntos(Set<Prenda> prendas){
+		return Sets.powerSet(prendas).stream()
+							.map(set -> new ArrayList<Prenda>(set)).collect(Collectors.toSet());
+	}
+	
+	private Set<List<Prenda>> aplanarAtuendos(Set<List<List<Prenda>>> paresCombinacionAccesorio){
+		return paresCombinacionAccesorio.stream()
+							.map(par -> par.stream().flatMap(List::stream).collect(Collectors.toList()))
+							.collect(Collectors.toSet());
+	}
+	
+	private Set<List<Prenda>> agregarCapas(Categoria categoria, Set<List<Prenda>> atuendosBase) {
+		int maximaCapa = this.getCapaMaxima(categoria);
+		Set<Prenda> prendasDeCapa = null;
+		Set<List<Prenda>> subConjuntoPrendasDeCapa = null;
+		Set<List<List<Prenda>>> combinaciones = null;
+		
+		for(int capa = 1; capa <= maximaCapa; capa++) {
+			prendasDeCapa = this.filtrarPorCapa(categoria, capa);
+			if(prendasDeCapa.isEmpty())
+				continue;
+			subConjuntoPrendasDeCapa = this.subConjuntos(prendasDeCapa);
+			combinaciones = Sets.cartesianProduct(
+					ImmutableList.of(atuendosBase, subConjuntoPrendasDeCapa));
+			atuendosBase = this.aplanarAtuendos(combinaciones);
+		}
+		return atuendosBase;
+	}
+	
+	private Set<Prenda> filtrarPorCapa(Categoria categoria, int capa) {
+		return prendas.get(categoria).stream().filter(prenda -> prenda.getCapa() == capa).collect(Collectors.toSet());
+	}
+	
+	private int getCapaMaxima(Categoria categoria) {
+		Optional<Prenda> max = prendas.get(categoria).stream().max(Comparator.comparing(prenda-> prenda.getCapa()));
+		if(max.isPresent())
+			return max.get().getCapa();
+		else
+			return 0;
 	}
 }
