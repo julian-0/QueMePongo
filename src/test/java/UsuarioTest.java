@@ -11,7 +11,6 @@ import org.junit.Assert;
 
 import Que_me_pongo.Material;
 import Que_me_pongo.Prenda;
-import Que_me_pongo.PrendaFactory;
 import Que_me_pongo.Usuario;
 import Que_me_pongo.Guardarropa;;
 
