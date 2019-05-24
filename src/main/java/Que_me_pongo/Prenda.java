@@ -67,6 +67,10 @@ public class Prenda {
 		return colorSecundario;
 	}
 	
+	public int getCapa() {
+		return this.tipo.getCapa();
+	}
+	
 	private void validarColor(Color colorPrimario, Color colorSecundario) {
 		if(colorPrimario.equals(colorSecundario))
 			throw new ColoresIgualesException("Los colores son iguales");

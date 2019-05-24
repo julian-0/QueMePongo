@@ -6,6 +6,7 @@ public enum Tipo {
 	BUZO,
   SHORT,
   ZAPATOSDETACON,
-  AROS
+  AROS,
+  CHALECO
     
 }
