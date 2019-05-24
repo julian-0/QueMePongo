@@ -1,5 +1,6 @@
 package Que_me_pongo;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 import java.util.Objects;
@@ -9,22 +10,23 @@ public class Prenda {
 	private Material material;
 	private Color colorPrimario;
 	private Color colorSecundario;
+	private ImageIcon imagen;
 
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
-		if (!(o instanceof Prenda)) return false;
+		if (o == null || getClass() != o.getClass()) return false;
 		Prenda prenda = (Prenda) o;
-		return getTipo() == prenda.getTipo() &&
-				getCategoria() == prenda.getCategoria() &&
-				getMaterial() == prenda.getMaterial() &&
-				getColorPrimario().equals(prenda.getColorPrimario()) &&
-				Objects.equals(getColorSecundario(), prenda.getColorSecundario());
+		return tipo.equals(prenda.tipo) &&
+				material == prenda.material &&
+				colorPrimario.equals(prenda.colorPrimario) &&
+				Objects.equals(colorSecundario, prenda.colorSecundario) &&
+				Objects.equals(imagen, prenda.imagen);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getTipo(), getCategoria(), getMaterial(), getColorPrimario(), getColorSecundario());
+		return Objects.hash(tipo, material, colorPrimario, colorSecundario, imagen);
 	}
 
 	@Override
@@ -38,13 +40,14 @@ public class Prenda {
 				'}';
 	}
 
-	public Prenda (TipoDePrenda tipo, Material material, Color colorPrimario, Color colorSecundario) {
+	public Prenda (TipoDePrenda tipo, Material material, Color colorPrimario, Color colorSecundario, String nombreImagen) {
 		this.tipo = Objects.requireNonNull(tipo, "es obligatorio introducir un tipo");
 		this.material = Objects.requireNonNull(material, "es obligatorio introducir un material");
 		this.validarMateriales(material);
 		this.colorPrimario = Objects.requireNonNull(colorPrimario, "es obligatorio introducir un color primario");
 		this.validarColor(colorPrimario, colorSecundario);
 		this.colorSecundario = colorSecundario;
+		this.imagen = RedimensionadorImagen.getInstance().redimensionar(nombreImagen);
 	}
 
 	public Tipo getTipo() {
@@ -66,7 +69,11 @@ public class Prenda {
 	public Color getColorSecundario() {
 		return colorSecundario;
 	}
-	
+
+	public ImageIcon getImagen() {
+		return imagen;
+	}
+
 	public int getCapa() {
 		return this.tipo.getCapa();
 	}
