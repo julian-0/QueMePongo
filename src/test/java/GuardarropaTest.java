@@ -39,6 +39,10 @@ public class GuardarropaTest {
 	List<Prenda> atuendoN = Arrays.asList(remeraB, pantalonB, zapatoB, accesorioA);
 	List<Prenda> atuendoO = Arrays.asList(remeraB, pantalonB, zapatoA);
 	List<Prenda> atuendoP = Arrays.asList(remeraB, pantalonB, zapatoB);
+	
+	public static <T1, T2> boolean listContainsIgnoreOrder(Collection<List<T1>> list1, List<T2> list2) {
+		return list1.stream().anyMatch(element1 -> new HashSet<>(element1).equals(new HashSet<>(list2)));
+	}
 
 	@Test
 	public void cargaGuardarropaEnUsuario() {
@@ -123,8 +127,46 @@ public class GuardarropaTest {
 		atuendos.forEach(atuendoRecibido -> listContainsIgnoreOrder(setAtuendos, atuendoRecibido));
 	}
 	
-	public static <T1, T2> boolean listContainsIgnoreOrder(Collection<List<T1>> list1, List<T2> list2) {
-		return list1.stream().anyMatch(element1 -> new HashSet<>(element1).equals(new HashSet<>(list2)));
+	@Test
+	public void generaAtuendosDeDosCapas() {
+		Guardarropa guardarropa = new Guardarropa();
+		Prenda buzo = PrendaFactory.crearBuzo(Material.ALGODON, Color.black, null);
+		guardarropa.agregarPrenda(remera);
+		guardarropa.agregarPrenda(pantalonA);
+		guardarropa.agregarPrenda(zapatoA);
+		guardarropa.agregarPrenda(buzo);
+		
+		List<Prenda> atuendoConBuzo = Arrays.asList(remera, pantalonA, zapatoA, buzo);
+		List<Prenda> atuendoSinBuzo = Arrays.asList(remera, pantalonA, zapatoA);
+		
+		Set<List<Prenda>> atuendosGenerados = guardarropa.atuendos();
+		List<List<Prenda>> atuendosEsperados = Arrays.asList(atuendoConBuzo, atuendoSinBuzo);
+		
+		Assert.assertEquals(atuendosGenerados.size(), atuendosEsperados.size());
+		atuendosGenerados.forEach(generado -> listContainsIgnoreOrder(atuendosEsperados, generado));
+	}
+	
+	@Test
+	public void generaAtuendosDeVariasCapas() {
+		Guardarropa guardarropa = new Guardarropa();
+		Prenda buzo = PrendaFactory.crearBuzo(Material.ALGODON, Color.black, null);
+		Prenda chaleco = PrendaFactory.crearChaleco(Material.CUERO, Color.black, null);
+		guardarropa.agregarPrenda(remera);
+		guardarropa.agregarPrenda(pantalonA);
+		guardarropa.agregarPrenda(zapatoA);
+		guardarropa.agregarPrenda(buzo);
+		guardarropa.agregarPrenda(chaleco);
+		
+		List<Prenda> atuendoConBuzo = Arrays.asList(remera, pantalonA, zapatoA, buzo);
+		List<Prenda> atuendoConBuzoYChaleco = Arrays.asList(remera, pantalonA, zapatoA, buzo, chaleco);
+		List<Prenda> atuendoConChaleco = Arrays.asList(remera, pantalonA, zapatoA, chaleco);
+		List<Prenda> atuendoSimple = Arrays.asList(remera, pantalonA, zapatoA);
+		
+		Set<List<Prenda>> atuendosGenerados = guardarropa.atuendos();
+		List<List<Prenda>> atuendosEsperados = Arrays.asList(atuendoConBuzo, atuendoSimple, atuendoConChaleco, atuendoConBuzoYChaleco);
+		
+		Assert.assertEquals(atuendosGenerados.size(), atuendosEsperados.size());
+		atuendosGenerados.forEach(generado -> listContainsIgnoreOrder(atuendosEsperados, generado));
 	}
 
 }

@@ -26,8 +26,10 @@ public class PrendaFactory {
     }
     
     static public Prenda crearZapatosDeTacon(Material material, Color colorPrimario, Color colorSecundario) {
-    	
     	return crearPrenda(TipoDePrendaFactory.zapatosDeTacon(), material, colorPrimario, colorSecundario);
     }
 
+    static public Prenda crearChaleco(Material material, Color colorPrimario, Color colorSecundario) {
+    	return crearPrenda(TipoDePrendaFactory.chaleco(), material, colorPrimario, colorSecundario);
+    }
 }
