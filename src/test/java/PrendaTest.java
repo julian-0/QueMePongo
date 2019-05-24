@@ -20,7 +20,7 @@ public class PrendaTest {
 
 	@Test
 	public void crearRemeraMangaCortaSinSecundario() {
-		Prenda remera = new Prenda(TipoDePrendaFactory.remeraMangaCorta(), Material.ALGODON, Color.BLACK, null);
+		Prenda remera = new Prenda(TipoDePrendaFactory.remeraMangaCorta(), Material.ALGODON, Color.BLACK, null, null);
 
 		//PrendaFactory factory = new PrendaFactory();
 		//Prenda remera = factory.crearRemeraMangaCorta(Material.SEDA, Color.BLACK, null);
@@ -34,7 +34,7 @@ public class PrendaTest {
 	
 	@Test
 	public void crearRemeraMangaCortaConSecundario() {
-		Prenda remera = new Prenda(TipoDePrendaFactory.remeraMangaCorta(), Material.ALGODON, Color.BLACK, Color.WHITE);
+		Prenda remera = new Prenda(TipoDePrendaFactory.remeraMangaCorta(), Material.ALGODON, Color.BLACK, Color.WHITE, null);
 		//PrendaFactory factory = new PrendaFactory();
 		//Prenda remera = factory.crearRemeraMangaCorta(Material.SEDA, Color.BLACK, Color.WHITE);
 
@@ -52,28 +52,28 @@ public class PrendaTest {
 	public void deberiaTirarExcepcionNullPointerPorTipo() throws Exception {
 		expectedEx.expect(NullPointerException.class);
 		
-		new Prenda(new TipoDePrenda(null, Categoria.SUPERIOR, Arrays.asList(Material.ALGODON), 1), Material.ALGODON, Color.BLACK, null);
+		new Prenda(new TipoDePrenda(null, Categoria.SUPERIOR, Arrays.asList(Material.ALGODON), 1), Material.ALGODON, Color.BLACK, null, null);
 	}
 	
 	@Test
 	public void deberiaTirarExcepcionNullPointerPorCategoria() throws Exception {
 		expectedEx.expect(NullPointerException.class);
 		
-		new Prenda(new TipoDePrenda(Tipo.REMERAMANGASCORTAS, null, Arrays.asList(Material.ALGODON), 1), Material.ALGODON, Color.BLACK, null);
+		new Prenda(new TipoDePrenda(Tipo.REMERAMANGASCORTAS, null, Arrays.asList(Material.ALGODON), 1), Material.ALGODON, Color.BLACK, null, null);
 	}
 	
 	@Test
 	public void deberiaTirarExcepcionNullPointerPorMaterial() throws Exception {
 		expectedEx.expect(NullPointerException.class);
 		
-		new Prenda(TipoDePrendaFactory.remeraMangaCorta(), null, Color.BLACK, null);
+		new Prenda(TipoDePrendaFactory.remeraMangaCorta(), null, Color.BLACK, null, null);
 	}
 	
 	@Test
 	public void deberiaTirarExcepcionNullPointerPorColorPrincipal() throws Exception {
 		expectedEx.expect(NullPointerException.class);
 		
-		new Prenda(TipoDePrendaFactory.remeraMangaCorta(), Material.ALGODON, null, null);
+		new Prenda(TipoDePrendaFactory.remeraMangaCorta(), Material.ALGODON, null, null, null);
 	}
 
 	@Test
@@ -81,7 +81,7 @@ public class PrendaTest {
 	    expectedEx.expect(ColoresIgualesException.class);
 	    expectedEx.expectMessage("Los colores son iguales");
 	    // Codigo que deberia tirar la excepcion
-	    new Prenda(TipoDePrendaFactory.remeraMangaCorta(), Material.ALGODON, Color.black, Color.black);
+	    new Prenda(TipoDePrendaFactory.remeraMangaCorta(), Material.ALGODON, Color.black, Color.black, null);
 	}
 
 	@Test
@@ -89,7 +89,7 @@ public class PrendaTest {
 	    expectedEx.expect(MaterialInvalidoException.class);
 	    expectedEx.expectMessage("Material invalido");
 	    // Codigo que deberia tirar la excepcion
-	    new Prenda(TipoDePrendaFactory.remeraMangaCorta(), Material.CUERO, Color.black, Color.black);
+	    new Prenda(TipoDePrendaFactory.remeraMangaCorta(), Material.CUERO, Color.black, Color.black, null);
 	}
 	
 }
