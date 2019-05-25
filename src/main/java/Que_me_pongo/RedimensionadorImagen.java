@@ -1,7 +1,11 @@
 package Que_me_pongo;
 
-import javax.swing.*;
-import java.awt.*;
+import net.coobird.thumbnailator.Thumbnails;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class RedimensionadorImagen {
 
@@ -21,11 +25,18 @@ public class RedimensionadorImagen {
         return instancia;
     }
 
-    public ImageIcon redimensionar(String nombre){
-        Image original = new ImageIcon(nombre).getImage();
-        Image modificada = original.getScaledInstance(ancho,alto,java.awt.Image.SCALE_SMOOTH);
+    public BufferedImage redimensionar(String path){
+        BufferedImage img = null;
+        try{
+            img = new BufferedImage(ancho,alto,BufferedImage.TYPE_INT_ARGB);
+            img = ImageIO.read(new File(path));
+            img = Thumbnails.of(img).size(ancho, alto).asBufferedImage();
+        }
+        catch (IOException e){
+            System.out.println("Error imagen: "+e);
+        }
 
-        return new ImageIcon(modificada);
+        return img;
     }
 }
 

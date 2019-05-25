@@ -1,8 +1,7 @@
 package Que_me_pongo;
 
-import javax.swing.*;
 import java.awt.*;
-import java.util.List;
+import java.awt.image.BufferedImage;
 import java.util.Objects;
 
 public class Prenda {
@@ -10,7 +9,7 @@ public class Prenda {
 	private Material material;
 	private Color colorPrimario;
 	private Color colorSecundario;
-	private ImageIcon imagen;
+	private BufferedImage imagen = null;
 
 	@Override
 	public boolean equals(Object o) {
@@ -40,14 +39,14 @@ public class Prenda {
 				'}';
 	}
 
-	public Prenda (TipoDePrenda tipo, Material material, Color colorPrimario, Color colorSecundario, String nombreImagen) {
+	public Prenda (TipoDePrenda tipo, Material material, Color colorPrimario, Color colorSecundario, String path) {
 		this.tipo = Objects.requireNonNull(tipo, "es obligatorio introducir un tipo");
 		this.material = Objects.requireNonNull(material, "es obligatorio introducir un material");
 		this.validarMateriales(material);
 		this.colorPrimario = Objects.requireNonNull(colorPrimario, "es obligatorio introducir un color primario");
 		this.validarColor(colorPrimario, colorSecundario);
 		this.colorSecundario = colorSecundario;
-		this.imagen = RedimensionadorImagen.getInstance().redimensionar(nombreImagen);
+		this.imagen = RedimensionadorImagen.getInstance().redimensionar(path);
 	}
 
 	public Tipo getTipo() {
@@ -70,19 +69,19 @@ public class Prenda {
 		return colorSecundario;
 	}
 
-	public ImageIcon getImagen() {
+	public BufferedImage getImagen() {
 		return imagen;
 	}
 
 	public int getCapa() {
 		return this.tipo.getCapa();
 	}
-	
+
 	private void validarColor(Color colorPrimario, Color colorSecundario) {
 		if(colorPrimario.equals(colorSecundario))
 			throw new ColoresIgualesException("Los colores son iguales");
 	}
-	
+
 	private void validarMateriales(Material material) {
 		if(!this.tipo.validarMaterial(material))
 			throw new MaterialInvalidoException("Material invalido");
