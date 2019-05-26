@@ -1,5 +1,6 @@
 package Que_me_pongo;
 
+import java.util.LinkedList;
 import java.util.Set;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -10,6 +11,8 @@ public class Usuario {
 	private Set<Guardarropa> guardarropas = new HashSet<Guardarropa>();
 
 	private TipoUsuario tipoUsuario;
+
+	private List<List<Prenda>> prendasPendientes = new LinkedList<List<Prenda>>();
 
 //	La forma de instanciar una prenda sería:
 	//Prenda miRemera = new PrendaFactory().crearRemera(Material.ALGODON, Color.WHITE, Color.BLACK);
@@ -36,5 +39,9 @@ public class Usuario {
 		return guardarropa.atuendos();
 	}
 
+	public void recolectarAtuendos(Set<List<Prenda>> atuendos){
+
+		this.prendasPendientes.addAll(atuendos);
+	}
 
 }
