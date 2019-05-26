@@ -86,4 +86,16 @@ public class Guardarropa {
 		else
 			return 0;
 	}
+
+	public boolean estaLleno(){
+		if(cantidadPrendas()< cantidadMaxima){
+			return false;
+		}
+		else{
+			return true;
+		}
+	}
+
+
+
 }
