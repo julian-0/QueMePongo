@@ -17,7 +17,7 @@ public class Evento {
     }
 
     public boolean esProximo(Date f, int cantDias){
-        long difEnMilisegundos = Math.abs(fecha.getTime() - f.getTime());
+        long difEnMilisegundos = fecha.getTime() - f.getTime();
         long difEnDias = TimeUnit.DAYS.convert(difEnMilisegundos, TimeUnit.MILLISECONDS);
 
         return difEnDias <= cantDias;
