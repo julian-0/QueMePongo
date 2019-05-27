@@ -8,7 +8,9 @@ import java.util.stream.Collectors;
 
 public class Guardarropa {
 	public Map<Categoria,Set<Prenda>> prendas = new HashMap<Categoria, Set<Prenda>>();
-	
+
+	private int cantidadMaxima;
+
 	public Guardarropa()
 	{
 		prendas.put(Categoria.SUPERIOR, new HashSet<Prenda>());
@@ -85,6 +87,10 @@ public class Guardarropa {
 			return max.get().getCapa();
 		else
 			return 0;
+	}
+
+	public int cantidadPrendas() {
+		return prendas.size();
 	}
 
 	public boolean estaLleno(){

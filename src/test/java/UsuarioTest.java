@@ -40,7 +40,7 @@ public class UsuarioTest {
 
 	@Test
 	public void usuarioAgregaGuardarropas() {
-		Usuario usuario = new Usuario();
+		Usuario usuario = new Usuario(new Premium());
 
 		Assert.assertEquals(0, usuario.getGuardarropas().size());
 		usuario.agregarGuardarropas();
@@ -49,7 +49,7 @@ public class UsuarioTest {
 
 	@Test
 	public void usuarioDevuelveLosAtuendosCorrectamente() {
-		Usuario usuario = new Usuario();
+		Usuario usuario = new Usuario(new Premium());
 		usuario.agregarGuardarropas();
 		usuario.agregarGuardarropas();
 
