@@ -16,6 +16,12 @@ public class Usuario {
 
 	private List<List<Prenda>> prendasPendientes = new LinkedList<List<Prenda>>();
 
+	public Usuario(TipoUsuario tipo){
+
+		this.tipoUsuario = tipo;
+
+	}
+
 //	La forma de instanciar una prenda sería:
 	//Prenda miRemera = new PrendaFactory().crearRemera(Material.ALGODON, Color.WHITE, Color.BLACK);
 	
