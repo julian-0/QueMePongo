@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 public class Guardarropa {
 	public Map<Categoria,Set<Prenda>> prendas = new HashMap<Categoria, Set<Prenda>>();
 
-	private int cantidadMaxima;
+
 
 	public Guardarropa()
 	{
@@ -93,7 +93,7 @@ public class Guardarropa {
 		return prendas.size();
 	}
 
-	public boolean estaLleno(){
+	public boolean estaLleno(int cantidadMaxima){
 		if(cantidadPrendas()< cantidadMaxima){
 			return false;
 		}

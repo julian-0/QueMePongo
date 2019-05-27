@@ -1,4 +1,5 @@
 import Que_me_pongo.*;
+import org.junit.Rule;
 import org.junit.Test;
 
 import java.awt.Color;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.junit.Assert;
+import org.junit.rules.ExpectedException;
 
 
 public class UsuarioTest {
@@ -76,6 +78,54 @@ public class UsuarioTest {
 		Assert.assertEquals(conjunto1.size() + conjunto2.size(), atuendos.size());
 		conjunto1.forEach(atuendo -> Assert.assertTrue(atuendos.contains(atuendo)));
 		conjunto2.forEach(atuendo -> Assert.assertTrue(atuendos.contains(atuendo)));
+	}
+
+
+
+
+	@Test
+	public void usuarioPremiumPuedeAgregarMuchasPrendas() {
+		Usuario usuario = new Usuario(new Premium());
+		usuario.agregarGuardarropas();
+		usuario.agregarGuardarropas();
+
+		List<Guardarropa> guardarropas = new ArrayList<>();
+		usuario.getGuardarropas().forEach(guardarropa -> guardarropas.add(guardarropa));
+
+		guardarropas.get(0).agregarPrenda(remeraA);
+		guardarropas.get(0).agregarPrenda(pantalonA);
+		guardarropas.get(0).agregarPrenda(zapatoA);
+		guardarropas.get(0).agregarPrenda(accesorioA);
+		guardarropas.get(0).agregarPrenda(remeraB);
+		guardarropas.get(0).agregarPrenda(pantalonB);
+		guardarropas.get(0).agregarPrenda(zapatoB);
+
+		Assert.assertEquals(7, usuario.getGuardarropas().size());
+	}
+
+
+	@Rule
+	public ExpectedException expectedEx = ExpectedException.none();
+
+	@Test
+	public void usuarioGratuitoNoPuedeAgregarMuchasPrendas() throws Exception {
+		expectedEx.expect(UsuarioGratuitoNoTieneLugarException.class);
+		expectedEx.expectMessage("Su guardarropas esta lleno, si desea tener mas lugar puede hacerse socio premium y disfrutar de todos sus beneficios");
+		Usuario usuario = new Usuario(new Premium());
+		usuario.agregarGuardarropas();
+		usuario.agregarGuardarropas();
+
+		List<Guardarropa> guardarropas = new ArrayList<>();
+		usuario.getGuardarropas().forEach(guardarropa -> guardarropas.add(guardarropa));
+
+		guardarropas.get(0).agregarPrenda(remeraA);
+		guardarropas.get(0).agregarPrenda(pantalonA);
+		guardarropas.get(0).agregarPrenda(zapatoA);
+		guardarropas.get(0).agregarPrenda(accesorioA);
+		guardarropas.get(0).agregarPrenda(remeraB);
+		guardarropas.get(0).agregarPrenda(pantalonB);
+		guardarropas.get(0).agregarPrenda(zapatoB);
+
 	}
 
 }
