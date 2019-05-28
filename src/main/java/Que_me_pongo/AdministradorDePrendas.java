@@ -22,11 +22,13 @@ public class AdministradorDePrendas {
 	public void aceptar() {
 		this.checkPendientes();
 		this.moverEntreListas(prendasPendientes, aceptados, 1);
+		this.ultimaPrendaAceptada.set(lastBit, true);
 	}
 	
 	public void rechazar() {
 		this.checkPendientes();
 		this.moverEntreListas(prendasPendientes, rechazados, 1);
+		this.ultimaPrendaAceptada.set(lastBit, false);
 	}
 	
 	public void deshacer() {
@@ -43,6 +45,8 @@ public class AdministradorDePrendas {
 		hasta.add(0, desde.get(0));
 		desde.remove(0);
 		lastBit += movimiento;
+		
+		
 	}
 	
 	private void checkPendientes() {
