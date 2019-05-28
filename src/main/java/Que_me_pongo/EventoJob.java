@@ -9,6 +9,7 @@ import java.util.Date;
 public class EventoJob implements Job {
 
     public void execute(JobExecutionContext context) throws JobExecutionException {
+        System.out.println("Ejecuto Job");
         RepositorioEventos.getInstance().proximos(new Date(),7);
     }
 }

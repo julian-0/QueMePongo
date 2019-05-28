@@ -46,7 +46,7 @@ public class GuardarropaTest {
 
 	@Test
 	public void cargaGuardarropaEnUsuario() {
-		Usuario usuario = new Usuario();
+		Usuario usuario = new Usuario(new Premium());
 		usuario.agregarGuardarropas();
 	}
 

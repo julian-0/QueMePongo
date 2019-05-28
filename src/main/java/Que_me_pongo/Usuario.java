@@ -12,7 +12,7 @@ public class Usuario {
 
 	private TipoUsuario tipoUsuario;
 
-	private Set<Evento> eventos;
+	private Set<Evento> eventos = new HashSet<Evento>();;
 
 	private List<List<Prenda>> prendasPendientes = new LinkedList<List<Prenda>>();
 
