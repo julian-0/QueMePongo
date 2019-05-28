@@ -12,8 +12,8 @@ public class Usuario {
 	private TipoUsuario tipoUsuario;
 
 	private Set<Evento> eventos = new HashSet<Evento>();
-
-	private List<List<Prenda>> prendasPendientes = new LinkedList<List<Prenda>>();
+	
+	private AdministradorDePrendas adminPrendas = new AdministradorDePrendas();
 
 	public Usuario(TipoUsuario tipo){
 
@@ -51,8 +51,19 @@ public class Usuario {
 	}
 
 	public void recolectarAtuendos(Set<List<Prenda>> atuendos){
-
-		this.prendasPendientes.addAll(atuendos);
+		this.adminPrendas.agregarAtuendos(atuendos);
+	}
+	
+	public void aceptarAtuendo() {
+		adminPrendas.aceptar();
+	}
+	
+	public void rechazarAtuendo() {
+		adminPrendas.rechazar();
+	}
+	
+	public void deshacerOpinion() {
+		adminPrendas.deshacer();
 	}
 
 }
