@@ -6,7 +6,7 @@ public class Gratuito implements TipoUsuario {
     public void agregarPrenda(Prenda prenda,Guardarropa guardarropa){
 
         if(guardarropa.estaLleno(cantidadMaxima)){
-            throw new UsuarioGratuitoNoTieneLugarException("Su guardarropas esta lleno, si desea tener mas lugar puede hacerse socio premium y disfrutar de todos sus beneficios");
+            throw new UsuarioGratuitoNoTieneLugarException("Su guardarropas esta lleno, si desea tener mas lugar puede hacerse socio premium");
         }
         else{
             guardarropa.agregarPrenda(prenda);

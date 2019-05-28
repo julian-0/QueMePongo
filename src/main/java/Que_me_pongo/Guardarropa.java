@@ -90,7 +90,7 @@ public class Guardarropa {
 	}
 
 	public int cantidadPrendas() {
-		return prendas.size();
+		return cantidadPrendasEn(Categoria.SUPERIOR)+cantidadPrendasEn(Categoria.INFERIOR)+cantidadPrendasEn(Categoria.ACCESORIO)+cantidadPrendasEn(Categoria.CALZADO);
 	}
 
 	public boolean estaLleno(int cantidadMaxima){

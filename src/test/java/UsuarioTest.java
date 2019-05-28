@@ -64,14 +64,14 @@ public class UsuarioTest {
 		List<Guardarropa> guardarropas = new ArrayList<>();
 		usuario.getGuardarropas().forEach(guardarropa -> guardarropas.add(guardarropa));
 
-		guardarropas.get(0).agregarPrenda(remeraA);
-		guardarropas.get(0).agregarPrenda(pantalonA);
-		guardarropas.get(0).agregarPrenda(zapatoA);
-		guardarropas.get(0).agregarPrenda(accesorioA);
+		usuario.agregarPrenda(remeraA,guardarropas.get(0));
+		usuario.agregarPrenda(pantalonA,guardarropas.get(0));
+		usuario.agregarPrenda(zapatoA,guardarropas.get(0));
+		usuario.agregarPrenda(accesorioA,guardarropas.get(0));
 
-		guardarropas.get(1).agregarPrenda(remeraB);
-		guardarropas.get(1).agregarPrenda(pantalonB);
-		guardarropas.get(1).agregarPrenda(zapatoB);
+		usuario.agregarPrenda(remeraB,guardarropas.get(1));
+		usuario.agregarPrenda(pantalonB,guardarropas.get(1));
+		usuario.agregarPrenda(zapatoB,guardarropas.get(1));
 
 		Set<List<Prenda>> atuendos = usuario.atuendos();
 
@@ -87,20 +87,22 @@ public class UsuarioTest {
 	public void usuarioPremiumPuedeAgregarMuchasPrendas() {
 		Usuario usuario = new Usuario(new Premium());
 		usuario.agregarGuardarropas();
-		usuario.agregarGuardarropas();
+
 
 		List<Guardarropa> guardarropas = new ArrayList<>();
 		usuario.getGuardarropas().forEach(guardarropa -> guardarropas.add(guardarropa));
 
-		guardarropas.get(0).agregarPrenda(remeraA);
-		guardarropas.get(0).agregarPrenda(pantalonA);
-		guardarropas.get(0).agregarPrenda(zapatoA);
-		guardarropas.get(0).agregarPrenda(accesorioA);
-		guardarropas.get(0).agregarPrenda(remeraB);
-		guardarropas.get(0).agregarPrenda(pantalonB);
-		guardarropas.get(0).agregarPrenda(zapatoB);
+		usuario.agregarPrenda(remeraA,guardarropas.get(0));
+		usuario.agregarPrenda(pantalonA,guardarropas.get(0));
+		usuario.agregarPrenda(zapatoA,guardarropas.get(0));
+		usuario.agregarPrenda(accesorioA,guardarropas.get(0));
 
-		Assert.assertEquals(7, usuario.getGuardarropas().size());
+		usuario.agregarPrenda(remeraB,guardarropas.get(0));
+		usuario.agregarPrenda(pantalonB,guardarropas.get(0));
+		usuario.agregarPrenda(zapatoB,guardarropas.get(0));
+
+
+		Assert.assertEquals(7, guardarropas.get(0).cantidadPrendas());
 	}
 
 
@@ -109,22 +111,24 @@ public class UsuarioTest {
 
 	@Test
 	public void usuarioGratuitoNoPuedeAgregarMuchasPrendas() throws Exception {
+
 		expectedEx.expect(UsuarioGratuitoNoTieneLugarException.class);
-		expectedEx.expectMessage("Su guardarropas esta lleno, si desea tener mas lugar puede hacerse socio premium y disfrutar de todos sus beneficios");
-		Usuario usuario = new Usuario(new Premium());
-		usuario.agregarGuardarropas();
+		expectedEx.expectMessage("Su guardarropas esta lleno, si desea tener mas lugar puede hacerse socio premium");
+
+
+		Usuario usuario = new Usuario(new Gratuito());
 		usuario.agregarGuardarropas();
 
 		List<Guardarropa> guardarropas = new ArrayList<>();
 		usuario.getGuardarropas().forEach(guardarropa -> guardarropas.add(guardarropa));
 
-		guardarropas.get(0).agregarPrenda(remeraA);
-		guardarropas.get(0).agregarPrenda(pantalonA);
-		guardarropas.get(0).agregarPrenda(zapatoA);
-		guardarropas.get(0).agregarPrenda(accesorioA);
-		guardarropas.get(0).agregarPrenda(remeraB);
-		guardarropas.get(0).agregarPrenda(pantalonB);
-		guardarropas.get(0).agregarPrenda(zapatoB);
+		usuario.agregarPrenda(remeraA,guardarropas.get(0));
+		usuario.agregarPrenda(pantalonA,guardarropas.get(0));
+		usuario.agregarPrenda(zapatoA,guardarropas.get(0));
+		usuario.agregarPrenda(accesorioA,guardarropas.get(0));
+		usuario.agregarPrenda(remeraB,guardarropas.get(0));
+		usuario.agregarPrenda(pantalonB,guardarropas.get(0));
+		usuario.agregarPrenda(zapatoB,guardarropas.get(0));
 
 	}
 
