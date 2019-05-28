@@ -20,26 +20,34 @@ public class AdministradorDePrendas {
 	}
 	
 	public void aceptar() {
+		this.checkPendientes();
 		this.moverEntreListas(prendasPendientes, aceptados, 1);
 	}
 	
 	public void rechazar() {
+		this.checkPendientes();
 		this.moverEntreListas(prendasPendientes, rechazados, 1);
 	}
 	
 	public void deshacer() {
-		if(ultimaPrendaAceptada.get(lastBit)) {
+		if(lastBit == -1)
+			throw new NoHistorialException();
+		
+		if(ultimaPrendaAceptada.get(lastBit))
 			this.moverEntreListas(aceptados, prendasPendientes, -1);
-		}
-		else {
+		else
 			this.moverEntreListas(rechazados, prendasPendientes, -1);
-		}
 	}
 	
 	private void moverEntreListas(List<List<Prenda>> desde, List<List<Prenda>> hasta, int movimiento) {
 		hasta.add(0, desde.get(0));
 		desde.remove(0);
 		lastBit += movimiento;
+	}
+	
+	private void checkPendientes() {
+		if(this.prendasPendientes.isEmpty())
+			throw new NoPendientesException();
 	}
 	
 	
