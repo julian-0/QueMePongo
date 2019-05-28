@@ -2,7 +2,6 @@ package Que_me_pongo;
 
 import java.util.LinkedList;
 import java.util.Set;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.HashSet;
 import java.util.List;
@@ -12,7 +11,7 @@ public class Usuario {
 
 	private TipoUsuario tipoUsuario;
 
-	private Set<Evento> eventos = new HashSet<Evento>();;
+	private Set<Evento> eventos = new HashSet<Evento>();
 
 	private List<List<Prenda>> prendasPendientes = new LinkedList<List<Prenda>>();
 
