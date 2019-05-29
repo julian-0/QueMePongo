@@ -1,4 +1,13 @@
 import Que_me_pongo.*;
+import Que_me_pongo.guardarropa.Guardarropa;
+import Que_me_pongo.guardarropa.PrendaYaEnGuardarropasException;
+import Que_me_pongo.prenda.Categoria;
+import Que_me_pongo.prenda.Material;
+import Que_me_pongo.prenda.Prenda;
+import Que_me_pongo.prenda.TipoDePrendaFactory;
+import Que_me_pongo.usuario.Premium;
+import Que_me_pongo.usuario.Usuario;
+
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;

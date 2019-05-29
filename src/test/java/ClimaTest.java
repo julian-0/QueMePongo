@@ -1,7 +1,8 @@
-import Que_me_pongo.ClimaMock;
-import Que_me_pongo.ClimaOpenWeather;
-import Que_me_pongo.ProveedorClima;
-import Que_me_pongo.RangoDiasException;
+import Que_me_pongo.proveedorClima.ClimaMock;
+import Que_me_pongo.proveedorClima.ClimaOpenWeather;
+import Que_me_pongo.proveedorClima.ProveedorClima;
+import Que_me_pongo.proveedorClima.RangoDiasException;
+
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;

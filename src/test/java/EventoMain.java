@@ -1,7 +1,8 @@
-import Que_me_pongo.Evento;
-import Que_me_pongo.EventoJob;
-import Que_me_pongo.Premium;
-import Que_me_pongo.Usuario;
+import Que_me_pongo.evento.Evento;
+import Que_me_pongo.evento.EventoJob;
+import Que_me_pongo.usuario.Premium;
+import Que_me_pongo.usuario.Usuario;
+
 import org.junit.Test;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;

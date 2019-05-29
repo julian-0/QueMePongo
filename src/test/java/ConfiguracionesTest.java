@@ -1,6 +1,6 @@
 import org.junit.Test;
 
-import Que_me_pongo.Configuraciones;
+import Que_me_pongo.configuraciones.Configuraciones;
 
 import org.junit.Assert;
 
