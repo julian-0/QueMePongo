@@ -19,7 +19,7 @@ public class Usuario {
 
 	private Set<Evento> eventos = new HashSet<Evento>();
 	
-	private AdministradorDeAtuendos adminPrendas = new AdministradorDeAtuendos();
+	private AdministradorDeAtuendos adminAtuendos = new AdministradorDeAtuendos();
 
 	public Usuario(TipoUsuario tipo){
 
@@ -57,19 +57,19 @@ public class Usuario {
 	}
 
 	public void recolectarAtuendos(Set<List<Prenda>> atuendos){
-		this.adminPrendas.agregarAtuendos(atuendos);
+		this.adminAtuendos.agregarAtuendos(atuendos);
 	}
 	
 	public void aceptarAtuendo() {
-		adminPrendas.aceptar();
+		adminAtuendos.aceptar();
 	}
 	
 	public void rechazarAtuendo() {
-		adminPrendas.rechazar();
+		adminAtuendos.rechazar();
 	}
 	
 	public void deshacerOpinion() {
-		adminPrendas.deshacer();
+		adminAtuendos.deshacer();
 	}
 
 }
