@@ -7,18 +7,28 @@ import java.util.stream.Collectors;
 import com.google.common.collect.Range;
 
 public class Sugeridor {
-	public Set<List<Prenda>> sugerir(Set<List<Prenda>> atuendos, double celsius) {
-		return atuendos.stream().
-					 filter(atuendo -> this.sugerirAtuendo(atuendo, celsius, 10)).
-					 collect(Collectors.toSet());
+	static public Set<List<Prenda>> sugerir(Set<List<Prenda>> atuendos, double celsius) {
+		ConfiguracionesSugeridor conf = Configuraciones.get(ConfiguracionesSugeridor.class); 
+		Set<List<Prenda>> sugeridos = Sugeridor.filtrar(atuendos, celsius, conf.getMargenBase());
+		
+		if(sugeridos.size() <= conf.getCantParaExtender())
+			sugeridos = Sugeridor.filtrar(atuendos, celsius, conf.getMargenExtendido());
+		
+		return sugeridos;
 	}
 	
-	private boolean sugerirAtuendo(List<Prenda> atuendo, double celsius, double margen) {
-		double nivelAbrigoTotal = atuendo.stream().reduce(.0, this::reducirNivelAbrigo, (n1, n2) -> n1 + n2); 
+	static private Set<List<Prenda>> filtrar(Set<List<Prenda>> atuendos, double celsius, double margen) {
+		return atuendos.stream().
+		 filter(atuendo -> Sugeridor.sugerirAtuendo(atuendo, celsius, margen)).
+		 collect(Collectors.toSet());
+	}
+	
+	static private boolean sugerirAtuendo(List<Prenda> atuendo, double celsius, double margen) {
+		double nivelAbrigoTotal = atuendo.stream().reduce(.0, Sugeridor::reducirNivelAbrigo, (n1, n2) -> n1 + n2); 
 		return Range.open(celsius-margen, celsius+margen).contains(1 / nivelAbrigoTotal);
 	}
 	
-	private double reducirNivelAbrigo(double nivelPrenda1, Prenda prenda2) {
+	static private double reducirNivelAbrigo(double nivelPrenda1, Prenda prenda2) {
 		return nivelPrenda1 + prenda2.getNivelAbrigo();
 	}
 	
