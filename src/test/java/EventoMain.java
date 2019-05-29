@@ -6,14 +6,11 @@ import org.junit.Test;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
 
 public class EventoMain {
 
-    public static void main(String[] args) throws SchedulerException, ParseException {
+    public static void main(String[] args) throws SchedulerException{
         Usuario usuario = new Usuario(new Premium());
 
         usuario.agregarEvento(new Evento(LocalDate.parse("2019-05-31"), usuario,"Ir al campo"));
@@ -28,14 +25,14 @@ public class EventoMain {
         // Creacion una instacia de JobDetail
         JobDetail jobDetail = JobBuilder.newJob(EventoJob.class).build();
 
-        // Creacion de un Trigger donde indicamos que el Job se ejecutara de inmediato y a partir de ahi en lapsos de 5 segundos .
+        // Creacion de un Trigger donde indicamos que el Job se ejecutara de inmediato y a partir de ahi en lapsos de 24 horas para siempre.
         Trigger trigger = TriggerBuilder
                 .newTrigger()
                 .withIdentity("CronTrigger")
                 .withSchedule(SimpleScheduleBuilder
                         .simpleSchedule()
-                        .withIntervalInHours(24)
-                        .repeatForever())
+                        .withIntervalInHours(24)    //Se ejecuta cada 24 horas
+                        .repeatForever())           //Se ejecuta para siempre
                 .build();
 
         // Registro dentro del Scheduler
@@ -43,7 +40,7 @@ public class EventoMain {
     }
 
     @Test
-    public void pruebaEventos() throws ParseException, SchedulerException, InterruptedException {
+    public void pruebaEventos() throws SchedulerException, InterruptedException {
         Usuario usuario = new Usuario(new Premium());
 
         usuario.agregarEvento(new Evento(LocalDate.parse("2019-05-31"), usuario,"Ir al campo"));
@@ -64,16 +61,15 @@ public class EventoMain {
                 .withIdentity("CronTrigger")
                 .withSchedule(SimpleScheduleBuilder
                         .simpleSchedule()
-                        .withIntervalInSeconds(5)
-                        //.repeatForever())
-                        .withRepeatCount(0))
+                        .withIntervalInSeconds(5)   //Cada cuanto se va a ejecutar
+                        .withRepeatCount(0))        //Cantidad de veces a ejecutar (ademas de la primera)
                 .build();
 
         // Registro dentro del Scheduler
         scheduler.scheduleJob(jobDetail, trigger);
 
-        // Damos tiempo a que el Trigger registrado termine su periodo de vida dentro del scheduler
-        Thread.sleep(10000);
+        // Damos tiempo (en milisegundos) a que el Trigger registrado termine su periodo de vida dentro del scheduler
+        Thread.sleep(10000); //10 seg
 
         // Detenemos la ejecución de la instancia de Scheduler
         scheduler.shutdown();

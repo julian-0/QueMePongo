@@ -3,6 +3,7 @@ package Que_me_pongo;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class RepositorioEventos {
 
@@ -19,14 +20,16 @@ public class RepositorioEventos {
         return instancia;
     }
 
+    //Agrega un evento en el set
     public void agendar(Evento evento){//Agrega un evento
         this.eventos.add(evento);
     }
 
-    public void proximos(LocalDate fecha, int cantDias){ //Filtra los eventos cuya fecha esta cantDias cerca y los hace sugerir
-        this.eventos
+    //Filtra los eventos cuya fecha esta cantDias cerca
+    public Set<Evento> proximos(LocalDate fecha, int cantDias){
+        return this.eventos
                 .stream()
                 .filter(evento -> evento.esProximo(fecha,cantDias))
-                .forEach(evento -> evento.sugerir());
+                .collect(Collectors.toSet());
     }
 }
