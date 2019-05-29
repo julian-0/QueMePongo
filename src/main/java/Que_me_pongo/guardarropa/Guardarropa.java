@@ -8,6 +8,8 @@ import Que_me_pongo.prenda.Prenda;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class Guardarropa {
 	public Map<Categoria,Set<Prenda>> prendas = new HashMap<Categoria, Set<Prenda>>();
@@ -64,20 +66,17 @@ public class Guardarropa {
 	
 	private Set<List<Prenda>> agregarCapas(Categoria categoria, Set<List<Prenda>> atuendosBase) {
 		int maximaCapa = this.getCapaMaxima(categoria);
-		Set<Prenda> prendasDeCapa = null;
-		Set<List<Prenda>> subConjuntoPrendasDeCapa = null;
-		Set<List<List<Prenda>>> combinaciones = null;
 		
-		for(int capa = 1; capa <= maximaCapa; capa++) {
-			prendasDeCapa = this.filtrarPorCapa(categoria, capa);
-			if(prendasDeCapa.isEmpty())
-				continue;
-			subConjuntoPrendasDeCapa = this.subConjuntos(prendasDeCapa);
-			combinaciones = Sets.cartesianProduct(
-					ImmutableList.of(atuendosBase, subConjuntoPrendasDeCapa));
-			atuendosBase = this.aplanarAtuendos(combinaciones);
-		}
-		return atuendosBase;
+		Stream<Set<List<Prenda>>> subConjuntosPorCapa = IntStream.rangeClosed(1, maximaCapa).
+				<Set<List<Prenda>>>mapToObj(capa -> this.subConjuntos(this.filtrarPorCapa(categoria, capa)));
+		
+		return subConjuntosPorCapa.reduce(atuendosBase, this::accumulator);
+	}
+	
+	private Set<List<Prenda>> accumulator(Set<List<Prenda>> atuendosBase, Set<List<Prenda>> subConjuntos) {
+		Set<List<List<Prenda>>> combinaciones = Sets.cartesianProduct(
+				ImmutableList.of(atuendosBase, subConjuntos));
+		return this.aplanarAtuendos(combinaciones);
 	}
 	
 	private Set<Prenda> filtrarPorCapa(Categoria categoria, int capa) {
@@ -97,12 +96,7 @@ public class Guardarropa {
 	}
 
 	public boolean estaLleno(int cantidadMaxima){
-		if(cantidadPrendas()< cantidadMaxima){
-			return false;
-		}
-		else{
-			return true;
-		}
+		return this.cantidadPrendas() >= cantidadMaxima;
 	}
 
 
