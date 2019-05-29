@@ -21,7 +21,7 @@ public class Evento {
     //Le va a cargar una lista de atuendos al usuario en su lista atuendos pendientes
     public void sugerir(){
 
-        Set<List<Prenda>> atuendos = usuario.atuendos();
+        Set<List<Prenda>> atuendos = Sugeridor.sugerir(usuario.atuendos(), Configuraciones.get(ProveedorClima.class).getTemp(LocalDate.now()));
         usuario.recolectarAtuendos(atuendos);
         System.out.println("Soy un evento y me ejecute xq estoy proximo, lugar: "+ this.lugar);
     }
