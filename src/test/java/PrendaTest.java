@@ -52,14 +52,14 @@ public class PrendaTest {
 	public void deberiaTirarExcepcionNullPointerPorTipo() throws Exception {
 		expectedEx.expect(NullPointerException.class);
 		
-		new Prenda(new TipoDePrenda(null, Categoria.SUPERIOR, Arrays.asList(Material.ALGODON), 1), Material.ALGODON, Color.BLACK, null, null);
+		new Prenda(new TipoDePrenda(null, Categoria.SUPERIOR, Arrays.asList(Material.ALGODON), 1,3), Material.ALGODON, Color.BLACK, null, null);
 	}
 	
 	@Test
 	public void deberiaTirarExcepcionNullPointerPorCategoria() throws Exception {
 		expectedEx.expect(NullPointerException.class);
 		
-		new Prenda(new TipoDePrenda(Tipo.REMERAMANGASCORTAS, null, Arrays.asList(Material.ALGODON), 1), Material.ALGODON, Color.BLACK, null, null);
+		new Prenda(new TipoDePrenda(Tipo.REMERAMANGASCORTAS, null, Arrays.asList(Material.ALGODON), 1,1), Material.ALGODON, Color.BLACK, null, null);
 	}
 	
 	@Test
