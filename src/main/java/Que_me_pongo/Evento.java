@@ -1,16 +1,17 @@
 package Que_me_pongo;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 public class Evento {
-    Date fecha;
+    LocalDate fecha;
     Usuario usuario;
     String lugar;
 
-    public Evento(Date fecha,Usuario usuario,String lugar) {
+    public Evento(LocalDate fecha,Usuario usuario,String lugar) {
         this.fecha = fecha;
         this.usuario = usuario;
         this.lugar = lugar;
@@ -25,10 +26,7 @@ public class Evento {
         System.out.println("Soy un evento y me ejecute xq estoy proximo, lugar: "+ this.lugar);
     }
 
-    public boolean esProximo(Date f, int cantDias){
-        long difEnMilisegundos = fecha.getTime() - f.getTime();
-        long difEnDias = TimeUnit.DAYS.convert(difEnMilisegundos, TimeUnit.MILLISECONDS);
-
-        return difEnDias <= cantDias;
+    public boolean esProximo(LocalDate f, int cantDias){
+        return f.isEqual(fecha) || (f.isAfter(fecha) && fecha.isBefore(f.plusDays(cantDias)));
     }
 }

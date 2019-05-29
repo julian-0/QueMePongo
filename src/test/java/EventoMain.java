@@ -8,6 +8,7 @@ import org.quartz.impl.StdSchedulerFactory;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class EventoMain {
@@ -15,12 +16,10 @@ public class EventoMain {
     public static void main(String[] args) throws SchedulerException, ParseException {
         Usuario usuario = new Usuario(new Premium());
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-
-        usuario.agregarEvento(new Evento(sdf.parse("31/05/2019"), usuario,"Ir al campo"));
-        usuario.agregarEvento(new Evento(sdf.parse("30/05/2019"), usuario,"Cumpleaños"));
-        usuario.agregarEvento(new Evento(sdf.parse("29/05/2019"), usuario,"Casamiento"));
-        usuario.agregarEvento(new Evento(sdf.parse("29/07/2019"), usuario,"Bautismo"));
+        usuario.agregarEvento(new Evento(LocalDate.parse("2019-05-31"), usuario,"Ir al campo"));
+        usuario.agregarEvento(new Evento(LocalDate.parse("2019-05-30"), usuario,"Cumpleaños"));
+        usuario.agregarEvento(new Evento(LocalDate.parse("2019-05-29"), usuario,"Casamiento"));
+        usuario.agregarEvento(new Evento(LocalDate.parse("2019-07-29"), usuario,"Bautismo"));
 
         Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
         System.out.println("Iniciando Scheduler");
@@ -47,13 +46,10 @@ public class EventoMain {
     public void pruebaEventos() throws ParseException, SchedulerException, InterruptedException {
         Usuario usuario = new Usuario(new Premium());
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        Date d = sdf.parse("31/05/2019");
-
-        usuario.agregarEvento(new Evento(sdf.parse("31/05/2019"), usuario,"Ir al campo"));
-        usuario.agregarEvento(new Evento(sdf.parse("30/05/2019"), usuario,"Cumpleaños"));
-        usuario.agregarEvento(new Evento(sdf.parse("29/05/2019"), usuario,"Casamiento"));
-        usuario.agregarEvento(new Evento(sdf.parse("29/07/2019"), usuario,"Bautismo"));
+        usuario.agregarEvento(new Evento(LocalDate.parse("2019-05-31"), usuario,"Ir al campo"));
+        usuario.agregarEvento(new Evento(LocalDate.parse("2019-05-30"), usuario,"Cumpleaños"));
+        usuario.agregarEvento(new Evento(LocalDate.parse("2019-05-29"), usuario,"Casamiento"));
+        usuario.agregarEvento(new Evento(LocalDate.parse("2019-07-29"), usuario,"Bautismo"));
 
         Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
         System.out.println("Iniciando Scheduler");

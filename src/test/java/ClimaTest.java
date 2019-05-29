@@ -18,7 +18,7 @@ public class ClimaTest {
     @Test
     public void obtenerTemperatura(){
         double temperatura;
-        String date = "2019-05-30";
+        LocalDate date = LocalDate.parse("2019-05-30");
 
         ProveedorClima pc = new ClimaOpenWeather();
         temperatura = pc.getTemp(date);
@@ -29,7 +29,7 @@ public class ClimaTest {
 
     @Test
     public void climaMock(){
-        String date = "2019-05-28";
+    	LocalDate date = LocalDate.parse("2019-05-28");
         ProveedorClima proveedorMock = mock(ClimaMock.class);
         when(proveedorMock.getTemp(date)).thenReturn(43.0);
         Assert.assertEquals(43.0, proveedorMock.getTemp(date), 0);
@@ -45,7 +45,7 @@ public class ClimaTest {
         LocalDate now = LocalDate.now();
 
         ProveedorClima pc = new ClimaOpenWeather();
-        pc.getTemp(now.plusDays(6).toString());
+        pc.getTemp(now.plusDays(6));
         Assert.fail();
     }
 

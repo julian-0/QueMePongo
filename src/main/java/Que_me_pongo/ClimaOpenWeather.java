@@ -16,15 +16,14 @@ public class ClimaOpenWeather implements ProveedorClima {
     }
 
     @Override
-    public double getTemp(String date) {
+    public double getTemp(LocalDate date) {
         String owAPIKey = "6e68fbf87908ad1457a13fc6946d138e";
         String ciudad = "Buenos Aires, Argentina";
         String baseURL = "http://api.openweathermap.org/data/2.5/forecast";
         double temperatura = 0;
         LocalDate now = LocalDate.now();
-        LocalDate localDate = LocalDate.parse(date);
 
-        if(localDate.isBefore(now) || localDate.isAfter(now.plusDays(5))) {
+        if(date.isBefore(now) || date.isAfter(now.plusDays(5))) {
             throw new RangoDiasException("La fecha pasada por parámetro se encuentra fuera del rango de días disponible.");
         }
 
@@ -49,7 +48,7 @@ public class ClimaOpenWeather implements ProveedorClima {
         int i=0;
         for (JsonElement dailyWeather : weathers) {
             dailyDate = dailyWeather.getAsJsonObject().get("dt_txt").getAsString();
-            if (dailyDate.contains(date)) {
+            if (LocalDate.parse(dailyDate.substring(0, 10)).isEqual(date)) {
                 i++;
                 temperatura += dailyWeather.getAsJsonObject().get("main").getAsJsonObject().get("temp").getAsDouble();
             }

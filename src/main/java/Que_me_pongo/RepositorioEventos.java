@@ -1,10 +1,8 @@
 package Que_me_pongo;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class RepositorioEventos {
 
@@ -25,7 +23,7 @@ public class RepositorioEventos {
         this.eventos.add(evento);
     }
 
-    public void proximos(Date fecha, int cantDias){ //Filtra los eventos cuya fecha esta cantDias cerca y los hace sugerir
+    public void proximos(LocalDate fecha, int cantDias){ //Filtra los eventos cuya fecha esta cantDias cerca y los hace sugerir
         this.eventos
                 .stream()
                 .filter(evento -> evento.esProximo(fecha,cantDias))
