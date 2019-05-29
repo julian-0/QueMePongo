@@ -76,6 +76,10 @@ public class Prenda {
 	public int getCapa() {
 		return this.tipo.getCapa();
 	}
+	
+	public double getNivelAbrigo() {
+		return this.tipo.getNivelAbrigo();
+	}
 
 	private void validarColor(Color colorPrimario, Color colorSecundario) {
 		if(colorPrimario.equals(colorSecundario))
