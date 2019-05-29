@@ -6,7 +6,7 @@ public class ClimaMock implements ProveedorClima {
     }
 
     @Override
-    public double getTemp() {
+    public double getTemp(String date) {
         return 0;
     }
 }
