@@ -47,7 +47,6 @@ public class ClimaTest {
 
         ProveedorClima pc = new ClimaOpenWeather();
         pc.getTemp(now.plusDays(6));
-        Assert.fail();
     }
 
 }

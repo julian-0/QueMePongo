@@ -46,7 +46,8 @@ public class Prenda {
 		this.colorPrimario = Objects.requireNonNull(colorPrimario, "es obligatorio introducir un color primario");
 		this.validarColor(colorPrimario, colorSecundario);
 		this.colorSecundario = colorSecundario;
-		this.imagen = RedimensionadorImagen.getInstance().redimensionar(path);
+		if(path != null)
+			this.imagen = RedimensionadorImagen.getInstance().redimensionar(path);
 	}
 
 	public Tipo getTipo() {
