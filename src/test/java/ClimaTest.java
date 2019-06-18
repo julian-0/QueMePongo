@@ -19,7 +19,7 @@ public class ClimaTest {
     @Test
     public void obtenerTemperatura(){
         double temperatura;
-        LocalDate date = LocalDate.parse("2019-05-30");
+        LocalDate date = LocalDate.now();
 
         ProveedorClima pc = new ClimaOpenWeather();
         temperatura = pc.getTemp(date);
