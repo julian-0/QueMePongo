@@ -1,21 +1,20 @@
 package Que_me_pongo.administradorAtuendos;
 
-import java.util.BitSet;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.Deque;
 
 import Que_me_pongo.prenda.Prenda;
 
 public class AdministradorDeAtuendos {
 
-	private List<List<Prenda>> prendasPendientes = new LinkedList<List<Prenda>>(), 
+	private Deque<List<Prenda>> prendasPendientes = new LinkedList<List<Prenda>>(), 
 			 aceptados = new LinkedList<List<Prenda>>(),
 			 rechazados = new LinkedList<List<Prenda>>();
 
-	private BitSet ultimaPrendaAceptada = new BitSet();
-	
-	private int lastBit = -1;
+	private Deque<Boolean> estadosDeAceptacion = new LinkedList<Boolean>();
 	
 	public void agregarAtuendos(Set<List<Prenda>> prendas) {
 		this.prendasPendientes.addAll(prendas);
@@ -23,32 +22,28 @@ public class AdministradorDeAtuendos {
 	
 	public void aceptar() {
 		this.checkPendientes();
-		this.moverEntreListas(prendasPendientes, aceptados, 1);
-		this.ultimaPrendaAceptada.set(lastBit, true);
+		this.moverEntreListas(prendasPendientes, aceptados);
+		estadosDeAceptacion.addFirst(true);
 	}
 	
 	public void rechazar() {
 		this.checkPendientes();
-		this.moverEntreListas(prendasPendientes, rechazados, 1);
-		this.ultimaPrendaAceptada.set(lastBit, false);
+		this.moverEntreListas(prendasPendientes, rechazados);
+		estadosDeAceptacion.addFirst(false);
 	}
 	
 	public void deshacer() {
-		if(lastBit == -1)
+		if(estadosDeAceptacion.isEmpty())
 			throw new NoHistorialException();
 		
-		if(ultimaPrendaAceptada.get(lastBit))
-			this.moverEntreListas(aceptados, prendasPendientes, -1);
+		if(estadosDeAceptacion.removeFirst())
+			this.moverEntreListas(aceptados, prendasPendientes);
 		else
-			this.moverEntreListas(rechazados, prendasPendientes, -1);
+			this.moverEntreListas(rechazados, prendasPendientes);
 	}
 	
-	private void moverEntreListas(List<List<Prenda>> desde, List<List<Prenda>> hasta, int movimiento) {
-		hasta.add(0, desde.get(0));
-		desde.remove(0);
-		lastBit += movimiento;
-		
-		
+	private void moverEntreListas(Deque<List<Prenda>> desde, Deque<List<Prenda>> hasta) {
+		hasta.addFirst(desde.removeFirst());
 	}
 	
 	private void checkPendientes() {
