@@ -92,7 +92,7 @@ public class Guardarropa {
 	}
 
 	public int cantidadPrendas() {
-		return cantidadPrendasEn(Categoria.SUPERIOR)+cantidadPrendasEn(Categoria.INFERIOR)+cantidadPrendasEn(Categoria.ACCESORIO)+cantidadPrendasEn(Categoria.CALZADO);
+		return this.prendas.values().stream().reduce(0, (acc, list) -> acc + list.size(), Integer::sum);
 	}
 
 	public boolean estaLleno(int cantidadMaxima){
