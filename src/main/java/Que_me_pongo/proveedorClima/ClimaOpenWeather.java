@@ -21,9 +21,11 @@ public class ClimaOpenWeather implements ProveedorClima {
 
     @Override
     public double getTemp(LocalDate date) {
-        String owAPIKey = "6e68fbf87908ad1457a13fc6946d138e";
+    		//owAPIKey=6e68fbf87908ad1457a13fc6946d138e
+        String owAPIKey = System.getenv("owAPIKey");
         String ciudad = "Buenos Aires, Argentina";
-        String baseURL = "http://api.openweathermap.org/data/2.5/forecast";
+        //owBaseURL=http://api.openweathermap.org/data/2.5/forecast
+        String baseURL = System.getenv("owBaseURL");
         LocalDate now = LocalDate.now();
 
         if(date.isBefore(now) || date.isAfter(now.plusDays(5))) {
