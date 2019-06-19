@@ -26,26 +26,26 @@ public class Sugeridor {
 	
 	public Set<List<Prenda>> sugerir(Set<List<Prenda>> atuendos) {
 		double celsius = Configuraciones.get(ProveedorClima.class).getTemp(this.fecha);
-		Set<List<Prenda>> sugeridos = Sugeridor.filtrar(atuendos, celsius, this.margenBase);
+		Set<List<Prenda>> sugeridos = this.filtrar(atuendos, celsius, this.margenBase);
 		
 		if(sugeridos.size() <= this.cantParaExtender)
-			sugeridos = Sugeridor.filtrar(atuendos, celsius, this.margenExtendido);
+			sugeridos = this.filtrar(atuendos, celsius, this.margenExtendido);
 		
 		return sugeridos;
 	}
 	
-	static private Set<List<Prenda>> filtrar(Set<List<Prenda>> atuendos, double celsius, double margen) {
+	private Set<List<Prenda>> filtrar(Set<List<Prenda>> atuendos, double celsius, double margen) {
 		return atuendos.stream().
-		 filter(atuendo -> Sugeridor.sugerirAtuendo(atuendo, celsius, margen)).
+		 filter(atuendo -> this.sugerirAtuendo(atuendo, celsius, margen)).
 		 collect(Collectors.toSet());
 	}
 	
-	static private boolean sugerirAtuendo(List<Prenda> atuendo, double celsius, double margen) {
-		double nivelAbrigoTotal = atuendo.stream().reduce(.0, Sugeridor::reducirNivelAbrigo, (n1, n2) -> n1 + n2); 
+	private boolean sugerirAtuendo(List<Prenda> atuendo, double celsius, double margen) {
+		double nivelAbrigoTotal = atuendo.stream().reduce(.0, this::reducirNivelAbrigo, (n1, n2) -> n1 + n2); 
 		return Range.open(celsius-margen, celsius+margen).contains(1 / nivelAbrigoTotal);
 	}
 	
-	static private double reducirNivelAbrigo(double nivelPrenda1, Prenda prenda2) {
+	private double reducirNivelAbrigo(double nivelPrenda1, Prenda prenda2) {
 		return nivelPrenda1 + prenda2.getNivelAbrigo();
 	}
 	
