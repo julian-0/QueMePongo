@@ -1,3 +1,4 @@
+import Que_me_pongo.proveedorClima.ClimaAccuWeather;
 import Que_me_pongo.proveedorClima.ClimaMock;
 import Que_me_pongo.proveedorClima.ClimaOpenWeather;
 import Que_me_pongo.proveedorClima.ProveedorClima;
@@ -26,6 +27,13 @@ public class ClimaTest {
 
         System.out.println("La temperatura es...");
         System.out.println(temperatura);
+    }
+    
+    @Test
+    public void probarAW()
+    {
+    	double temperatura = new ClimaAccuWeather().getTemp(LocalDate.now());
+    	System.out.println(temperatura);
     }
 
     @Test
