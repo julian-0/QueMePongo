@@ -3,6 +3,7 @@ package Que_me_pongo.proveedorClima;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 import com.google.gson.Gson;
@@ -55,7 +56,7 @@ public class ClimaAccuWeather implements ProveedorClima {
     
     output = response.getEntity(String.class);
     
-    JsonArray dailyWeathers = new Gson().fromJson(output, JsonObject.class).get("DailyForecast").getAsJsonArray();
+    JsonArray dailyWeathers = new Gson().fromJson(output, JsonObject.class).get("DailyForecasts").getAsJsonArray();
     
     double temperaturaPromedio = this.temperaturaPromedio(dailyWeathers, date);
     
@@ -68,6 +69,7 @@ public class ClimaAccuWeather implements ProveedorClima {
   													filter(dailyWeather -> this.weatherIsOf(date, dailyWeather)).
   													<Double>map(dailyWeather -> this.getTempOfWeather(dailyWeather)).
   													collect(Collectors.toList());
+  													
   	return predictions.stream().reduce(.0, Double::sum) / predictions.size();
   }
   
@@ -81,7 +83,7 @@ public class ClimaAccuWeather implements ProveedorClima {
   {
   	JsonObject temperatura = dailyWeather.getAsJsonObject().get("Temperature").getAsJsonObject();
   	double minima = temperatura.get("Minimum").getAsJsonObject().get("Value").getAsDouble();
-  	double maxima = temperatura.get("Maxima").getAsJsonObject().get("Value").getAsDouble();
+  	double maxima = temperatura.get("Maximum").getAsJsonObject().get("Value").getAsDouble();
   	return (minima + maxima) / 2;
   }
 
