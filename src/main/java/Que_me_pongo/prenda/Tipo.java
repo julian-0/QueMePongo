@@ -3,10 +3,13 @@ package Que_me_pongo.prenda;
 public enum Tipo {
 	ANTEOJOS,
 	REMERAMANGASCORTAS,
+	REMERAMANGASLARGAS,
 	BUZO,
   SHORT,
+  PANTALON,
   ZAPATOSDETACON,
   AROS,
-  CHALECO
+  CHALECO,
+  GUANTES
     
 }

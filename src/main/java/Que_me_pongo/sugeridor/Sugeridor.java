@@ -12,6 +12,7 @@ import Que_me_pongo.prenda.Prenda;
 import Que_me_pongo.proveedorClima.ProveedorClima;
 
 public class Sugeridor {
+	private double tMax = 20, abrigoMin = 3, abrigoParaCero = 10;
 	private double margenBase, margenExtendido;
 	private int cantParaExtender;
 	private LocalDate fecha;
@@ -41,13 +42,23 @@ public class Sugeridor {
 	}
 	
 	private boolean sugerirAtuendo(List<Prenda> atuendo, double celsius, double margen) {
-		double nivelAbrigoTotal = atuendo.stream().reduce(.0, this::reducirNivelAbrigo, (n1, n2) -> n1 + n2); 
-		return Range.open(celsius-margen, celsius+margen).contains(1 / nivelAbrigoTotal);
+		double nivelAbrigoTotal = atuendo.stream().reduce(.0, this::reducirNivelAbrigo, (n1, n2) -> n1 + n2);
+		if(celsius >= 20)
+			celsius = 20;
+		return Range.closed(celsius-margen, celsius+margen).contains(aTemperatura(nivelAbrigoTotal));
 	}
 	
 	private double reducirNivelAbrigo(double nivelPrenda1, Prenda prenda2) {
 		return nivelPrenda1 + prenda2.getNivelAbrigo();
 	}
 	
-
+	private double aTemperatura(double nivelAbrigo)
+	{
+		/*
+		 * Una funcion lineal donde el nivel de abrigo minimo (3)
+		 * pasa por la temperatura maxima (20) y el nivel de abrigo 
+		 * 10 pasa por 0 grados
+		 */
+		return (-tMax / (abrigoParaCero - abrigoMin)) * nivelAbrigo + abrigoParaCero * tMax / (abrigoParaCero- abrigoMin);
+	}
 }
