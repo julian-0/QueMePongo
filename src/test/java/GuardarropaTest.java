@@ -133,7 +133,7 @@ public class GuardarropaTest {
 		List<List<Prenda>> setAtuendos = Arrays.asList(atuendoA, atuendoC, atuendoConB1, atuendoConB2);
 
 		Assert.assertEquals(setAtuendos.size(), atuendos.size());
-		atuendos.forEach(atuendoRecibido -> listContainsIgnoreOrder(setAtuendos, atuendoRecibido));
+		atuendos.forEach(atuendoRecibido -> Assert.assertTrue(listContainsIgnoreOrder(setAtuendos, atuendoRecibido)));
 	}
 
 	@Test
@@ -152,7 +152,7 @@ public class GuardarropaTest {
 		List<List<Prenda>> atuendosEsperados = Arrays.asList(atuendoConBuzo, atuendoSinBuzo);
 
 		Assert.assertEquals(atuendosGenerados.size(), atuendosEsperados.size());
-		atuendosGenerados.forEach(generado -> listContainsIgnoreOrder(atuendosEsperados, generado));
+		atuendosGenerados.forEach(generado -> Assert.assertTrue(listContainsIgnoreOrder(atuendosEsperados, generado)));
 	}
 
 	@Test
@@ -175,7 +175,7 @@ public class GuardarropaTest {
 		List<List<Prenda>> atuendosEsperados = Arrays.asList(atuendoConBuzo, atuendoSimple, atuendoConChaleco, atuendoConBuzoYChaleco);
 
 		Assert.assertEquals(atuendosGenerados.size(), atuendosEsperados.size());
-		atuendosGenerados.forEach(generado -> listContainsIgnoreOrder(atuendosEsperados, generado));
+		atuendosGenerados.forEach(generado -> Assert.assertTrue(listContainsIgnoreOrder(atuendosEsperados, generado)));
 	}
 
 }
