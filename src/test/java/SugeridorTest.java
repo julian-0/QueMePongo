@@ -34,20 +34,20 @@ public class SugeridorTest {
 
 	static List<Prenda> atuendo1 = Arrays.asList(remeraMangaCorta, shorts, zapatosDeTacon), //3NA - 18°
 							 atuendo2 = Arrays.asList(remeraMangaCorta, shorts, zapatosDeTacon, guantes), //5NA - 15°
-							 atuendo3 = Arrays.asList(remeraMangaCorta, shorts, zapatosDeTacon, buzo), //5
-							 atuendo4 = Arrays.asList(remeraMangaCorta, shorts, zapatosDeTacon, buzo, guantes), //7NA - 12°
+							 atuendo3 = Arrays.asList(remeraMangaCorta, shorts, zapatosDeTacon, buzo), //6NA - 13,5°
+							 atuendo4 = Arrays.asList(remeraMangaCorta, shorts, zapatosDeTacon, buzo, guantes), //8NA - 10,5°
 							 atuendo5 = Arrays.asList(remeraMangaCorta, pantalon, zapatosDeTacon), //4NA - 16.5°
 							 atuendo6 = Arrays.asList(remeraMangaCorta, pantalon, zapatosDeTacon, guantes), //6NA - 13,5°
-							 atuendo7 = Arrays.asList(remeraMangaCorta, pantalon, zapatosDeTacon, buzo), //6
-							 atuendo8 = Arrays.asList(remeraMangaCorta, pantalon, zapatosDeTacon, buzo, guantes), //8NA - 10,5
+							 atuendo7 = Arrays.asList(remeraMangaCorta, pantalon, zapatosDeTacon, buzo), //7NA - 12°
+							 atuendo8 = Arrays.asList(remeraMangaCorta, pantalon, zapatosDeTacon, buzo, guantes), //9NA - 9°
 							 atuendo9 = Arrays.asList(remeraMangaLarga, shorts, zapatosDeTacon), //3.5NA - 17.25°
 							 atuendo10 = Arrays.asList(remeraMangaLarga, shorts, zapatosDeTacon, guantes), //5.5NA - 14.25°
-							 atuendo11 = Arrays.asList(remeraMangaLarga, shorts, zapatosDeTacon, buzo), //5.5
-							 atuendo12 = Arrays.asList(remeraMangaLarga, shorts, zapatosDeTacon, buzo, guantes), //7.5NA - 11.25°
+							 atuendo11 = Arrays.asList(remeraMangaLarga, shorts, zapatosDeTacon, buzo), //6.5NA - 12.75
+							 atuendo12 = Arrays.asList(remeraMangaLarga, shorts, zapatosDeTacon, buzo, guantes), //8.5NA - 9.75°
 							 atuendo13 = Arrays.asList(remeraMangaLarga, pantalon, zapatosDeTacon), //4.5NA - 15.75°
-							 atuendo14 = Arrays.asList(remeraMangaLarga, pantalon, zapatosDeTacon, guantes), //6.5NA - 12.75
-							 atuendo15 = Arrays.asList(remeraMangaLarga, pantalon, zapatosDeTacon, buzo), //6.5
-							 atuendo16 = Arrays.asList(remeraMangaLarga, pantalon, zapatosDeTacon, buzo, guantes); //8.5NA - 9.75° 
+							 atuendo14 = Arrays.asList(remeraMangaLarga, pantalon, zapatosDeTacon, guantes), //6.5NA - 12.75°
+							 atuendo15 = Arrays.asList(remeraMangaLarga, pantalon, zapatosDeTacon, buzo), //7.5NA - 11.25°
+							 atuendo16 = Arrays.asList(remeraMangaLarga, pantalon, zapatosDeTacon, buzo, guantes); //9.5NA - 8.25° 
 	
 	static Set<List<Prenda>> atuendos = new HashSet<List<Prenda>>(
 																								Arrays.asList(atuendo1, atuendo2, atuendo3, atuendo4,
@@ -69,7 +69,7 @@ public class SugeridorTest {
 	}
 	
 	@Test
-	public void funcionaRangoBasico() {
+	public void funcionaRangoBasicoA18Grados() {
 		LocalDate fecha = LocalDate.now();
 		Sugeridor sug = new Sugeridor(2, 4, 1, fecha);
 		Set<List<Prenda>> atuendosFinales = new HashSet<List<Prenda>>(
@@ -78,11 +78,41 @@ public class SugeridorTest {
 	}
 	
 	@Test
-	public void usaRangoExtendido() {
+	public void usaRangoExtendidoA18Grados() {
 		LocalDate fecha = LocalDate.now();
 		Sugeridor sug = new Sugeridor(0.5, 2, 2, fecha);
 		Set<List<Prenda>> atuendosFinales = new HashSet<List<Prenda>>(
 																						Arrays.asList(atuendo1, atuendo5, atuendo9));
+		testDeSugerencia(atuendosFinales, sug, fecha, 18.);
+	}
+	
+	@Test
+	public void funcionaRangoBasicoAGradosNoRedondos() {
+		LocalDate fecha = LocalDate.now();
+		Sugeridor sug = new Sugeridor(2, 4, 1, fecha);
+		Set<List<Prenda>> atuendosFinales = new HashSet<List<Prenda>>(
+																						Arrays.asList(atuendo3, atuendo4, atuendo6, atuendo7,
+																								atuendo10, atuendo11, atuendo14, atuendo15));
+		testDeSugerencia(atuendosFinales, sug, fecha, 12.37);
+	}
+	
+	@Test
+	public void usaRangoExtendidoAGradosNoRedondos() {
+		LocalDate fecha = LocalDate.now();
+		Sugeridor sug = new Sugeridor(0.5, 2, 3, fecha);
+		Set<List<Prenda>> atuendosFinales = new HashSet<List<Prenda>>(
+																						Arrays.asList(atuendo3, atuendo4, atuendo6, atuendo7, 
+																								atuendo10, atuendo11, atuendo14, atuendo15));
+		testDeSugerencia(atuendosFinales, sug, fecha, 12.37);
+	}
+	
+	@Test 
+	public void retornaLoQuePuedeSinoAlcanza() {
+		LocalDate fecha = LocalDate.now();
+		Sugeridor sug = new Sugeridor(0.5, 2, 10, fecha);
+		Set<List<Prenda>> atuendosFinales = new HashSet<List<Prenda>>(
+				Arrays.asList(atuendo1, atuendo5, atuendo9));
+		
 		testDeSugerencia(atuendosFinales, sug, fecha, 18.);
 	}
 	
