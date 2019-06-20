@@ -41,13 +41,21 @@ public class Sugeridor {
 	}
 	
 	private boolean sugerirAtuendo(List<Prenda> atuendo, double celsius, double margen) {
-		double nivelAbrigoTotal = atuendo.stream().reduce(.0, this::reducirNivelAbrigo, (n1, n2) -> n1 + n2); 
-		return Range.open(celsius-margen, celsius+margen).contains(1 / nivelAbrigoTotal);
+		double nivelAbrigoTotal = atuendo.stream().reduce(.0, this::reducirNivelAbrigo, (n1, n2) -> n1 + n2);
+		return Range.closed(celsius-margen, celsius+margen).contains(aTemperatura(nivelAbrigoTotal));
 	}
 	
 	private double reducirNivelAbrigo(double nivelPrenda1, Prenda prenda2) {
 		return nivelPrenda1 + prenda2.getNivelAbrigo();
 	}
 	
-
+	private double aTemperatura(double nivelAbrigo)
+	{
+		/*
+		 * Una funcion lineal que asume lo siguiente:
+		 * -Con tres prendas basicas obligatorias, hay un nivel de abrigo de tres y eso sirve para dieciocho grados
+		 * -Por cada tres grados que desciende la temperatura, aumento en dos el nivel de abrigo
+		 */
+		return -1.5 * nivelAbrigo + 22.5;
+	}
 }

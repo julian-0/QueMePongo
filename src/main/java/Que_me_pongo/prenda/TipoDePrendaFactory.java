@@ -12,7 +12,7 @@ public class TipoDePrendaFactory {
 	static public TipoDePrenda anteojos() {
 		List<Material> materiales = new LinkedList<Material>();
   	materiales.add(Material.PLASTICO);
-  	return new TipoDePrenda(Tipo.ANTEOJOS, Categoria.ACCESORIO, materiales, 1, 0);
+  	return new TipoDePrenda(Tipo.ANTEOJOS, Categoria.ACCESORIO, materiales, 2, 0);
 	}
 	
 	static public TipoDePrenda remeraMangaCorta() {
@@ -20,14 +20,29 @@ public class TipoDePrendaFactory {
   	materiales.add(Material.ALGODON);
   	materiales.add(Material.SEDA);
   	materiales.add(Material.DRIFIT);
-  	return new TipoDePrenda(Tipo.REMERAMANGASCORTAS, Categoria.SUPERIOR, materiales, 0, 3);
+  	return new TipoDePrenda(Tipo.REMERAMANGASCORTAS, Categoria.SUPERIOR, materiales, 0, 1);
+	}
+	
+	static public TipoDePrenda remeraMangaLarga() {
+		List<Material> materiales = new LinkedList<Material>();
+  	materiales.add(Material.ALGODON);
+  	materiales.add(Material.SEDA);
+  	materiales.add(Material.DRIFIT);
+  	return new TipoDePrenda(Tipo.REMERAMANGASLARGAS, Categoria.SUPERIOR, materiales, 0, 1.5);
 	}
 	
 	static public TipoDePrenda shorts() {
 		List<Material> materiales = new LinkedList<Material>();
   	materiales.add(Material.ALGODON);
   	materiales.add(Material.DRIFIT);
-  	return new TipoDePrenda(Tipo.SHORT, Categoria.INFERIOR, materiales, 0, 3);
+  	return new TipoDePrenda(Tipo.SHORT, Categoria.INFERIOR, materiales, 0, 1);
+	}
+	
+	static public TipoDePrenda pantalon() {
+		List<Material> materiales = new LinkedList<Material>();
+  	materiales.add(Material.ALGODON);
+  	materiales.add(Material.DRIFIT);
+  	return new TipoDePrenda(Tipo.PANTALON, Categoria.INFERIOR, materiales, 0, 2);
 	}
 	
 	static public TipoDePrenda buzo() {
@@ -40,11 +55,16 @@ public class TipoDePrendaFactory {
 	static public TipoDePrenda zapatosDeTacon() {
 		List<Material> materiales = new LinkedList<Material>();
   	materiales.add(Material.CUERO);
-  	return new TipoDePrenda(Tipo.ZAPATOSDETACON, Categoria.CALZADO, materiales, 0, 2);
+  	return new TipoDePrenda(Tipo.ZAPATOSDETACON, Categoria.CALZADO, materiales, 0, 1);
 	}
 	
 	static public TipoDePrenda chaleco() {
 		List<Material> materiales = Arrays.asList(Material.ALGODON, Material.CUERO);
-		return new TipoDePrenda(Tipo.CHALECO, Categoria.SUPERIOR, materiales, 1, 3);
+		return new TipoDePrenda(Tipo.CHALECO, Categoria.SUPERIOR, materiales, 1, 2);
+	}
+	
+	static public TipoDePrenda guantes() {
+		List<Material> materiales = Arrays.asList(Material.ALGODON, Material.CUERO);
+		return new TipoDePrenda(Tipo.GUANTES, Categoria.ACCESORIO, materiales, 3, 2);
 	}
 }
