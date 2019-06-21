@@ -1,5 +1,4 @@
 import Que_me_pongo.proveedorClima.ClimaAccuWeather;
-import Que_me_pongo.proveedorClima.ClimaMock;
 import Que_me_pongo.proveedorClima.ClimaOpenWeather;
 import Que_me_pongo.proveedorClima.ProveedorClima;
 import Que_me_pongo.proveedorClima.RangoDiasException;
@@ -39,7 +38,7 @@ public class ClimaTest {
     @Test
     public void climaMock(){
     	LocalDate date = LocalDate.parse("2019-05-28");
-        ProveedorClima proveedorMock = mock(ClimaMock.class);
+        ProveedorClima proveedorMock = mock(ProveedorClima.class);
         when(proveedorMock.getTemp(date)).thenReturn(43.0);
         Assert.assertEquals(43.0, proveedorMock.getTemp(date), 0);
     }
