@@ -18,44 +18,6 @@ import java.util.stream.StreamSupport;
 import javax.ws.rs.core.MultivaluedMap;
 
 public class ClimaOpenWeather extends APIProviders {
-
-    public ClimaOpenWeather() {
-    }
-
-//    @Override
-//    public double getTemp(LocalDate date) {
-//    		//owAPIKey=6e68fbf87908ad1457a13fc6946d138e
-//        String owAPIKey = System.getenv("owAPIKey");
-//        String ciudad = "Buenos Aires, Argentina";
-//        //owBaseURL=http://api.openweathermap.org/data/2.5/forecast
-//        String baseURL = System.getenv("owBaseURL");
-//        LocalDate now = LocalDate.now();
-//
-//        if(date.isBefore(now) || date.isAfter(now.plusDays(5))) {
-//            throw new RangoDiasException("La fecha pasada por parámetro se encuentra fuera del rango de días disponible.");
-//        }
-//
-//        Client client = Client.create();
-//        WebResource webResource = client.resource(baseURL)
-//                .queryParam("q", ciudad)
-//                .queryParam("APPID", owAPIKey);
-//        ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
-//
-//        if (response.getStatus() != 200) {
-//            throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
-//        }
-//
-//        String output = response.getEntity(String.class);
-//
-//        Gson g = new Gson();
-//        JsonObject jo = g.fromJson(output, JsonObject.class);
-//
-//        JsonArray weathers = jo.get("list").getAsJsonArray();
-//
-//        Double temperatura = this.temperaturaPromedio(weathers, date);
-//
-//        return (temperatura - 273.15);
-//    }
     
     private double temperaturaPromedio(JsonArray weathers, LocalDate date)
     {
