@@ -2,8 +2,8 @@
 <class-diagram version="1.2.3" icons="false" automaticImage="JPEG" always-add-relationships="false" 
   generalizations="true" realizations="true" associations="true" dependencies="true" nesting-relationships="true" 
   router="FAN">  
-  <class id="1" language="java" name="Que_me_pongo.administradorAtuendos.AdministradorDeAtuendos" project="Que_me_pongo" 
-    file="/Que_me_pongo/src/main/java/Que_me_pongo/administradorAtuendos/AdministradorDeAtuendos.java" binary="false" 
+  <class id="1" language="java" name="que_me_pongo.administradorAtuendos.AdministradorDeAtuendos" project="que_me_pongo" 
+    file="/que_me_pongo/src/main/java/que_me_pongo/administradorAtuendos/AdministradorDeAtuendos.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="616" y="-151"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -12,8 +12,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="2" language="java" name="Que_me_pongo.configuraciones.Configuraciones" project="Que_me_pongo" 
-    file="/Que_me_pongo/src/main/java/Que_me_pongo/configuraciones/Configuraciones.java" binary="false" 
+  <class id="2" language="java" name="que_me_pongo.configuraciones.Configuraciones" project="que_me_pongo" 
+    file="/que_me_pongo/src/main/java/que_me_pongo/configuraciones/Configuraciones.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="624" y="532"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -22,8 +22,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="Que_me_pongo.evento.Evento" project="Que_me_pongo" 
-    file="/Que_me_pongo/src/main/java/Que_me_pongo/evento/Evento.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="3" language="java" name="que_me_pongo.evento.Evento" project="que_me_pongo" 
+    file="/que_me_pongo/src/main/java/que_me_pongo/evento/Evento.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="724" y="376"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -31,8 +31,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="4" language="java" name="Que_me_pongo.evento.EventoJob" project="Que_me_pongo" 
-    file="/Que_me_pongo/src/main/java/Que_me_pongo/evento/EventoJob.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="4" language="java" name="que_me_pongo.evento.EventoJob" project="que_me_pongo" 
+    file="/que_me_pongo/src/main/java/que_me_pongo/evento/EventoJob.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="738" y="76"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -40,8 +40,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="5" language="java" name="Que_me_pongo.evento.RepositorioEventos" project="Que_me_pongo" 
-    file="/Que_me_pongo/src/main/java/Que_me_pongo/evento/RepositorioEventos.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="5" language="java" name="que_me_pongo.evento.RepositorioEventos" project="que_me_pongo" 
+    file="/que_me_pongo/src/main/java/que_me_pongo/evento/RepositorioEventos.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="740" y="208"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -49,8 +49,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="6" language="java" name="Que_me_pongo.guardarropa.Guardarropa" project="Que_me_pongo" 
-    file="/Que_me_pongo/src/main/java/Que_me_pongo/guardarropa/Guardarropa.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="6" language="java" name="que_me_pongo.guardarropa.Guardarropa" project="que_me_pongo" 
+    file="/que_me_pongo/src/main/java/que_me_pongo/guardarropa/Guardarropa.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1398" y="-156"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -58,8 +58,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="7" language="java" name="Que_me_pongo.prenda.Prenda" project="Que_me_pongo" 
-    file="/Que_me_pongo/src/main/java/Que_me_pongo/prenda/Prenda.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="7" language="java" name="que_me_pongo.prenda.Prenda" project="que_me_pongo" 
+    file="/que_me_pongo/src/main/java/que_me_pongo/prenda/Prenda.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1069" y="99"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -67,8 +67,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <enumeration id="8" language="java" name="Que_me_pongo.prenda.Material" project="Que_me_pongo" 
-    file="/Que_me_pongo/src/main/java/Que_me_pongo/prenda/Material.java" binary="false" corner="BOTTOM_RIGHT">    
+  <enumeration id="8" language="java" name="que_me_pongo.prenda.Material" project="que_me_pongo" 
+    file="/que_me_pongo/src/main/java/que_me_pongo/prenda/Material.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1341" y="221"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -76,8 +76,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </enumeration>  
-  <enumeration id="9" language="java" name="Que_me_pongo.prenda.Tipo" project="Que_me_pongo" 
-    file="/Que_me_pongo/src/main/java/Que_me_pongo/prenda/Tipo.java" binary="false" corner="BOTTOM_RIGHT">    
+  <enumeration id="9" language="java" name="que_me_pongo.prenda.Tipo" project="que_me_pongo" 
+    file="/que_me_pongo/src/main/java/que_me_pongo/prenda/Tipo.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1480" y="418"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -85,8 +85,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </enumeration>  
-  <class id="10" language="java" name="Que_me_pongo.prenda.RedimensionadorImagen" project="Que_me_pongo" 
-    file="/Que_me_pongo/src/main/java/Que_me_pongo/prenda/RedimensionadorImagen.java" binary="false" 
+  <class id="10" language="java" name="que_me_pongo.prenda.RedimensionadorImagen" project="que_me_pongo" 
+    file="/que_me_pongo/src/main/java/que_me_pongo/prenda/RedimensionadorImagen.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1151" y="408"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -95,8 +95,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="11" language="java" name="Que_me_pongo.prenda.TipoDePrenda" project="Que_me_pongo" 
-    file="/Que_me_pongo/src/main/java/Que_me_pongo/prenda/TipoDePrenda.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="11" language="java" name="que_me_pongo.prenda.TipoDePrenda" project="que_me_pongo" 
+    file="/que_me_pongo/src/main/java/que_me_pongo/prenda/TipoDePrenda.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1667" y="151"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -104,8 +104,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <enumeration id="12" language="java" name="Que_me_pongo.prenda.Categoria" project="Que_me_pongo" 
-    file="/Que_me_pongo/src/main/java/Que_me_pongo/prenda/Categoria.java" binary="false" corner="BOTTOM_RIGHT">    
+  <enumeration id="12" language="java" name="que_me_pongo.prenda.Categoria" project="que_me_pongo" 
+    file="/que_me_pongo/src/main/java/que_me_pongo/prenda/Categoria.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1672" y="-40"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -113,8 +113,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </enumeration>  
-  <interface id="13" language="java" name="Que_me_pongo.proveedorClima.ProveedorClima" project="Que_me_pongo" 
-    file="/Que_me_pongo/src/main/java/Que_me_pongo/proveedorClima/ProveedorClima.java" binary="false" 
+  <interface id="13" language="java" name="que_me_pongo.proveedorClima.ProveedorClima" project="que_me_pongo" 
+    file="/que_me_pongo/src/main/java/que_me_pongo/proveedorClima/ProveedorClima.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="485" y="382"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -123,8 +123,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <class id="14" language="java" name="Que_me_pongo.proveedorClima.ClimaMock" project="Que_me_pongo" 
-    file="/Que_me_pongo/src/main/java/Que_me_pongo/proveedorClima/ClimaMock.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="14" language="java" name="que_me_pongo.proveedorClima.ClimaMock" project="que_me_pongo" 
+    file="/que_me_pongo/src/main/java/que_me_pongo/proveedorClima/ClimaMock.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="490" y="255"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -132,8 +132,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="15" language="java" name="Que_me_pongo.proveedorClima.ClimaOpenWeather" project="Que_me_pongo" 
-    file="/Que_me_pongo/src/main/java/Que_me_pongo/proveedorClima/ClimaOpenWeather.java" binary="false" 
+  <class id="15" language="java" name="que_me_pongo.proveedorClima.ClimaOpenWeather" project="que_me_pongo" 
+    file="/que_me_pongo/src/main/java/que_me_pongo/proveedorClima/ClimaOpenWeather.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="299" y="254"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -142,8 +142,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="16" language="java" name="Que_me_pongo.sugeridor.Sugeridor" project="Que_me_pongo" 
-    file="/Que_me_pongo/src/main/java/Que_me_pongo/sugeridor/Sugeridor.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="16" language="java" name="que_me_pongo.sugeridor.Sugeridor" project="que_me_pongo" 
+    file="/que_me_pongo/src/main/java/que_me_pongo/sugeridor/Sugeridor.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="929" y="625"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -151,8 +151,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="17" language="java" name="Que_me_pongo.sugeridor.ConfiguracionesSugeridor" project="Que_me_pongo" 
-    file="/Que_me_pongo/src/main/java/Que_me_pongo/sugeridor/ConfiguracionesSugeridor.java" binary="false" 
+  <class id="17" language="java" name="que_me_pongo.sugeridor.ConfiguracionesSugeridor" project="que_me_pongo" 
+    file="/que_me_pongo/src/main/java/que_me_pongo/sugeridor/ConfiguracionesSugeridor.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1333" y="623"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -161,8 +161,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="18" language="java" name="Que_me_pongo.usuario.Usuario" project="Que_me_pongo" 
-    file="/Que_me_pongo/src/main/java/Que_me_pongo/usuario/Usuario.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="18" language="java" name="que_me_pongo.usuario.Usuario" project="que_me_pongo" 
+    file="/que_me_pongo/src/main/java/que_me_pongo/usuario/Usuario.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="197" y="-28"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -170,8 +170,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="19" language="java" name="Que_me_pongo.usuario.Gratuito" project="Que_me_pongo" 
-    file="/Que_me_pongo/src/main/java/Que_me_pongo/usuario/Gratuito.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="19" language="java" name="que_me_pongo.usuario.Gratuito" project="que_me_pongo" 
+    file="/que_me_pongo/src/main/java/que_me_pongo/usuario/Gratuito.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1094" y="-145"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -179,8 +179,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="20" language="java" name="Que_me_pongo.usuario.Premium" project="Que_me_pongo" 
-    file="/Que_me_pongo/src/main/java/Que_me_pongo/usuario/Premium.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="20" language="java" name="que_me_pongo.usuario.Premium" project="que_me_pongo" 
+    file="/que_me_pongo/src/main/java/que_me_pongo/usuario/Premium.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1086" y="-284"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -188,8 +188,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <interface id="21" language="java" name="Que_me_pongo.usuario.TipoUsuario" project="Que_me_pongo" 
-    file="/Que_me_pongo/src/main/java/Que_me_pongo/usuario/TipoUsuario.java" binary="false" corner="BOTTOM_RIGHT">    
+  <interface id="21" language="java" name="que_me_pongo.usuario.TipoUsuario" project="que_me_pongo" 
+    file="/que_me_pongo/src/main/java/que_me_pongo/usuario/TipoUsuario.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="753" y="-340"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      

@@ -1,7 +1,7 @@
-import Que_me_pongo.evento.Evento;
-import Que_me_pongo.evento.EventoJob;
-import Que_me_pongo.usuario.Premium;
-import Que_me_pongo.usuario.Usuario;
+import que_me_pongo.evento.Evento;
+import que_me_pongo.evento.EventoJob;
+import que_me_pongo.usuario.Premium;
+import que_me_pongo.usuario.Usuario;
 
 import org.junit.Test;
 import org.quartz.*;

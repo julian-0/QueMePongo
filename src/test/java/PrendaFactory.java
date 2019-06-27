@@ -1,8 +1,8 @@
-import Que_me_pongo.*;
-import Que_me_pongo.prenda.Material;
-import Que_me_pongo.prenda.Prenda;
-import Que_me_pongo.prenda.TipoDePrenda;
-import Que_me_pongo.prenda.TipoDePrendaFactory;
+import que_me_pongo.*;
+import que_me_pongo.prenda.Material;
+import que_me_pongo.prenda.Prenda;
+import que_me_pongo.prenda.TipoDePrenda;
+import que_me_pongo.prenda.TipoDePrendaFactory;
 
 import java.awt.Color;
 

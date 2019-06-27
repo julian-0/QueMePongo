@@ -6,14 +6,14 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import Que_me_pongo.prenda.Categoria;
-import Que_me_pongo.prenda.ColoresIgualesException;
-import Que_me_pongo.prenda.Material;
-import Que_me_pongo.prenda.MaterialInvalidoException;
-import Que_me_pongo.prenda.Prenda;
-import Que_me_pongo.prenda.Tipo;
-import Que_me_pongo.prenda.TipoDePrenda;
-import Que_me_pongo.prenda.TipoDePrendaFactory;
+import que_me_pongo.prenda.Categoria;
+import que_me_pongo.prenda.ColoresIgualesException;
+import que_me_pongo.prenda.Material;
+import que_me_pongo.prenda.MaterialInvalidoException;
+import que_me_pongo.prenda.Prenda;
+import que_me_pongo.prenda.Tipo;
+import que_me_pongo.prenda.TipoDePrenda;
+import que_me_pongo.prenda.TipoDePrendaFactory;
 
 public class PrendaTest {
 

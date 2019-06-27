@@ -4,11 +4,11 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 
-import Que_me_pongo.configuraciones.Configuraciones;
-import Que_me_pongo.prenda.Material;
-import Que_me_pongo.prenda.Prenda;
-import Que_me_pongo.proveedorClima.ProveedorClima;
-import Que_me_pongo.sugeridor.Sugeridor;
+import que_me_pongo.configuraciones.Configuraciones;
+import que_me_pongo.prenda.Material;
+import que_me_pongo.prenda.Prenda;
+import que_me_pongo.proveedorClima.ProveedorClima;
+import que_me_pongo.sugeridor.Sugeridor;
 
 import java.awt.Color;
 import java.time.LocalDate;
