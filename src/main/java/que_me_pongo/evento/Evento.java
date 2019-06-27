@@ -44,6 +44,10 @@ public class Evento {
     	return this.usuario;
     }
     
+    public Guardarropa getGuardarropa() {
+    	return this.guardarropa;
+    }
+    
     public String getDescripcion() {
     	return this.descripcion;
     }
