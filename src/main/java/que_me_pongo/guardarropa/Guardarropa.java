@@ -52,6 +52,13 @@ public class Guardarropa {
 		reservas.put(fecha, reservadas);
 	}
 	
+	public void liberarAtuendo(LocalDate fecha, List<Prenda> atuendo) {
+		Set<Prenda> reservadas = reservas.get(fecha);
+		if(atuendo.stream().allMatch(prenda -> reservadas.contains(prenda)))
+			throw new RuntimeException();
+		reservadas.removeAll(atuendo);
+	}
+	
 	public Set<List<Prenda>> atuendos(LocalDate fecha){
 		return atuendos().stream().filter(atuendo -> atuendoDisponibleEnFecha(fecha, atuendo)).collect(Collectors.toSet());
 

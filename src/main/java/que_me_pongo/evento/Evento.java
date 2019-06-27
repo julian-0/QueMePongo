@@ -1,13 +1,16 @@
 package que_me_pongo.evento;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import que_me_pongo.evento.listeners.EventoListener;
+import que_me_pongo.guardarropa.Guardarropa;
 import que_me_pongo.prenda.Categoria;
 import que_me_pongo.prenda.Prenda;
 import que_me_pongo.sugeridor.Sugeridor;
@@ -16,31 +19,22 @@ import que_me_pongo.usuario.Usuario;
 public class Evento {
     private LocalDate fecha;
     private Usuario usuario;
+    private Guardarropa guardarropa;
     private String descripcion;
     private Deque<List<Prenda>> sugerencias, rechazados;
     private List<Prenda> aceptado;
     private Collection<EventoListener> listenersSugerir;
+    private Set<Categoria> aumentoAbrigo, reduccionAbrigo;
 
     //Se crea un evento y se carga en el repo de eventos
-    public Evento(LocalDate fecha,Usuario usuario,String descripcion,Collection<EventoListener> listenersSugerir) {
-        this.fecha = fecha;
-        this.usuario = usuario;
-        this.descripcion = descripcion;
-        this.listenersSugerir = listenersSugerir;
-
-        RepositorioEventos.getInstance().agendar(this);
-        
+    public Evento(LocalDate fecha,Usuario usuario, Guardarropa guardarropa,String descripcion,Collection<EventoListener> notificadores) {
+    	settearEstadoInicial(fecha, usuario, guardarropa, descripcion, notificadores);
     }
     
-    public Evento(LocalDate fecha,Usuario usuario,String descripcion,Collection<EventoListener> listenersSugerir, EventoListener tiempoParaRepetir) {
-      this.fecha = fecha;
-      this.usuario = usuario;
-      this.descripcion = descripcion;
-      this.listenersSugerir = listenersSugerir;
+    public Evento(LocalDate fecha,Usuario usuario,String descripcion,Collection<EventoListener> notificadores, EventoListener tiempoParaRepetir) {
+      settearEstadoInicial(fecha, usuario, guardarropa, descripcion, notificadores);
       this.listenersSugerir.add(tiempoParaRepetir);
-      RepositorioEventos.getInstance().agendar(this);
-      
-  }
+    }
     
     public LocalDate getFecha() {
     	return this.fecha;
@@ -56,6 +50,11 @@ public class Evento {
     
     public Collection<EventoListener> getListenersSugerir(){
     	return this.listenersSugerir;
+    }
+    
+    public Evento addListenersSugerir(EventoListener listener) {
+    	listenersSugerir.add(listener);
+    	return this;
     }
 
     //Le va a cargar una lista de atuendos al usuario en su lista atuendos pendientes
@@ -77,15 +76,19 @@ public class Evento {
     	validarExistenSugerencias();
     	validarNoAceptado();
     	aceptado = sugerencias.removeFirst();
-    	//Pasar info al usuario
+    	usuario.ajustarPreferencias(aumentarAbrigo, reducirAbrigo);
+    	guardarropa.reservarAtuendo(fecha, aceptado);
+    	this.aumentoAbrigo = aumentarAbrigo;
+    	this.reduccionAbrigo = reducirAbrigo;
     }
     
     public void deshacerDecision() {
     	validarExistenSugerencias();
     	if(aceptado != null) {
     		sugerencias.addFirst(aceptado);
+    		guardarropa.liberarAtuendo(fecha, aceptado);
     		aceptado = null;
-    		//Hacer que el usuario deshaga sus preferencias
+    		usuario.ajustarPreferencias(reduccionAbrigo, aumentoAbrigo);
     	}
     	else if(!rechazados.isEmpty()) {
     		sugerencias.addFirst(rechazados.removeLast());
@@ -113,6 +116,18 @@ public class Evento {
     private void validarExistenSugerencias() {
     	if(sugerencias == null)
     		throw new SinSugerenciasException();
+    }
+    
+    private void settearEstadoInicial(LocalDate fecha,Usuario usuario, Guardarropa guardarropa,String descripcion,Collection<EventoListener> notificadores) {
+    	this.fecha = Objects.requireNonNull(fecha);
+      this.usuario = Objects.requireNonNull(usuario);
+      this.descripcion = Objects.requireNonNull(descripcion);
+      this.guardarropa = Objects.requireNonNull(guardarropa);
+      if(notificadores == null)
+      	this.listenersSugerir = new ArrayList<EventoListener>();
+      else
+      	this.listenersSugerir = notificadores;
+      RepositorioEventos.getInstance().agendar(this);   
     }
     
 }
