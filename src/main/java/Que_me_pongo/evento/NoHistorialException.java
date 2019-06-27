@@ -1,4 +1,4 @@
-package Que_me_pongo.administradorAtuendos;
+package Que_me_pongo.evento;
 
 public class NoHistorialException extends RuntimeException {
 

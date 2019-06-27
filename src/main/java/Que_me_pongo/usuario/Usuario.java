@@ -1,16 +1,17 @@
 package Que_me_pongo.usuario;
 
-import java.util.LinkedList;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import Que_me_pongo.administradorAtuendos.AdministradorDeAtuendos;
 import Que_me_pongo.evento.Evento;
 import Que_me_pongo.guardarropa.Guardarropa;
 import Que_me_pongo.prenda.Prenda;
+import Que_me_pongo.prenda.Categoria;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 public class Usuario {
 	private Set<Guardarropa> guardarropas = new HashSet<Guardarropa>();
@@ -19,7 +20,7 @@ public class Usuario {
 
 	private Set<Evento> eventos = new HashSet<Evento>();
 	
-	private AdministradorDeAtuendos adminAtuendos = new AdministradorDeAtuendos();
+	private Map<Categoria, Double> preferencias = new HashMap();
 
 	public Usuario(TipoUsuario tipo){
 
@@ -34,11 +35,11 @@ public class Usuario {
 		return this.guardarropas;
 	}
 
-	public void agregarGuardarropas(){
-		guardarropas.add(new Guardarropa());
+	public void agregarGuardarropas(Guardarropa guardarropa){
+		guardarropas.add(guardarropa);
 	}
 
-	public void agregarPrenda(Prenda prenda,Guardarropa guardarropa){
+	public void agregarPrenda(Prenda prenda, Guardarropa guardarropa){
 		tipoUsuario.agregarPrenda(prenda, guardarropa);
 	}
 
@@ -56,20 +57,14 @@ public class Usuario {
 		this.eventos.add(evento);
 	}
 
-	public void recolectarAtuendos(Set<List<Prenda>> atuendos){
-		this.adminAtuendos.agregarAtuendos(atuendos);
+	public void ajustarPreferencias(Set<Categoria> aumentarAbrigo, Set<Categoria> reducirAbrigo) {
+		aumentarAbrigo.forEach(categoria -> preferencias.put(categoria, preferencias.getOrDefault(categoria, 0.) + 0.25));
+		reducirAbrigo.forEach(categoria -> preferencias.put(categoria, preferencias.getOrDefault(categoria, 0.) - 0.25));
 	}
 	
-	public void aceptarAtuendo() {
-		adminAtuendos.aceptar();
+	public Double getPreferencia(Categoria categoria) {
+		return preferencias.getOrDefault(categoria, 0.);
 	}
 	
-	public void rechazarAtuendo() {
-		adminAtuendos.rechazar();
-	}
-	
-	public void deshacerOpinion() {
-		adminAtuendos.deshacer();
-	}
 
 }

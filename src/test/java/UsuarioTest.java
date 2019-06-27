@@ -50,19 +50,12 @@ public class UsuarioTest {
 
 
 	@Test
-	public void usuarioAgregaGuardarropas() {
-		Usuario usuario = new Usuario(new Premium());
-
-		Assert.assertEquals(0, usuario.getGuardarropas().size());
-		usuario.agregarGuardarropas();
-		Assert.assertEquals(1, usuario.getGuardarropas().size());
-	}
-
-	@Test
 	public void usuarioDevuelveLosAtuendosCorrectamente() {
 		Usuario usuario = new Usuario(new Premium());
-		usuario.agregarGuardarropas();
-		usuario.agregarGuardarropas();
+		Guardarropa guardarropa1 = new Guardarropa(),
+								guardarropa2 = new Guardarropa();
+		usuario.agregarGuardarropas(guardarropa1);
+		usuario.agregarGuardarropas(guardarropa2);
 
 		Set<List<Prenda>> conjunto1 = new HashSet<>();
 		conjunto1.addAll(Arrays.asList(atuendoA, atuendoC));
@@ -70,17 +63,14 @@ public class UsuarioTest {
 		Set<List<Prenda>> conjunto2 = new HashSet<>();
 		conjunto2.addAll(Arrays.asList(atuendoP));
 
-		List<Guardarropa> guardarropas = new ArrayList<>();
-		usuario.getGuardarropas().forEach(guardarropa -> guardarropas.add(guardarropa));
+		usuario.agregarPrenda(remeraA,guardarropa1);
+		usuario.agregarPrenda(pantalonA,guardarropa1);
+		usuario.agregarPrenda(zapatoA,guardarropa1);
+		usuario.agregarPrenda(accesorioA,guardarropa1);
 
-		usuario.agregarPrenda(remeraA,guardarropas.get(0));
-		usuario.agregarPrenda(pantalonA,guardarropas.get(0));
-		usuario.agregarPrenda(zapatoA,guardarropas.get(0));
-		usuario.agregarPrenda(accesorioA,guardarropas.get(0));
-
-		usuario.agregarPrenda(remeraB,guardarropas.get(1));
-		usuario.agregarPrenda(pantalonB,guardarropas.get(1));
-		usuario.agregarPrenda(zapatoB,guardarropas.get(1));
+		usuario.agregarPrenda(remeraB,guardarropa2);
+		usuario.agregarPrenda(pantalonB,guardarropa2);
+		usuario.agregarPrenda(zapatoB,guardarropa2);
 
 		Set<List<Prenda>> atuendos = usuario.atuendos();
 
@@ -95,23 +85,20 @@ public class UsuarioTest {
 	@Test
 	public void usuarioPremiumPuedeAgregarMuchasPrendas() {
 		Usuario usuario = new Usuario(new Premium());
-		usuario.agregarGuardarropas();
+		Guardarropa guardarropa = new Guardarropa();
+		usuario.agregarGuardarropas(guardarropa);
+
+		usuario.agregarPrenda(remeraA, guardarropa);
+		usuario.agregarPrenda(pantalonA,guardarropa);
+		usuario.agregarPrenda(zapatoA,guardarropa);
+		usuario.agregarPrenda(accesorioA,guardarropa);
+
+		usuario.agregarPrenda(remeraB,guardarropa);
+		usuario.agregarPrenda(pantalonB,guardarropa);
+		usuario.agregarPrenda(zapatoB,guardarropa);
 
 
-		List<Guardarropa> guardarropas = new ArrayList<>();
-		usuario.getGuardarropas().forEach(guardarropa -> guardarropas.add(guardarropa));
-
-		usuario.agregarPrenda(remeraA,guardarropas.get(0));
-		usuario.agregarPrenda(pantalonA,guardarropas.get(0));
-		usuario.agregarPrenda(zapatoA,guardarropas.get(0));
-		usuario.agregarPrenda(accesorioA,guardarropas.get(0));
-
-		usuario.agregarPrenda(remeraB,guardarropas.get(0));
-		usuario.agregarPrenda(pantalonB,guardarropas.get(0));
-		usuario.agregarPrenda(zapatoB,guardarropas.get(0));
-
-
-		Assert.assertEquals(7, guardarropas.get(0).cantidadPrendas());
+		Assert.assertEquals(7, guardarropa.cantidadPrendas());
 	}
 
 
@@ -124,20 +111,17 @@ public class UsuarioTest {
 		expectedEx.expect(UsuarioGratuitoNoTieneLugarException.class);
 		expectedEx.expectMessage("Su guardarropas esta lleno, si desea tener mas lugar puede hacerse socio premium");
 
-
+		Guardarropa guardarropa = new Guardarropa();
 		Usuario usuario = new Usuario(new Gratuito());
-		usuario.agregarGuardarropas();
+		usuario.agregarGuardarropas(guardarropa);
 
-		List<Guardarropa> guardarropas = new ArrayList<>();
-		usuario.getGuardarropas().forEach(guardarropa -> guardarropas.add(guardarropa));
-
-		usuario.agregarPrenda(remeraA,guardarropas.get(0));
-		usuario.agregarPrenda(pantalonA,guardarropas.get(0));
-		usuario.agregarPrenda(zapatoA,guardarropas.get(0));
-		usuario.agregarPrenda(accesorioA,guardarropas.get(0));
-		usuario.agregarPrenda(remeraB,guardarropas.get(0));
-		usuario.agregarPrenda(pantalonB,guardarropas.get(0));
-		usuario.agregarPrenda(zapatoB,guardarropas.get(0));
+		usuario.agregarPrenda(remeraA,guardarropa);
+		usuario.agregarPrenda(pantalonA,guardarropa);
+		usuario.agregarPrenda(zapatoA,guardarropa);
+		usuario.agregarPrenda(accesorioA,guardarropa);
+		usuario.agregarPrenda(remeraB,guardarropa);
+		usuario.agregarPrenda(pantalonB,guardarropa);
+		usuario.agregarPrenda(zapatoB,guardarropa);
 
 	}
 
