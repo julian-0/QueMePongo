@@ -6,22 +6,23 @@ import com.google.common.collect.Sets;
 import que_me_pongo.prenda.Categoria;
 import que_me_pongo.prenda.Prenda;
 
+import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class Guardarropa {
 	public Map<Categoria,Set<Prenda>> prendas = new HashMap<Categoria, Set<Prenda>>();
-
+	public Map<LocalDate,Set<Prenda>> reservas = new HashMap<LocalDate, Set<Prenda>>();
 
 
 	public Guardarropa()
 	{
-		prendas.put(Categoria.SUPERIOR, new HashSet<Prenda>());
-		prendas.put(Categoria.INFERIOR, new HashSet<Prenda>());
-		prendas.put(Categoria.CALZADO, new HashSet<Prenda>());
-		prendas.put(Categoria.ACCESORIO, new HashSet<Prenda>());
+		//Uso un foreach clasico porque values() devuelve un array
+		for(Categoria cat : Categoria.values())
+			prendas.put(cat, new HashSet<Prenda>());
 	}
 
 	public void agregarPrenda(Prenda prenda) {
@@ -35,19 +36,40 @@ public class Guardarropa {
 		return prendas.get(categoria).size();
 	}
 	
+	public int cantidadPrendas() {
+		return this.prendas.values().stream().reduce(0, (acc, list) -> acc + list.size(), Integer::sum);
+	}
+
+	public boolean estaLleno(int cantidadMaxima){
+		return this.cantidadPrendas() >= cantidadMaxima;
+	}
+	
+	public void reservarAtuendo(LocalDate fecha, List<Prenda> atuendo) {
+		Set<Prenda> reservadas = reservas.getOrDefault(fecha, new HashSet<Prenda>());
+		if(atuendo.stream().anyMatch(prenda -> reservadas.contains(prenda)))
+			throw new PrendaYaReservadaException();
+		reservadas.addAll(atuendo);
+		reservas.put(fecha, reservadas);
+	}
+	
+	public Set<List<Prenda>> atuendos(LocalDate fecha){
+		return atuendos().stream().filter(atuendo -> atuendoDisponibleEnFecha(fecha, atuendo)).collect(Collectors.toSet());
+
+	}
+	
 	public Set<List<Prenda>> atuendos(){
 		Set<List<Prenda>> atuendosMinimos = Sets.cartesianProduct(ImmutableList.of(
-				this.filtrarPorCapa(Categoria.SUPERIOR, 0),
+				filtrarPorCapa(Categoria.SUPERIOR, 0),
 				prendas.get(Categoria.INFERIOR),
 				prendas.get(Categoria.CALZADO)
 				));
 		
 		Set<List<List<Prenda>>> paresCombinacionAccesorio = Sets.cartesianProduct(
-				ImmutableList.of(atuendosMinimos, this.subConjuntos(prendas.get(Categoria.ACCESORIO))));
+				ImmutableList.of(atuendosMinimos, subConjuntos(prendas.get(Categoria.ACCESORIO))));
 		
-		Set<List<Prenda>> atuendosConAccesorios = this.aplanarAtuendos(paresCombinacionAccesorio);
+		Set<List<Prenda>> atuendosConAccesorios = aplanarAtuendos(paresCombinacionAccesorio);
 		
-		Set<List<Prenda>> atuendosConSuperiores = this.agregarCapas(Categoria.SUPERIOR, atuendosConAccesorios);
+		Set<List<Prenda>> atuendosConSuperiores = agregarCapas(Categoria.SUPERIOR, atuendosConAccesorios);
 		
 		return atuendosConSuperiores;
 
@@ -90,13 +112,9 @@ public class Guardarropa {
 		else
 			return 0;
 	}
-
-	public int cantidadPrendas() {
-		return this.prendas.values().stream().reduce(0, (acc, list) -> acc + list.size(), Integer::sum);
-	}
-
-	public boolean estaLleno(int cantidadMaxima){
-		return this.cantidadPrendas() >= cantidadMaxima;
+	
+	private boolean atuendoDisponibleEnFecha(LocalDate fecha, List<Prenda> atuendo) {
+		return reservas.getOrDefault(fecha, new HashSet<Prenda>()).stream().noneMatch(prenda -> atuendo.contains(prenda));
 	}
 
 
