@@ -65,7 +65,8 @@ public class Evento {
 
     //Le va a cargar una lista de atuendos al usuario en su lista atuendos pendientes
     public void sugerir(Sugeridor sugeridor, PronosticoClima pronostico){
-        sugerencias = new LinkedList<List<Prenda>>(sugeridor.sugerir(guardarropa.atuendos(fecha.toLocalDate()), pronostico));
+        sugerencias = new LinkedList<List<Prenda>>(
+        		sugeridor.sugerir(guardarropa.atuendos(fecha.toLocalDate()), pronostico, usuario));
         rechazados = new LinkedList<List<Prenda>>();
         listenersSugerir.forEach(listener -> listener.accionRealizada(this));
     }

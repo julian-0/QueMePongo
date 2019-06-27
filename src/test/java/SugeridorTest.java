@@ -10,6 +10,7 @@ import que_me_pongo.prenda.Prenda;
 import que_me_pongo.proveedorClima.PronosticoClima;
 import que_me_pongo.proveedorClima.ProveedorClima;
 import que_me_pongo.sugeridor.Sugeridor;
+import que_me_pongo.usuario.Usuario;
 
 import java.awt.Color;
 import java.time.LocalDate;
@@ -56,6 +57,9 @@ public class SugeridorTest {
 																															atuendo5, atuendo6, atuendo7, atuendo8,
 																															atuendo9, atuendo10, atuendo11, atuendo12,
 																															atuendo13, atuendo14, atuendo15, atuendo16));
+	
+	@Mock
+	Usuario usuario;
 	
 	public static <T1, T2> boolean listContainsIgnoreOrder(Collection<List<T1>> list1, List<T2> list2) {
 		return list1.stream().anyMatch(element1 -> new HashSet<>(element1).equals(new HashSet<>(list2)));
@@ -110,7 +114,7 @@ public class SugeridorTest {
 	}
 	
 	public void testDeSugerencia(Set<List<Prenda>> esperados, Sugeridor sugeridor, LocalDate fecha, Double temp) {
-		Set<List<Prenda>> resultado = sugeridor.sugerir(atuendos, new PronosticoClima(LocalDateTime.now(), temp));
+		Set<List<Prenda>> resultado = sugeridor.sugerir(atuendos, new PronosticoClima(LocalDateTime.now(), temp), usuario);
 		
 		Assert.assertEquals(esperados.size(), resultado.size());
 		resultado.forEach(atuendoRecibido -> Assert.assertTrue(listContainsIgnoreOrder(esperados, atuendoRecibido)));
