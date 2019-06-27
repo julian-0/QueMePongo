@@ -1,37 +1,68 @@
 package Que_me_pongo.evento;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import Que_me_pongo.evento.listeners.EventoListener;
 import Que_me_pongo.prenda.Categoria;
 import Que_me_pongo.prenda.Prenda;
 import Que_me_pongo.sugeridor.Sugeridor;
 import Que_me_pongo.usuario.Usuario;
 
 public class Evento {
-    LocalDate fecha;
-    Usuario usuario;
-    String lugar;
-    Deque<List<Prenda>> sugerencias, rechazados;
-    List<Prenda> aceptado;
+    private LocalDate fecha;
+    private Usuario usuario;
+    private String descripcion;
+    private Deque<List<Prenda>> sugerencias, rechazados;
+    private List<Prenda> aceptado;
+    private Collection<EventoListener> listenersSugerir;
 
     //Se crea un evento y se carga en el repo de eventos
-    public Evento(LocalDate fecha,Usuario usuario,String lugar) {
+    public Evento(LocalDate fecha,Usuario usuario,String descripcion,Collection<EventoListener> listenersSugerir) {
         this.fecha = fecha;
         this.usuario = usuario;
-        this.lugar = lugar;
+        this.descripcion = descripcion;
+        this.listenersSugerir = listenersSugerir;
 
         RepositorioEventos.getInstance().agendar(this);
+        
+    }
+    
+    public Evento(LocalDate fecha,Usuario usuario,String descripcion,Collection<EventoListener> listenersSugerir, EventoListener tiempoParaRepetir) {
+      this.fecha = fecha;
+      this.usuario = usuario;
+      this.descripcion = descripcion;
+      this.listenersSugerir = listenersSugerir;
+      this.listenersSugerir.add(tiempoParaRepetir);
+      RepositorioEventos.getInstance().agendar(this);
+      
+  }
+    
+    public LocalDate getFecha() {
+    	return this.fecha;
+    }
+    
+    public Usuario getUsuario() {
+    	return this.usuario;
+    }
+    
+    public String getDescripcion() {
+    	return this.descripcion;
+    }
+    
+    public Collection<EventoListener> getListenersSugerir(){
+    	return this.listenersSugerir;
     }
 
     //Le va a cargar una lista de atuendos al usuario en su lista atuendos pendientes
     public void sugerir(Sugeridor sugeridor){
         sugerencias = new LinkedList<List<Prenda>>(sugeridor.sugerir(usuario.atuendos()));
         rechazados = new LinkedList<List<Prenda>>();
-        //Avisar a listeners
+        listenersSugerir.forEach(listener -> listener.accionRealizada(this));
     }
     
     public void rechazarSugerencia() {
@@ -49,7 +80,7 @@ public class Evento {
     	//Pasar info al usuario
     }
     
-    public void deshacerDecicion() {
+    public void deshacerDecision() {
     	validarExistenSugerencias();
     	if(aceptado != null) {
     		sugerencias.addFirst(aceptado);
@@ -78,4 +109,5 @@ public class Evento {
     	if(sugerencias == null)
     		throw new SinSugerenciasException();
     }
+    
 }
