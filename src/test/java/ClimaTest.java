@@ -4,6 +4,7 @@ import que_me_pongo.proveedorClima.ProveedorClima;
 import que_me_pongo.proveedorClima.RangoDiasException;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -17,6 +18,7 @@ public class ClimaTest {
     
 
     @Test
+    @Ignore
     public void obtenerTemperatura(){
         double temperatura;
         LocalDate date = LocalDate.now();
@@ -29,6 +31,7 @@ public class ClimaTest {
     }
     
     @Test
+    @Ignore
     public void probarAW()
     {
     	double temperatura = new ClimaAccuWeather().getTemp(LocalDate.now());
