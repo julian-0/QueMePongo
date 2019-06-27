@@ -1,6 +1,5 @@
 package que_me_pongo.proveedorClima;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class PronosticoClima {
@@ -18,5 +17,10 @@ public class PronosticoClima {
 	}
 	public double getTemperatura() {
 		return temperatura;
+	}
+	
+	public boolean difiere(PronosticoClima otro) {
+		//TODO poner más condiciones una vez se rellene la clase
+		return Math.abs(this.temperatura - otro.getTemperatura()) > 10;
 	}
 }

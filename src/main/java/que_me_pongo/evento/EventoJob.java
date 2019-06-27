@@ -17,17 +17,17 @@ import java.time.LocalDate;
 import java.util.Set;
 
 public class EventoJob implements Job {
-
     //Hace sugerir los eventos proximos
     public void execute(JobExecutionContext context) throws JobExecutionException {
     	
     		List<PronosticoClima> pronosticos = Configuraciones.get(ProveedorClima.class).getPronostico();
     		LocalDate date = LocalDate.now();
         Sugeridor sugeridor = new Sugeridor(2, 4, 1);
-        Set<Evento> proximos = RepositorioEventos.getInstance().proximos(date, 5);
+        Set<Evento> proximos = RepositorioEventos.getInstance().proximos(date, 3);
         
+        //TODO ver si no conviene los eventos con cambio de pronostico filtrarlo por otro lado.
         proximos.stream().
-        filter(evento -> !evento.sugirio()).
+        filter(evento -> !evento.sugirio() || evento.chequearPronostico(pronosticoDeEvento(evento, pronosticos))).
         forEach(evento -> evento.sugerir(sugeridor, pronosticoDeEvento(evento, pronosticos)));
     }
     

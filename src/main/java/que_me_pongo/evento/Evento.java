@@ -23,6 +23,7 @@ public class Evento {
     private Usuario usuario;
     private Guardarropa guardarropa;
     private String descripcion;
+    private PronosticoClima pronostico;
     private Deque<List<Prenda>> sugerencias, rechazados;
     private List<Prenda> aceptado;
     private Collection<EventoListener> listenersSugerir;
@@ -68,6 +69,8 @@ public class Evento {
         sugerencias = new LinkedList<List<Prenda>>(
         		sugeridor.sugerir(guardarropa.atuendos(fecha.toLocalDate()), pronostico, usuario));
         rechazados = new LinkedList<List<Prenda>>();
+        aceptado = null;
+        this.pronostico = pronostico;
         listenersSugerir.forEach(listener -> listener.accionRealizada(this));
     }
     
@@ -136,5 +139,9 @@ public class Evento {
       	this.listenersSugerir = notificadores;
       RepositorioEventos.getInstance().agendar(this);   
     }
+
+		public boolean chequearPronostico(PronosticoClima nuevoPronostico) {
+			return pronostico.difiere(nuevoPronostico);
+		}
     
 }
