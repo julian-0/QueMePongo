@@ -14,8 +14,8 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class Guardarropa {
-	public Map<Categoria,Set<Prenda>> prendas = new HashMap<Categoria, Set<Prenda>>();
-	public Map<LocalDate,Set<Prenda>> reservas = new HashMap<LocalDate, Set<Prenda>>();
+	private Map<Categoria,Set<Prenda>> prendas = new HashMap<Categoria, Set<Prenda>>();
+	private Map<LocalDate,Set<Prenda>> reservas = new HashMap<LocalDate, Set<Prenda>>();
 
 
 	public Guardarropa()
