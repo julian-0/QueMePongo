@@ -85,6 +85,7 @@ public class Evento {
     	if(aceptado != null) {
     		sugerencias.addFirst(aceptado);
     		aceptado = null;
+    		//Hacer que el usuario deshaga sus preferencias
     	}
     	else if(!rechazados.isEmpty()) {
     		sugerencias.addFirst(rechazados.removeLast());
@@ -98,6 +99,10 @@ public class Evento {
     */
     public boolean esProximo(LocalDate fConsultada, int cantDias){
         return fConsultada.isEqual(fecha) || (fConsultada.isBefore(fecha) && fecha.isBefore(fConsultada.plusDays(cantDias)));
+    }
+    
+    public boolean sugirio() {
+    	return sugerencias != null;
     }
     
     private void validarNoAceptado() {

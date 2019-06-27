@@ -7,16 +7,18 @@ import org.quartz.JobExecutionException;
 import que_me_pongo.sugeridor.Sugeridor;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 public class EventoJob implements Job {
 
     //Hace sugerir los eventos proximos
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        System.out.println("Ejecuto Job");
-        Sugeridor sugeridor = new Sugeridor(5, 10, 3, LocalDate.now());
-        RepositorioEventos.getInstance()
-                .proximos(LocalDate.now(),7)
-                .stream()
-                .forEach(evento -> evento.sugerir(sugeridor));
+    		LocalDate date = LocalDate.now();
+        Sugeridor sugeridor = new Sugeridor(2, 4, 1, date);
+        Set<Evento> proximos = RepositorioEventos.getInstance().proximos(date, 7);
+        
+        proximos.stream().
+        filter(evento -> !evento.sugirio()).
+        forEach(evento -> evento.sugerir(sugeridor));
     }
 }
