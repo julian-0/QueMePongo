@@ -1,24 +1,25 @@
  package que_me_pongo.proveedorClima;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 import javax.ws.rs.core.MultivaluedMap;
 
 public class ClimaOpenWeather extends APIProviders {
-    
+		private List<PronosticoClima> mapToEstadoClima(JsonArray weathers) {
+		//TODO Reemplazar con un mappeo real
+		return Arrays.asList(new PronosticoClima(LocalDateTime.now(), 0));
+		}
+		
+		//TODO quitar si ya no sirven
     private double temperaturaPromedio(JsonArray weathers, LocalDate date)
     {
     	List<Double> predictions = StreamSupport.stream(weathers.spliterator(), false).
@@ -60,11 +61,9 @@ public class ClimaOpenWeather extends APIProviders {
 		}
 
 		@Override
-		protected double proccessJson(JsonElement obj, LocalDate date) {
+		protected List<PronosticoClima> proccessJson(JsonElement obj) {
 			JsonArray weathers = obj.getAsJsonObject().get("list").getAsJsonArray();
 
-      Double temperatura = temperaturaPromedio(weathers, date);
-
-      return (temperatura - 273.15);
+      return mapToEstadoClima(weathers);
 		}
 }

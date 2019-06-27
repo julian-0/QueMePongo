@@ -1,7 +1,7 @@
 package que_me_pongo.proveedorClima;
 
-import java.time.LocalDate;
+import java.util.List;
 
 public interface ProveedorClima {
-    double getTemp(LocalDate date);
+    List<PronosticoClima> getPronostico();
 }

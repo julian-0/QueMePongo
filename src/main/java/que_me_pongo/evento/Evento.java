@@ -1,6 +1,7 @@
 package que_me_pongo.evento;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Deque;
@@ -13,11 +14,12 @@ import que_me_pongo.evento.listeners.EventoListener;
 import que_me_pongo.guardarropa.Guardarropa;
 import que_me_pongo.prenda.Categoria;
 import que_me_pongo.prenda.Prenda;
+import que_me_pongo.proveedorClima.PronosticoClima;
 import que_me_pongo.sugeridor.Sugeridor;
 import que_me_pongo.usuario.Usuario;
 
 public class Evento {
-    private LocalDate fecha;
+    private LocalDateTime fecha;
     private Usuario usuario;
     private Guardarropa guardarropa;
     private String descripcion;
@@ -27,16 +29,16 @@ public class Evento {
     private Set<Categoria> aumentoAbrigo, reduccionAbrigo;
 
     //Se crea un evento y se carga en el repo de eventos
-    public Evento(LocalDate fecha,Usuario usuario, Guardarropa guardarropa,String descripcion,Collection<EventoListener> notificadores) {
+    public Evento(LocalDateTime fecha,Usuario usuario, Guardarropa guardarropa,String descripcion,Collection<EventoListener> notificadores) {
     	settearEstadoInicial(fecha, usuario, guardarropa, descripcion, notificadores);
     }
     
-    public Evento(LocalDate fecha,Usuario usuario,String descripcion,Collection<EventoListener> notificadores, EventoListener tiempoParaRepetir) {
+    public Evento(LocalDateTime fecha,Usuario usuario,String descripcion,Collection<EventoListener> notificadores, EventoListener tiempoParaRepetir) {
       settearEstadoInicial(fecha, usuario, guardarropa, descripcion, notificadores);
       this.listenersSugerir.add(tiempoParaRepetir);
     }
     
-    public LocalDate getFecha() {
+    public LocalDateTime getFecha() {
     	return this.fecha;
     }
     
@@ -62,8 +64,8 @@ public class Evento {
     }
 
     //Le va a cargar una lista de atuendos al usuario en su lista atuendos pendientes
-    public void sugerir(Sugeridor sugeridor){
-        sugerencias = new LinkedList<List<Prenda>>(sugeridor.sugerir(usuario.atuendos()));
+    public void sugerir(Sugeridor sugeridor, PronosticoClima pronostico){
+        sugerencias = new LinkedList<List<Prenda>>(sugeridor.sugerir(guardarropa.atuendos(fecha.toLocalDate()), pronostico));
         rechazados = new LinkedList<List<Prenda>>();
         listenersSugerir.forEach(listener -> listener.accionRealizada(this));
     }
@@ -72,7 +74,7 @@ public class Evento {
     	validarExistenSugerencias();
     	validarNoAceptado();
     	
-    	//removeFirst tira su propia exception si está vacia, tal vez atajarlo antes y tirar una nuestra
+    	//removeFirst tira su propia excepcion si está vacia, tal vez atajarlo antes y tirar una nuestra
     	rechazados.add(sugerencias.removeFirst());
     }
     
@@ -81,7 +83,7 @@ public class Evento {
     	validarNoAceptado();
     	aceptado = sugerencias.removeFirst();
     	usuario.ajustarPreferencias(aumentarAbrigo, reducirAbrigo);
-    	guardarropa.reservarAtuendo(fecha, aceptado);
+    	guardarropa.reservarAtuendo(fecha.toLocalDate(), aceptado);
     	this.aumentoAbrigo = aumentarAbrigo;
     	this.reduccionAbrigo = reducirAbrigo;
     }
@@ -90,7 +92,7 @@ public class Evento {
     	validarExistenSugerencias();
     	if(aceptado != null) {
     		sugerencias.addFirst(aceptado);
-    		guardarropa.liberarAtuendo(fecha, aceptado);
+    		guardarropa.liberarAtuendo(fecha.toLocalDate(), aceptado);
     		aceptado = null;
     		usuario.ajustarPreferencias(reduccionAbrigo, aumentoAbrigo);
     	}
@@ -105,7 +107,7 @@ public class Evento {
     y ademas esta dentro del rango de cantDias
     */
     public boolean esProximo(LocalDate fConsultada, int cantDias){
-        return fConsultada.isEqual(fecha) || (fConsultada.isBefore(fecha) && fecha.isBefore(fConsultada.plusDays(cantDias)));
+        return fConsultada.isEqual(fecha.toLocalDate()) || (fConsultada.isBefore(fecha.toLocalDate()) && fecha.toLocalDate().isBefore(fConsultada.plusDays(cantDias)));
     }
     
     public boolean sugirio() {
@@ -122,7 +124,7 @@ public class Evento {
     		throw new SinSugerenciasException();
     }
     
-    private void settearEstadoInicial(LocalDate fecha,Usuario usuario, Guardarropa guardarropa,String descripcion,Collection<EventoListener> notificadores) {
+    private void settearEstadoInicial(LocalDateTime fecha,Usuario usuario, Guardarropa guardarropa,String descripcion,Collection<EventoListener> notificadores) {
     	this.fecha = Objects.requireNonNull(fecha);
       this.usuario = Objects.requireNonNull(usuario);
       this.descripcion = Objects.requireNonNull(descripcion);

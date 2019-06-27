@@ -7,11 +7,13 @@ import org.junit.BeforeClass;
 import que_me_pongo.configuraciones.Configuraciones;
 import que_me_pongo.prenda.Material;
 import que_me_pongo.prenda.Prenda;
+import que_me_pongo.proveedorClima.PronosticoClima;
 import que_me_pongo.proveedorClima.ProveedorClima;
 import que_me_pongo.sugeridor.Sugeridor;
 
 import java.awt.Color;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
@@ -59,19 +61,10 @@ public class SugeridorTest {
 		return list1.stream().anyMatch(element1 -> new HashSet<>(element1).equals(new HashSet<>(list2)));
 	}
 	
-	@Mock
-	ProveedorClima climaMock;
-	
-	@Before
-	public void setClimaMock()
-	{
-		Configuraciones.set(ProveedorClima.class, climaMock);
-	}
-	
 	@Test
 	public void funcionaRangoBasicoA18Grados() {
 		LocalDate fecha = LocalDate.now();
-		Sugeridor sug = new Sugeridor(2, 4, 1, fecha);
+		Sugeridor sug = new Sugeridor(2, 4, 1);
 		Set<List<Prenda>> atuendosFinales = new HashSet<List<Prenda>>(
 																						Arrays.asList(atuendo1, atuendo5, atuendo9));
 		testDeSugerencia(atuendosFinales, sug, fecha, 18.);
@@ -80,7 +73,7 @@ public class SugeridorTest {
 	@Test
 	public void usaRangoExtendidoA18Grados() {
 		LocalDate fecha = LocalDate.now();
-		Sugeridor sug = new Sugeridor(0.5, 2, 2, fecha);
+		Sugeridor sug = new Sugeridor(0.5, 2, 2);
 		Set<List<Prenda>> atuendosFinales = new HashSet<List<Prenda>>(
 																						Arrays.asList(atuendo1, atuendo5, atuendo9));
 		testDeSugerencia(atuendosFinales, sug, fecha, 18.);
@@ -89,7 +82,7 @@ public class SugeridorTest {
 	@Test
 	public void funcionaRangoBasicoAGradosNoRedondos() {
 		LocalDate fecha = LocalDate.now();
-		Sugeridor sug = new Sugeridor(2, 4, 1, fecha);
+		Sugeridor sug = new Sugeridor(2, 4, 1);
 		Set<List<Prenda>> atuendosFinales = new HashSet<List<Prenda>>(
 																						Arrays.asList(atuendo3, atuendo4, atuendo6, atuendo7,
 																								atuendo10, atuendo11, atuendo14, atuendo15));
@@ -99,7 +92,7 @@ public class SugeridorTest {
 	@Test
 	public void usaRangoExtendidoAGradosNoRedondos() {
 		LocalDate fecha = LocalDate.now();
-		Sugeridor sug = new Sugeridor(0.5, 2, 3, fecha);
+		Sugeridor sug = new Sugeridor(0.5, 2, 3);
 		Set<List<Prenda>> atuendosFinales = new HashSet<List<Prenda>>(
 																						Arrays.asList(atuendo3, atuendo4, atuendo6, atuendo7, 
 																								atuendo10, atuendo11, atuendo14, atuendo15));
@@ -109,7 +102,7 @@ public class SugeridorTest {
 	@Test 
 	public void retornaLoQuePuedeSinoAlcanza() {
 		LocalDate fecha = LocalDate.now();
-		Sugeridor sug = new Sugeridor(0.5, 2, 10, fecha);
+		Sugeridor sug = new Sugeridor(0.5, 2, 10);
 		Set<List<Prenda>> atuendosFinales = new HashSet<List<Prenda>>(
 				Arrays.asList(atuendo1, atuendo5, atuendo9));
 		
@@ -117,8 +110,7 @@ public class SugeridorTest {
 	}
 	
 	public void testDeSugerencia(Set<List<Prenda>> esperados, Sugeridor sugeridor, LocalDate fecha, Double temp) {
-		Mockito.when(climaMock.getTemp(fecha)).thenReturn(temp);
-		Set<List<Prenda>> resultado = sugeridor.sugerir(atuendos);
+		Set<List<Prenda>> resultado = sugeridor.sugerir(atuendos, new PronosticoClima(LocalDateTime.now(), temp));
 		
 		Assert.assertEquals(esperados.size(), resultado.size());
 		resultado.forEach(atuendoRecibido -> Assert.assertTrue(listContainsIgnoreOrder(esperados, atuendoRecibido)));

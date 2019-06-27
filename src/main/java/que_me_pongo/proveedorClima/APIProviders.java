@@ -1,6 +1,7 @@
 package que_me_pongo.proveedorClima;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -13,15 +14,8 @@ import com.sun.jersey.api.client.WebResource;
 public abstract class APIProviders implements ProveedorClima {
 
 	@Override
-	public double getTemp(LocalDate date) {
-		validateDate(date, LocalDate.now());
-    
-    return proccessJson(runQuery(baseURL(), queryParams()), date);
-	}
-	
-	protected void validateDate(LocalDate date, LocalDate hoy) {
-		if(date.isBefore(hoy) || date.isAfter(hoy.plusDays(maxAmountOfDays()))) 
-      throw new RangoDiasException("La fecha pasada por parámetro se encuentra fuera del rango de días disponible.");
+	public List<PronosticoClima> getPronostico() {
+    return proccessJson(runQuery(baseURL(), queryParams()));
 	}
 	
 	protected void validateStatusCode(int statusCode) {
@@ -45,6 +39,6 @@ public abstract class APIProviders implements ProveedorClima {
 	abstract protected String baseURL();
 	abstract protected MultivaluedMap<String, String> queryParams();
 	abstract protected int maxAmountOfDays();
-	abstract protected double proccessJson(JsonElement obj, LocalDate date);
+	abstract protected List<PronosticoClima> proccessJson(JsonElement obj);
 
 }

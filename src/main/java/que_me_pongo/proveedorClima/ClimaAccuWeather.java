@@ -1,6 +1,8 @@
 package que_me_pongo.proveedorClima;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -35,10 +37,11 @@ public class ClimaAccuWeather extends APIProviders  {
 	}
 
 	@Override
-	protected double proccessJson(JsonElement obj, LocalDate date) {
+	protected List<PronosticoClima> proccessJson(JsonElement obj) {
 		JsonArray dailyWeathers = obj.getAsJsonObject().get("DailyForecasts").getAsJsonArray();
     
-    return temperaturaPromedio(dailyWeathers, date);
+    return mapToEstadoClima(dailyWeathers);
+		
 	}
 	
 	private String getCityCode() {
@@ -54,6 +57,13 @@ public class ClimaAccuWeather extends APIProviders  {
 		return je.getAsJsonArray().get(0).getAsJsonObject().get("Key").getAsString();
 	}
 	
+	
+	private List<PronosticoClima> mapToEstadoClima(JsonArray weathers) {
+		//TODO Reemplazar con un mappeo real
+		return Arrays.asList(new PronosticoClima(LocalDateTime.now(), 0));
+	}
+	
+	//TODO sacar estos metodos si ya no sirven
 	private double temperaturaPromedio(JsonArray weathers, LocalDate date) {
   	List<Double> predictions = StreamSupport.stream(weathers.spliterator(), false).
   													filter(dailyWeather -> this.weatherIsOf(date, dailyWeather)).
