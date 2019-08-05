@@ -1,11 +1,14 @@
 package que_me_pongo;
 
+import que_me_pongo.configuraciones.Configuraciones;
 import que_me_pongo.evento.Evento;
 import que_me_pongo.evento.EventoJob;
 import que_me_pongo.guardarropa.Guardarropa;
 import que_me_pongo.prenda.Material;
 import que_me_pongo.prenda.Prenda;
 import que_me_pongo.prenda.TipoDePrendaFactory;
+import que_me_pongo.proveedorClima.ClimaOpenWeather;
+import que_me_pongo.proveedorClima.ProveedorClima;
 import que_me_pongo.usuario.Premium;
 import que_me_pongo.usuario.Usuario;
 
@@ -20,6 +23,7 @@ import java.util.ArrayList;
 public class EventoMain {
 
     public static void main(String[] args) throws SchedulerException{
+    		Configuraciones.set(ProveedorClima.class, new ClimaOpenWeather());
         Usuario usuario = new Usuario(new Premium());
 
         Prenda remera = new Prenda(TipoDePrendaFactory.remeraMangaCorta(), Material.SEDA, Color.BLACK, null,null);
@@ -38,12 +42,12 @@ public class EventoMain {
         guardarropa.agregarPrenda(accesorioA);
         guardarropa.agregarPrenda(zapatoA);
         guardarropa.agregarPrenda(zapatoB);
-
+        LocalDateTime ahora = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        usuario.agregarEvento(new Evento(LocalDateTime.parse("2019-08-05 12:30",formatter), usuario, guardarropa,"Ir al campo", new ArrayList()));
-        usuario.agregarEvento(new Evento(LocalDateTime.parse("2019-05-06 12:30",formatter), usuario, guardarropa,"Cumpleaños", new ArrayList()));
-        usuario.agregarEvento(new Evento(LocalDateTime.parse("2019-05-07 12:30",formatter), usuario, guardarropa,"Casamiento", new ArrayList()));
-        usuario.agregarEvento(new Evento(LocalDateTime.parse("2019-09-29 12:30",formatter), usuario, guardarropa,"Bautismo", new ArrayList()));
+        usuario.agregarEvento(new Evento(ahora.plusDays(1), usuario, guardarropa,"Ir al campo", new ArrayList()));
+        usuario.agregarEvento(new Evento(ahora.plusDays(2), usuario, guardarropa,"Cumpleaños", new ArrayList()));
+        usuario.agregarEvento(new Evento(ahora.plusDays(4), usuario, guardarropa,"Casamiento", new ArrayList()));
+        usuario.agregarEvento(new Evento(ahora.plusDays(5), usuario, guardarropa,"Bautismo", new ArrayList()));
 
         Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
         System.out.println("Iniciando Scheduler");
@@ -58,50 +62,12 @@ public class EventoMain {
                 .withIdentity("CronTrigger")
                 .withSchedule(SimpleScheduleBuilder
                         .simpleSchedule()
-                        .withIntervalInHours(24)    //Se ejecuta cada 24 horas
+                        .withIntervalInSeconds(15)    //Se ejecuta cada 24 horas
                         .repeatForever())           //Se ejecuta para siempre
                 .build();
 
         // Registro dentro del Scheduler
         scheduler.scheduleJob(jobDetail, trigger);
-    }
-
-    //@Test
-    public void pruebaEventos() throws SchedulerException, InterruptedException {
-        Usuario usuario = new Usuario(new Premium());
-        Guardarropa guardarropa = new Guardarropa();
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        usuario.agregarEvento(new Evento(LocalDateTime.parse("2019-08-05 12:30",formatter), usuario, guardarropa,"Ir al campo", new ArrayList()));
-        usuario.agregarEvento(new Evento(LocalDateTime.parse("2019-08-06 12:30",formatter), usuario, guardarropa,"Cumpleaños", new ArrayList()));
-        usuario.agregarEvento(new Evento(LocalDateTime.parse("2019-08-07 12:30",formatter), usuario, guardarropa,"Casamiento", new ArrayList()));
-        usuario.agregarEvento(new Evento(LocalDateTime.parse("2019-09-29 12:30",formatter), usuario, guardarropa,"Bautismo", new ArrayList()));
-
-        Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
-        System.out.println("Iniciando Scheduler");
-        scheduler.start();
-
-        // Creacion una instacia de JobDetail
-        JobDetail jobDetail = JobBuilder.newJob(EventoJob.class).build();
-
-        // Creacion de un Trigger donde indicamos que el Job se ejecutara de inmediato y a partir de ahi en lapsos de 5 segundos .
-        Trigger trigger = TriggerBuilder
-                .newTrigger()
-                .withIdentity("CronTrigger")
-                .withSchedule(SimpleScheduleBuilder
-                        .simpleSchedule()
-                        .withIntervalInSeconds(5)   //Cada cuanto se va a ejecutar
-                        .withRepeatCount(0))        //Cantidad de veces a ejecutar (ademas de la primera)
-                .build();
-
-        // Registro dentro del Scheduler
-        scheduler.scheduleJob(jobDetail, trigger);
-
-        // Damos tiempo (en milisegundos) a que el Trigger registrado termine su periodo de vida dentro del scheduler
-        Thread.sleep(10000); //10 seg
-
-        // Detenemos la ejecución de la instancia de Scheduler
-        scheduler.shutdown();
     }
 
 }
