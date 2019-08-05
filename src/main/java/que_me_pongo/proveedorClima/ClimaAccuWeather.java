@@ -3,6 +3,7 @@ package que_me_pongo.proveedorClima;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -17,7 +18,8 @@ import com.sun.jersey.core.util.MultivaluedMapImpl;
 public class ClimaAccuWeather extends APIProviders  {
 	@Override
 	protected String baseURL() {
-		String cityCode = getCityCode();
+		//Si hace falta se puede hardcodear, 05/08/2019 es 7894
+		String cityCode = "7894";//getCityCode();
 		//awForecastAPIURL=http://dataservice.accuweather.com/forecasts/v1/daily/5day
 		return System.getenv("awForecastAPIURL") + "/" + cityCode;
 	}
@@ -59,8 +61,16 @@ public class ClimaAccuWeather extends APIProviders  {
 	
 	
 	private List<PronosticoClima> mapToEstadoClima(JsonArray weathers) {
-		//TODO Reemplazar con un mappeo real
-		return Arrays.asList(new PronosticoClima(LocalDateTime.now(), 0));
+		List<PronosticoClima> retorno = new LinkedList<PronosticoClima>();
+		for(JsonElement weather : weathers) {
+			JsonObject obj = weather.getAsJsonObject();
+			LocalDateTime fecha = LocalDateTime.parse(obj.get("Date").getAsString().substring(0, 19));
+			JsonObject temperatura = obj.get("Temperature").getAsJsonObject();
+			double maxima = temperatura.get("Maximum").getAsJsonObject().get("Value").getAsDouble(), 
+						 minima = temperatura.get("Minimum").getAsJsonObject().get("Value").getAsDouble();
+			retorno.add(new PronosticoClima(fecha, (maxima + minima) / 2));
+		}
+		return retorno;
 	}
 	
 	//TODO sacar estos metodos si ya no sirven
