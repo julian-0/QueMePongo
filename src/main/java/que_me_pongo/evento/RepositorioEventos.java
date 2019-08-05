@@ -1,6 +1,7 @@
 package que_me_pongo.evento;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -31,5 +32,14 @@ public class RepositorioEventos {
                 .stream()
                 .filter(evento -> evento.esProximo(fecha,cantDias))
                 .collect(Collectors.toSet());
+    }
+
+    public Set<Evento> getEventos() {
+        return eventos;
+    }
+
+
+    public Set<Evento> filtrarEventos(Date desde, Date hasta){
+        return eventos.stream().filter(e -> e.estaEntreFechas(desde,hasta)).collect(Collectors.toSet());
     }
 }

@@ -2,14 +2,11 @@ package que_me_pongo.evento;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.*;
 
+import org.uqbar.commons.model.annotations.Observable;
 import que_me_pongo.evento.listeners.EventoListener;
 import que_me_pongo.guardarropa.Guardarropa;
 import que_me_pongo.prenda.Categoria;
@@ -18,6 +15,7 @@ import que_me_pongo.proveedorClima.PronosticoClima;
 import que_me_pongo.sugeridor.Sugeridor;
 import que_me_pongo.usuario.Usuario;
 
+@Observable
 public class Evento {
     private LocalDateTime fecha;
     private Usuario usuario;
@@ -54,7 +52,9 @@ public class Evento {
     public String getDescripcion() {
     	return this.descripcion;
     }
-    
+
+    public Deque<List<Prenda>> getSugerencias() { return sugerencias; }
+
     public Collection<EventoListener> getListenersSugerir(){
     	return this.listenersSugerir;
     }
@@ -140,8 +140,14 @@ public class Evento {
       RepositorioEventos.getInstance().agendar(this);   
     }
 
-		public boolean chequearPronostico(PronosticoClima nuevoPronostico) {
+    public boolean chequearPronostico(PronosticoClima nuevoPronostico) {
 			return pronostico.difiere(nuevoPronostico);
 		}
-    
+
+	public boolean estaEntreFechas(Date desde, Date hasta){
+        ZonedDateTime zdt = fecha.atZone(ZoneId.systemDefault());
+        Date fechaConvertida = Date.from(zdt.toInstant());
+
+        return fechaConvertida.after(desde) && fechaConvertida.before(hasta);
+    }
 }
