@@ -32,7 +32,7 @@ public class Evento {
     	settearEstadoInicial(fecha, usuario, guardarropa, descripcion, notificadores);
     }
     
-    public Evento(LocalDateTime fecha,Usuario usuario,String descripcion,Collection<EventoListener> notificadores, EventoListener tiempoParaRepetir) {
+    public Evento(LocalDateTime fecha,Usuario usuario,Guardarropa guardarropa,String descripcion,Collection<EventoListener> notificadores, EventoListener tiempoParaRepetir) {
       settearEstadoInicial(fecha, usuario, guardarropa, descripcion, notificadores);
       this.listenersSugerir.add(tiempoParaRepetir);
     }
@@ -144,7 +144,7 @@ public class Evento {
 			return pronostico.difiere(nuevoPronostico);
 		}
 
-	public boolean estaEntreFechas(Date desde, Date hasta){
+    public boolean estaEntreFechas(Date desde, Date hasta){
         ZonedDateTime zdt = fecha.atZone(ZoneId.systemDefault());
         Date fechaConvertida = Date.from(zdt.toInstant());
 
