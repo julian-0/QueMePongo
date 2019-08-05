@@ -16,10 +16,10 @@ import javax.ws.rs.core.MultivaluedMap;
 public class ClimaOpenWeather extends APIProviders {
 		private List<PronosticoClima> mapToEstadoClima(JsonArray weathers) {
 		//TODO Reemplazar con un mappeo real
-		return Arrays.asList(new PronosticoClima(LocalDateTime.now(), 0),
-												 new PronosticoClima(LocalDateTime.now().plusDays(1), 0),
-												 new PronosticoClima(LocalDateTime.now().plusDays(2), 0),
-												 new PronosticoClima(LocalDateTime.now().plusDays(3), 0));
+		return Arrays.asList(new PronosticoClima(LocalDateTime.now(), 15),
+												 new PronosticoClima(LocalDateTime.now().plusDays(1), 15),
+												 new PronosticoClima(LocalDateTime.now().plusDays(2), 15),
+												 new PronosticoClima(LocalDateTime.now().plusDays(3), 15));
 		}
 		
 		//TODO quitar si ya no sirven

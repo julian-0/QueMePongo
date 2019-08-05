@@ -81,12 +81,15 @@ public class EventosWindow extends MainWindow<FiltradorDeEventos> {
                 .setFixedSize(80)
                 .bindContentsToProperty("fecha").
                 setTransformer(new LocalDateTimeTransformer());
-
+        
         new Column<Evento>(tabla) //
-                .setTitle("Sugerencias")
+                .setTitle("Sugirio")
                 .setFixedSize(85)
-                .bindContentsToProperty("sugerencias").
-                setTransformer(new CollectionToSiNoTransformer());
+                .bindContentsToProperty("sugirio").
+                setTransformer((Boolean b) -> b? "Sí" : "No");
+        
+        new Column<Evento>(tabla).
+				setTitle("Sugerencias").setFixedSize(150).bindContentsToProperty("sugerencias");
     }
 
     public void ingresarFecha(Panel panel, String property){

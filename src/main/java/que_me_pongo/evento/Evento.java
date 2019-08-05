@@ -114,7 +114,7 @@ public class Evento {
         return fConsultada.isEqual(fecha.toLocalDate()) || (fConsultada.isBefore(fecha.toLocalDate()) && fecha.toLocalDate().isBefore(fConsultada.plusDays(cantDias)));
     }
     
-    public boolean sugirio() {
+    public boolean getSugirio() {
     	return sugerencias != null;
     }
     
