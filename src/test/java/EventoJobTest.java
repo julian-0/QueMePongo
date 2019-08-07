@@ -8,6 +8,7 @@ import que_me_pongo.configuraciones.Configuraciones;
 import que_me_pongo.evento.Evento;
 import que_me_pongo.evento.EventoJob;
 import que_me_pongo.evento.RepositorioEventos;
+import que_me_pongo.evento.listeners.notificaciones.MailListener;
 import que_me_pongo.guardarropa.Guardarropa;
 import que_me_pongo.proveedorClima.PronosticoClima;
 import que_me_pongo.proveedorClima.ProveedorClima;
@@ -23,7 +24,7 @@ import org.junit.Before;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EventoJobTest {
-	Usuario usuario = new Usuario("DDS",null,new Premium());
+	Usuario usuario = new Usuario("Julian","jm.ord98@gmail.com",new Premium());
 	Guardarropa guardarropa = new Guardarropa();
 	
 	@Mock
@@ -66,7 +67,7 @@ public class EventoJobTest {
 				new PronosticoClima(ahora.plusDays(2), 15),
 				new PronosticoClima(ahora.plusDays(3), 15)));
 		
-		Evento evento1 = Mockito.spy(new Evento(ahora.plusDays(1), usuario, guardarropa,"Ir al campo", new ArrayList()));
+		Evento evento1 = Mockito.spy(new Evento(ahora.plusDays(1), usuario, guardarropa,"Ir al campo", new ArrayList(),new MailListener()));
 		Evento evento2 = Mockito.spy(new Evento(ahora.plusDays(2), usuario, guardarropa,"Cumpleaños", new ArrayList()));
 		Evento evento3 = Mockito.spy(new Evento(ahora.plusDays(4), usuario, guardarropa,"Casamiento", new ArrayList()));
 		Evento evento4 = Mockito.spy(new Evento(ahora.plusDays(5), usuario, guardarropa,"Bautismo", new ArrayList()));
@@ -87,9 +88,14 @@ public class EventoJobTest {
   	
   	job.execute(null);
   	
-  	Mockito.verify(evento1, Mockito.times(2)).sugerir(Mockito.any(), Mockito.any());
-  	Mockito.verify(evento2, Mockito.times(2)).sugerir(Mockito.any(), Mockito.any());
+  	Mockito.verify(evento1, Mockito.times(1)).sugerir(Mockito.any(), Mockito.any());
+  	Mockito.verify(evento2, Mockito.times(1)).sugerir(Mockito.any(), Mockito.any());
   	Mockito.verify(evento3, Mockito.times(0)).sugerir(Mockito.any(), Mockito.any());
   	Mockito.verify(evento4, Mockito.times(0)).sugerir(Mockito.any(), Mockito.any());
+
+  	Mockito.verify(evento1, Mockito.times(1)).resugerir(Mockito.any(), Mockito.any());
+	Mockito.verify(evento2, Mockito.times(1)).resugerir(Mockito.any(), Mockito.any());
+	Mockito.verify(evento3, Mockito.times(0)).resugerir(Mockito.any(), Mockito.any());
+	Mockito.verify(evento4, Mockito.times(0)).resugerir(Mockito.any(), Mockito.any());
 	}
 }

@@ -45,7 +45,7 @@ public class MailListener implements EventoListener {
 				"Hola " + destinatario.getNombre() + "!!\n"
 						+ cuerpo + evento.getDescripcion();
 
-
+		asunto = asunto + " (" + evento.getDescripcion() + ")";
 		this.enviarMensaje(toEmail, session, asunto, contenido);
 	}
 
