@@ -56,7 +56,7 @@ public class MailListener implements EventoListener {
 		try {
 			msg.setFrom(new InternetAddress(myMail));
 			msg.addRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
-			msg.setSubject("Subject Line");
+			msg.setSubject(asunto);
 			msg.setText(contenido);
 
 			Transport.send(msg);
