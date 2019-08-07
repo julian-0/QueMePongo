@@ -16,6 +16,7 @@ import org.uqbar.arena.widgets.tables.Table;
 import que_me_pongo.evento.FiltradorDeEventos;
 
 import java.awt.*;
+import java.time.LocalDateTime;
 
 @SuppressWarnings("serial")
 public class EventosWindow extends MainWindow<FiltradorDeEventos> {
@@ -79,8 +80,8 @@ public class EventosWindow extends MainWindow<FiltradorDeEventos> {
         new Column<Evento>(tabla) //
                 .setTitle("Fecha")
                 .setFixedSize(80)
-                .bindContentsToProperty("fecha").
-                setTransformer(new LocalDateTimeTransformer());
+                .bindContentsToProperty("fecha");
+                //.setTransformer((LocalDateTime date) -> date.toLocalDate().toString());
         
         new Column<Evento>(tabla) //
                 .setTitle("Sugirio")
