@@ -64,14 +64,23 @@ public class Evento {
     	return this;
     }
 
-    //Le va a cargar una lista de atuendos al usuario en su lista atuendos pendientes
-    public void sugerir(Sugeridor sugeridor, PronosticoClima pronostico){
+    public void obtenerSugerencias(Sugeridor sugeridor, PronosticoClima pronostico){
         sugerencias = new LinkedList<List<Prenda>>(
-        		sugeridor.sugerir(guardarropa.atuendos(fecha.toLocalDate()), pronostico, usuario));
+                sugeridor.sugerir(guardarropa.atuendos(fecha.toLocalDate()), pronostico, usuario));
         rechazados = new LinkedList<List<Prenda>>();
         aceptado = null;
         this.pronostico = pronostico;
+    }
+
+    //Le va a cargar una lista de atuendos al usuario en su lista atuendos pendientes
+    public void sugerir(Sugeridor sugeridor, PronosticoClima pronostico){
+        this.obtenerSugerencias(sugeridor,pronostico);
         listenersSugerir.forEach(listener -> listener.sugerenciasRealizadas(this));
+    }
+
+    public void resugerir(Sugeridor sugeridor, PronosticoClima pronostico){
+        this.obtenerSugerencias(sugeridor,pronostico);
+        listenersSugerir.forEach(listener -> listener.alertaMeteorologica(this));
     }
     
     public void rechazarSugerencia() {

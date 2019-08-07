@@ -27,8 +27,12 @@ public class EventoJob implements Job {
 
         //TODO ver si no conviene los eventos con cambio de pronostico filtrarlo por otro lado.
         proximos.stream().
-        filter(evento -> !evento.getSugirio() || evento.chequearPronostico(pronosticoDeEvento(evento, pronosticos))).
+        filter(evento -> !evento.getSugirio()).
         forEach(evento -> evento.sugerir(sugeridor, pronosticoDeEvento(evento, pronosticos)));
+
+        proximos.stream()
+                .filter(evento -> evento.getSugirio() && evento.chequearPronostico(pronosticoDeEvento(evento, pronosticos)))
+                .forEach(evento -> evento.resugerir(sugeridor, pronosticoDeEvento(evento, pronosticos)));
     }
     
     private PronosticoClima pronosticoDeEvento(Evento evento, List<PronosticoClima> pronosticos) {

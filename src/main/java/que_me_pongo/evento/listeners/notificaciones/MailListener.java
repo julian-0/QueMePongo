@@ -19,6 +19,20 @@ public class MailListener implements EventoListener {
 	@Override
 	public void sugerenciasRealizadas(Evento evento) {
 
+		String cuerpo = "Ya fueron generados los atuendos para tu evento: ";
+		String asunto = "Sugerencias realizadas!";
+		this.enviarNotificacion(evento,cuerpo,asunto);
+	}
+
+	@Override
+	public void alertaMeteorologica(Evento evento) {
+		String cuerpo = "El clima cambio, seria mejor que revises las sugerencias de tu evento: ";
+		String asunto = "Evento resugerido";
+		this.enviarNotificacion(evento,cuerpo,asunto);
+	}
+
+	private void enviarNotificacion(Evento evento,String cuerpo,String asunto) {
+
 		Usuario destinatario = evento.getUsuario();
 
 		String toEmail = destinatario.getMail();
@@ -27,13 +41,12 @@ public class MailListener implements EventoListener {
 
 		Session session = this.iniciarSesion();
 
-		String cuerpo =
+		String contenido =
 				"Hola " + destinatario.getNombre() + "!!\n"
-				+ "Ya fueron generados los atuendos para tu evento " + evento.getDescripcion();
+						+ cuerpo + evento.getDescripcion();
 
 
-		this.enviarMensaje(toEmail, session, "Sugerencias realizadas!", cuerpo);
-
+		this.enviarMensaje(toEmail, session, asunto, contenido);
 	}
 
 	private Session iniciarSesion(){

@@ -11,4 +11,10 @@ public class SMSListener implements EventoListener {
 
 	}
 
+	@Override
+	public void alertaMeteorologica(Evento evento) {
+		// TODO Auto-generated method stub
+
+	}
+
 }
