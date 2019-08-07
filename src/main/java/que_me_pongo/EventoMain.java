@@ -45,10 +45,10 @@ public class EventoMain {
         guardarropa.agregarPrenda(zapatoB);
         LocalDateTime ahora = LocalDateTime.now();
 
-        usuario.agregarEvento(new Evento(ahora.plusDays(1), usuario, guardarropa,"Ir al campo", new ArrayList(),new MailListener()));
-        usuario.agregarEvento(new Evento(ahora.plusDays(2), usuario, guardarropa,"Cumpleaños", new ArrayList()));
-        usuario.agregarEvento(new Evento(ahora.plusDays(4), usuario, guardarropa,"Casamiento", new ArrayList()));
-        usuario.agregarEvento(new Evento(ahora.plusDays(5), usuario, guardarropa,"Bautismo", new ArrayList()));
+        new Evento(ahora.plusDays(1), usuario, guardarropa,"Ir al campo", new ArrayList(), new MailListener());
+        new Evento(ahora.plusDays(2), usuario, guardarropa,"Cumpleaños", new ArrayList());
+        new Evento(ahora.plusDays(4), usuario, guardarropa,"Casamiento", new ArrayList());
+        new Evento(ahora.plusDays(5), usuario, guardarropa,"Bautismo", new ArrayList());
 
 
 

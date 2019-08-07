@@ -21,8 +21,6 @@ public class Usuario {
 	private Set<Guardarropa> guardarropas = new HashSet<Guardarropa>();
 
 	private TipoUsuario tipoUsuario;
-
-	private Set<Evento> eventos = new HashSet<Evento>();
 	
 	private Map<Categoria, Double> preferencias = new HashMap();
 
@@ -60,10 +58,6 @@ public class Usuario {
 
 	public Set<List<Prenda>> atuendosDe(Guardarropa guardarropa){
 		return guardarropa.atuendos();
-	}
-
-	public void agregarEvento(Evento evento){//Agrego un evento
-		this.eventos.add(evento);
 	}
 
 	public void ajustarPreferencias(Set<Categoria> aumentarAbrigo, Set<Categoria> reducirAbrigo) {
