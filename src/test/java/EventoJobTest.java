@@ -23,7 +23,7 @@ import org.junit.Before;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EventoJobTest {
-	Usuario usuario = new Usuario(new Premium());
+	Usuario usuario = new Usuario("DDS",null,new Premium());
 	Guardarropa guardarropa = new Guardarropa();
 	
 	@Mock

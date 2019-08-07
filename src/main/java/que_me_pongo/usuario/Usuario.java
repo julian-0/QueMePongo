@@ -14,6 +14,10 @@ import java.util.List;
 import java.util.Map;
 
 public class Usuario {
+	private String nombre;
+
+	private String mail;
+
 	private Set<Guardarropa> guardarropas = new HashSet<Guardarropa>();
 
 	private TipoUsuario tipoUsuario;
@@ -22,8 +26,9 @@ public class Usuario {
 	
 	private Map<Categoria, Double> preferencias = new HashMap();
 
-	public Usuario(TipoUsuario tipo){
-
+	public Usuario(String name,String email,TipoUsuario tipo){
+		this.nombre = name;
+		this.mail = email;
 		this.tipoUsuario = tipo;
 
 	}
@@ -34,6 +39,10 @@ public class Usuario {
 	public Set<Guardarropa> getGuardarropas() {
 		return this.guardarropas;
 	}
+
+	public String getNombre() { return nombre; }
+
+	public String getMail() { return mail; }
 
 	public void agregarGuardarropas(Guardarropa guardarropa){
 		guardarropas.add(guardarropa);

@@ -71,7 +71,7 @@ public class Evento {
         rechazados = new LinkedList<List<Prenda>>();
         aceptado = null;
         this.pronostico = pronostico;
-        listenersSugerir.forEach(listener -> listener.accionRealizada(this));
+        listenersSugerir.forEach(listener -> listener.sugerenciasRealizadas(this));
     }
     
     public void rechazarSugerencia() {

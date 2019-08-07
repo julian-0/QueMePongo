@@ -6,7 +6,7 @@ import que_me_pongo.evento.listeners.EventoListener;
 public class SMSListener implements EventoListener {
 
 	@Override
-	public void accionRealizada(Evento evento) {
+	public void sugerenciasRealizadas(Evento evento) {
 		// TODO Auto-generated method stub
 
 	}

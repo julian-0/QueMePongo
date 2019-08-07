@@ -51,7 +51,7 @@ public class UsuarioTest {
 
 	@Test
 	public void usuarioDevuelveLosAtuendosCorrectamente() {
-		Usuario usuario = new Usuario(new Premium());
+		Usuario usuario = new Usuario("DDS",null,new Premium());
 		Guardarropa guardarropa1 = new Guardarropa(),
 								guardarropa2 = new Guardarropa();
 		usuario.agregarGuardarropas(guardarropa1);
@@ -84,7 +84,7 @@ public class UsuarioTest {
 
 	@Test
 	public void usuarioPremiumPuedeAgregarMuchasPrendas() {
-		Usuario usuario = new Usuario(new Premium());
+		Usuario usuario = new Usuario("DDS",null,new Premium());
 		Guardarropa guardarropa = new Guardarropa();
 		usuario.agregarGuardarropas(guardarropa);
 
@@ -112,7 +112,7 @@ public class UsuarioTest {
 		expectedEx.expectMessage("Su guardarropas esta lleno, si desea tener mas lugar puede hacerse socio premium");
 
 		Guardarropa guardarropa = new Guardarropa();
-		Usuario usuario = new Usuario(new Gratuito());
+		Usuario usuario = new Usuario("DDS",null,new Gratuito());
 		usuario.agregarGuardarropas(guardarropa);
 
 		usuario.agregarPrenda(remeraA,guardarropa);

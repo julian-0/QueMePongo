@@ -24,7 +24,7 @@ public class EventoMain {
 
     public static void main(String[] args) throws SchedulerException{
     		Configuraciones.set(ProveedorClima.class, new ClimaOpenWeather());
-        Usuario usuario = new Usuario(new Premium());
+        Usuario usuario = new Usuario("Julian","jm.ord98@gmail.com",new Premium());
 
         Prenda remera = new Prenda(TipoDePrendaFactory.remeraMangaCorta(), Material.SEDA, Color.BLACK, null,null);
         Prenda remeraB = new Prenda(TipoDePrendaFactory.remeraMangaCorta(),Material.ALGODON, Color.WHITE, null,null);
