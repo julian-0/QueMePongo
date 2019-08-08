@@ -8,6 +8,7 @@ import java.util.*;
 
 import org.uqbar.commons.model.annotations.Observable;
 import que_me_pongo.evento.listeners.EventoListener;
+import que_me_pongo.evento.repetidores.RepeticionDeEvento;
 import que_me_pongo.guardarropa.Guardarropa;
 import que_me_pongo.prenda.Categoria;
 import que_me_pongo.prenda.Prenda;
@@ -25,16 +26,18 @@ public class Evento {
     private Deque<List<Prenda>> sugerencias, rechazados;
     private List<Prenda> aceptado;
     private Collection<EventoListener> listenersSugerir;
+    private RepeticionDeEvento repeticion;
     private Set<Categoria> aumentoAbrigo, reduccionAbrigo;
 
     //Se crea un evento y se carga en el repo de eventos
     public Evento(LocalDateTime fecha,Usuario usuario, Guardarropa guardarropa,String descripcion,Collection<EventoListener> notificadores) {
     	settearEstadoInicial(fecha, usuario, guardarropa, descripcion, notificadores);
+    	repeticion = RepeticionDeEvento.noRepite();
     }
     
-    public Evento(LocalDateTime fecha,Usuario usuario,Guardarropa guardarropa,String descripcion,Collection<EventoListener> notificadores, EventoListener tiempoParaRepetir) {
+    public Evento(LocalDateTime fecha,Usuario usuario,Guardarropa guardarropa,String descripcion,Collection<EventoListener> notificadores, RepeticionDeEvento tiempoParaRepetir) {
       settearEstadoInicial(fecha, usuario, guardarropa, descripcion, notificadores);
-      this.listenersSugerir.add(tiempoParaRepetir);
+      repeticion = tiempoParaRepetir; 
     }
     
     public LocalDateTime getFecha() {
@@ -76,6 +79,7 @@ public class Evento {
     public void sugerir(Sugeridor sugeridor, PronosticoClima pronostico){
         this.obtenerSugerencias(sugeridor,pronostico);
         listenersSugerir.forEach(listener -> listener.sugerenciasRealizadas(this));
+        this.repeticion.repetir(this);
     }
 
     public void resugerir(Sugeridor sugeridor, PronosticoClima pronostico){

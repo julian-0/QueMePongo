@@ -24,15 +24,14 @@ public class EventoJob implements Job {
     		LocalDate date = LocalDate.now();
         Sugeridor sugeridor = new Sugeridor(2, 4, 1);
         Set<Evento> proximos = RepositorioEventos.getInstance().proximos(date, 3);
-
-        //TODO ver si no conviene los eventos con cambio de pronostico filtrarlo por otro lado.
+        System.out.println(proximos);
+        proximos.stream()
+        .filter(evento -> evento.getSugirio() && evento.chequearPronostico(pronosticoDeEvento(evento, pronosticos)))
+        .forEach(evento -> evento.resugerir(sugeridor, pronosticoDeEvento(evento, pronosticos)));
+        
         proximos.stream().
         filter(evento -> !evento.getSugirio()).
         forEach(evento -> evento.sugerir(sugeridor, pronosticoDeEvento(evento, pronosticos)));
-
-        proximos.stream()
-                .filter(evento -> evento.getSugirio() && evento.chequearPronostico(pronosticoDeEvento(evento, pronosticos)))
-                .forEach(evento -> evento.resugerir(sugeridor, pronosticoDeEvento(evento, pronosticos)));
     }
     
     private PronosticoClima pronosticoDeEvento(Evento evento, List<PronosticoClima> pronosticos) {

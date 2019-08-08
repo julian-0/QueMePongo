@@ -67,7 +67,7 @@ public class EventoJobTest {
 				new PronosticoClima(ahora.plusDays(2), 15),
 				new PronosticoClima(ahora.plusDays(3), 15)));
 		
-		Evento evento1 = Mockito.spy(new Evento(ahora.plusDays(1), usuario, guardarropa,"Ir al campo", new ArrayList(),new MailListener()));
+		Evento evento1 = Mockito.spy(new Evento(ahora.plusDays(1), usuario, guardarropa,"Ir al campo", new ArrayList()));
 		Evento evento2 = Mockito.spy(new Evento(ahora.plusDays(2), usuario, guardarropa,"Cumpleaños", new ArrayList()));
 		Evento evento3 = Mockito.spy(new Evento(ahora.plusDays(4), usuario, guardarropa,"Casamiento", new ArrayList()));
 		Evento evento4 = Mockito.spy(new Evento(ahora.plusDays(5), usuario, guardarropa,"Bautismo", new ArrayList()));

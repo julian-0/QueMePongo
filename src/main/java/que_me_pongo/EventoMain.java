@@ -4,6 +4,7 @@ import que_me_pongo.configuraciones.Configuraciones;
 import que_me_pongo.evento.Evento;
 import que_me_pongo.evento.EventoJob;
 import que_me_pongo.evento.listeners.notificaciones.MailListener;
+import que_me_pongo.evento.repetidores.RepeticionDeEvento;
 import que_me_pongo.guardarropa.Guardarropa;
 import que_me_pongo.prenda.Material;
 import que_me_pongo.prenda.Prenda;
@@ -18,8 +19,8 @@ import org.quartz.impl.StdSchedulerFactory;
 
 import java.awt.*;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class EventoMain {
 
@@ -45,8 +46,8 @@ public class EventoMain {
         guardarropa.agregarPrenda(zapatoB);
         LocalDateTime ahora = LocalDateTime.now();
 
-        new Evento(ahora.plusDays(1), usuario, guardarropa,"Ir al campo", new ArrayList(), new MailListener());
-        new Evento(ahora.plusDays(2), usuario, guardarropa,"Cumpleaños", new ArrayList());
+        new Evento(ahora.plusDays(1), usuario, guardarropa,"Ir al campo", Arrays.asList(new MailListener()));
+        new Evento(ahora.plusDays(1), usuario, guardarropa,"Cumpleaños", new ArrayList(), RepeticionDeEvento.diario());
         new Evento(ahora.plusDays(4), usuario, guardarropa,"Casamiento", new ArrayList());
         new Evento(ahora.plusDays(5), usuario, guardarropa,"Bautismo", new ArrayList());
 
