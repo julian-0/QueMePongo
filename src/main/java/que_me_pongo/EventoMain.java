@@ -46,7 +46,7 @@ public class EventoMain {
         guardarropa.agregarPrenda(zapatoB);
         LocalDateTime ahora = LocalDateTime.now();
 
-        new Evento(ahora.plusDays(1), usuario, guardarropa,"Ir al campo", Arrays.asList(new MailListener()));
+        new Evento(ahora.plusDays(1), usuario, guardarropa,"Ir al campo", new ArrayList());
         new Evento(ahora.plusDays(1), usuario, guardarropa,"Cumpleaños", new ArrayList(), RepeticionDeEvento.diario());
         new Evento(ahora.plusDays(4), usuario, guardarropa,"Casamiento", new ArrayList());
         new Evento(ahora.plusDays(5), usuario, guardarropa,"Bautismo", new ArrayList());
@@ -54,7 +54,6 @@ public class EventoMain {
 
 
         Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
-        System.out.println("Iniciando Scheduler");
         scheduler.start();
 
         // Creacion una instacia de JobDetail

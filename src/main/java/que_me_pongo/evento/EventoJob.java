@@ -24,7 +24,7 @@ public class EventoJob implements Job {
     		LocalDate date = LocalDate.now();
         Sugeridor sugeridor = new Sugeridor(2, 4, 1);
         Set<Evento> proximos = RepositorioEventos.getInstance().proximos(date, 3);
-        System.out.println(proximos);
+        
         proximos.stream()
         .filter(evento -> evento.getSugirio() && evento.chequearPronostico(pronosticoDeEvento(evento, pronosticos)))
         .forEach(evento -> evento.resugerir(sugeridor, pronosticoDeEvento(evento, pronosticos)));
