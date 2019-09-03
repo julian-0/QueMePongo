@@ -52,18 +52,11 @@ public class Guardarropa {
 	}
 	
 	public void reservarAtuendo(LocalDate fecha, List<Prenda> atuendo) {
-		Set<Prenda> reservadas = reservas.getOrDefault(fecha, new HashSet<Prenda>());
-		if(atuendo.stream().anyMatch(prenda -> reservadas.contains(prenda)))
-			throw new PrendaYaReservadaException();
-		reservadas.addAll(atuendo);
-		reservas.put(fecha, reservadas);
+		atuendo.forEach(prenda -> prenda.addReserva(fecha));
 	}
 	
 	public void liberarAtuendo(LocalDate fecha, List<Prenda> atuendo) {
-		Set<Prenda> reservadas = reservas.get(fecha);
-		if(atuendo.stream().allMatch(prenda -> reservadas.contains(prenda)))
-			throw new RuntimeException();
-		reservadas.removeAll(atuendo);
+		atuendo.forEach(prenda -> prenda.removeReserva(fecha));
 	}
 	
 	public Set<List<Prenda>> atuendos(LocalDate fecha){
@@ -128,7 +121,7 @@ public class Guardarropa {
 	}
 	
 	private boolean atuendoDisponibleEnFecha(LocalDate fecha, List<Prenda> atuendo) {
-		return reservas.getOrDefault(fecha, new HashSet<Prenda>()).stream().noneMatch(prenda -> atuendo.contains(prenda));
+		return atuendo.stream().noneMatch(prenda -> prenda.getReserva(fecha));
 	}
 
 

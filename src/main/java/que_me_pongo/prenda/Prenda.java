@@ -2,7 +2,10 @@ package que_me_pongo.prenda;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.time.LocalDate;
 import java.util.Objects;
+import java.util.Set;
+import java.util.LinkedHashSet;
 
 public class Prenda {
 	private TipoDePrenda tipo;
@@ -10,6 +13,7 @@ public class Prenda {
 	private Color colorPrimario;
 	private Color colorSecundario;
 	private BufferedImage imagen = null;
+	private Set<LocalDate> reservas = new LinkedHashSet<LocalDate>();
 
 	@Override
 	public boolean equals(Object o) {
@@ -80,6 +84,22 @@ public class Prenda {
 	
 	public double getNivelAbrigo() {
 		return this.tipo.getNivelAbrigo();
+	}
+	
+	public void addReserva(LocalDate fecha) {
+		if(getReserva(fecha))
+			throw new PrendaYaReservadaException();
+		reservas.add(fecha);
+	}
+	
+	public void removeReserva(LocalDate fecha) {
+		if(!getReserva(fecha))
+			throw new PrendaNoReservadaException();
+		reservas.remove(fecha);
+	}
+	
+	public boolean getReserva(LocalDate fecha) {
+		return reservas.contains(fecha);
 	}
 
 	private void validarColor(Color colorPrimario, Color colorSecundario) {
