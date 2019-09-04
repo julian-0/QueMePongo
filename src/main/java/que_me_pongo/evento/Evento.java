@@ -32,7 +32,6 @@ public class Evento {
     //Se crea un evento y se carga en el repo de eventos
     public Evento(LocalDateTime fecha,Usuario usuario, Guardarropa guardarropa,String descripcion,Collection<EventoListener> notificadores) {
     	settearEstadoInicial(fecha, usuario, guardarropa, descripcion, notificadores);
-    	repeticion = RepeticionDeEvento.noRepite();
     }
     
     public Evento(LocalDateTime fecha,Usuario usuario,Guardarropa guardarropa,String descripcion,Collection<EventoListener> notificadores, RepeticionDeEvento tiempoParaRepetir) {
@@ -79,7 +78,7 @@ public class Evento {
     public void sugerir(Sugeridor sugeridor, PronosticoClima pronostico){
         this.obtenerSugerencias(sugeridor,pronostico);
         listenersSugerir.forEach(listener -> listener.sugerenciasRealizadas(this));
-        this.repeticion.repetir(this);
+        generarRepeticion();
     }
 
     public void resugerir(Sugeridor sugeridor, PronosticoClima pronostico){
@@ -151,6 +150,13 @@ public class Evento {
       else
       	this.listenersSugerir = notificadores;
       RepositorioEventos.getInstance().agendar(this);   
+    }
+    
+    private void generarRepeticion() {
+    	if(repeticion == null)
+    		return;
+    	LocalDateTime nuevaFecha = repeticion.getNuevaFecha(this.getFecha());
+    	new Evento(nuevaFecha, this.usuario, this.guardarropa, this.descripcion, this.listenersSugerir);
     }
 
     public boolean chequearPronostico(PronosticoClima nuevoPronostico) {

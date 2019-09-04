@@ -3,8 +3,7 @@ package que_me_pongo;
 import que_me_pongo.configuraciones.Configuraciones;
 import que_me_pongo.evento.Evento;
 import que_me_pongo.evento.EventoJob;
-import que_me_pongo.evento.listeners.notificaciones.MailListener;
-import que_me_pongo.evento.repetidores.RepeticionDeEvento;
+import que_me_pongo.evento.repetidores.RepeticionesDeEvento;
 import que_me_pongo.guardarropa.Guardarropa;
 import que_me_pongo.prenda.Material;
 import que_me_pongo.prenda.Prenda;
@@ -47,7 +46,7 @@ public class EventoMain {
         LocalDateTime ahora = LocalDateTime.now();
 
         new Evento(ahora.plusDays(1), usuario, guardarropa,"Ir al campo", new ArrayList());
-        new Evento(ahora.plusDays(1), usuario, guardarropa,"Cumpleaños", new ArrayList(), RepeticionDeEvento.diario());
+        new Evento(ahora.plusDays(1), usuario, guardarropa,"Cumpleaños", new ArrayList(), RepeticionesDeEvento.diario());
         new Evento(ahora.plusDays(4), usuario, guardarropa,"Casamiento", new ArrayList());
         new Evento(ahora.plusDays(5), usuario, guardarropa,"Bautismo", new ArrayList());
 
