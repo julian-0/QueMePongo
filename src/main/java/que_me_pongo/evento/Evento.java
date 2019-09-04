@@ -148,15 +148,14 @@ public class Evento {
       if(notificadores == null)
       	this.listenersSugerir = new ArrayList<EventoListener>();
       else
-      	this.listenersSugerir = notificadores;
-      RepositorioEventos.getInstance().agendar(this);   
+      	this.listenersSugerir = notificadores;   
     }
     
     private void generarRepeticion() {
     	if(repeticion == null)
     		return;
     	LocalDateTime nuevaFecha = repeticion.getNuevaFecha(this.getFecha());
-    	new Evento(nuevaFecha, this.usuario, this.guardarropa, this.descripcion, this.listenersSugerir);
+    	RepositorioEventos.getInstance().crearEvento(nuevaFecha, this.usuario, this.guardarropa, this.descripcion, this.listenersSugerir, this.repeticion);
     }
 
     public boolean chequearPronostico(PronosticoClima nuevoPronostico) {
