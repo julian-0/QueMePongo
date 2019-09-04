@@ -27,17 +27,16 @@ public class RedimensionadorImagen {
 
     public BufferedImage redimensionar(String path){
         BufferedImage img = null;
-        // Este try catch habria que sacarlo
-        try{
-            img = new BufferedImage(ancho,alto,BufferedImage.TYPE_INT_ARGB);
-            img = ImageIO.read(new File(path));
-            img = Thumbnails.of(img).forceSize(ancho, alto).asBufferedImage();
+        try {
+        	img = new BufferedImage(ancho,alto,BufferedImage.TYPE_INT_ARGB);
+					img = ImageIO.read(new File(path));
+					img = Thumbnails.of(img).forceSize(ancho, alto).asBufferedImage();
+				} catch (IOException e) {
+					throw new ImagenNoPudoRedimesionarseException();
+				}
+        
         /*con forceSize se fuerza la imagen a esos valores perdiendo calidad,
         en cambio con size solo se fuerza algun valor y se preserva el aspecto*/
-        }
-        catch (IOException e){
-            System.out.println("Error imagen: "+e);
-        }
 
         return img;
     }
