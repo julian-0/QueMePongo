@@ -9,6 +9,7 @@ import java.util.*;
 import org.uqbar.commons.model.annotations.Observable;
 import que_me_pongo.evento.listeners.EventoListener;
 import que_me_pongo.evento.repetidores.RepeticionDeEvento;
+import que_me_pongo.evento.repetidores.RepeticionesDeEvento;
 import que_me_pongo.guardarropa.Guardarropa;
 import que_me_pongo.prenda.Categoria;
 import que_me_pongo.prenda.Prenda;
@@ -26,17 +27,18 @@ public class Evento {
     private Deque<List<Prenda>> sugerencias, rechazados;
     private List<Prenda> aceptado;
     private Collection<EventoListener> listenersSugerir;
-    private RepeticionDeEvento repeticion;
+    private RepeticionDeEvento repetidor;
     private Set<Categoria> aumentoAbrigo, reduccionAbrigo;
 
     //Se crea un evento y se carga en el repo de eventos
     public Evento(LocalDateTime fecha,Usuario usuario, Guardarropa guardarropa,String descripcion,Collection<EventoListener> notificadores) {
     	settearEstadoInicial(fecha, usuario, guardarropa, descripcion, notificadores);
+    	this.repetidor = RepeticionesDeEvento.noRepite();
     }
     
     public Evento(LocalDateTime fecha,Usuario usuario,Guardarropa guardarropa,String descripcion,Collection<EventoListener> notificadores, RepeticionDeEvento tiempoParaRepetir) {
       settearEstadoInicial(fecha, usuario, guardarropa, descripcion, notificadores);
-      repeticion = tiempoParaRepetir; 
+      this.repetidor = tiempoParaRepetir; 
     }
     
     public LocalDateTime getFecha() {
@@ -78,7 +80,7 @@ public class Evento {
     public void sugerir(Sugeridor sugeridor, PronosticoClima pronostico){
         this.obtenerSugerencias(sugeridor,pronostico);
         listenersSugerir.forEach(listener -> listener.sugerenciasRealizadas(this));
-        generarRepeticion();
+        repetidor.generarRepeticion(this);
     }
 
     public void resugerir(Sugeridor sugeridor, PronosticoClima pronostico){
@@ -151,11 +153,8 @@ public class Evento {
       	this.listenersSugerir = notificadores;   
     }
     
-    private void generarRepeticion() {
-    	if(repeticion == null)
-    		return;
-    	LocalDateTime nuevaFecha = repeticion.getNuevaFecha(this.getFecha());
-    	RepositorioEventos.getInstance().crearEvento(nuevaFecha, this.usuario, this.guardarropa, this.descripcion, this.listenersSugerir, this.repeticion);
+    public void generarRepeticion(LocalDateTime nuevaFecha) {
+    	RepositorioEventos.getInstance().crearEvento(nuevaFecha, this.usuario, this.guardarropa, this.descripcion, this.listenersSugerir, this.repetidor);
     }
 
     public boolean chequearPronostico(PronosticoClima nuevoPronostico) {
