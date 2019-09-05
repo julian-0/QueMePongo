@@ -1,14 +1,10 @@
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
 
-import que_me_pongo.configuraciones.Configuraciones;
 import que_me_pongo.prenda.Material;
 import que_me_pongo.prenda.Prenda;
 import que_me_pongo.proveedorClima.PronosticoClima;
-import que_me_pongo.proveedorClima.ProveedorClima;
 import que_me_pongo.sugeridor.Sugeridor;
 import que_me_pongo.usuario.Usuario;
 
@@ -22,7 +18,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)

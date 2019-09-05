@@ -7,9 +7,8 @@ import org.quartz.JobExecutionException;
 import com.google.common.base.Optional;
 import com.google.common.collect.Iterables;
 
-import que_me_pongo.configuraciones.Configuraciones;
+import que_me_pongo.proveedorClima.InstanciaProveedorClima;
 import que_me_pongo.proveedorClima.PronosticoClima;
-import que_me_pongo.proveedorClima.ProveedorClima;
 import que_me_pongo.sugeridor.Sugeridor;
 
 import java.util.List;
@@ -20,7 +19,7 @@ public class EventoJob implements Job {
     //Hace sugerir los eventos proximos
     public void execute(JobExecutionContext context) throws JobExecutionException {
 
-        List<PronosticoClima> pronosticos = Configuraciones.get(ProveedorClima.class).getPronostico();
+        List<PronosticoClima> pronosticos = InstanciaProveedorClima.getInstancia().getPronostico();
     		LocalDate date = LocalDate.now();
         Sugeridor sugeridor = new Sugeridor(2, 4, 1);
         Set<Evento> proximos = RepositorioEventos.getInstance().proximos(date, 3);

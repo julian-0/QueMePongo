@@ -1,17 +1,14 @@
 package que_me_pongo;
 
-import que_me_pongo.configuraciones.Configuraciones;
-import que_me_pongo.evento.Evento;
 import que_me_pongo.evento.EventoJob;
 import que_me_pongo.evento.RepositorioEventos;
-import que_me_pongo.evento.repetidores.RepeticionDeEvento;
 import que_me_pongo.evento.repetidores.RepeticionesDeEvento;
 import que_me_pongo.guardarropa.Guardarropa;
 import que_me_pongo.prenda.Material;
 import que_me_pongo.prenda.Prenda;
 import que_me_pongo.prenda.TipoDePrendaFactory;
 import que_me_pongo.proveedorClima.ClimaOpenWeather;
-import que_me_pongo.proveedorClima.ProveedorClima;
+import que_me_pongo.proveedorClima.InstanciaProveedorClima;
 import que_me_pongo.usuario.Premium;
 import que_me_pongo.usuario.Usuario;
 
@@ -21,12 +18,11 @@ import org.quartz.impl.StdSchedulerFactory;
 import java.awt.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class EventoMain {
 
     public static void main(String[] args) throws SchedulerException{
-    		Configuraciones.set(ProveedorClima.class, new ClimaOpenWeather());
+    		InstanciaProveedorClima.setInstancia(new ClimaOpenWeather());
         Usuario usuario = new Usuario("Julian","jm.ord98@gmail.com",new Premium());
 
         Prenda remera = new Prenda(TipoDePrendaFactory.remeraMangaCorta(), Material.SEDA, Color.BLACK, null,null);
@@ -66,7 +62,7 @@ public class EventoMain {
                 .withIdentity("CronTrigger")
                 .withSchedule(SimpleScheduleBuilder
                         .simpleSchedule()
-                        .withIntervalInSeconds(15)    //Se ejecuta cada 24 horas
+                        .withIntervalInHours(24)    //Se ejecuta cada 24 horas
                         .repeatForever())           //Se ejecuta para siempre
                 .build();
 

@@ -4,13 +4,12 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import que_me_pongo.configuraciones.Configuraciones;
 import que_me_pongo.evento.Evento;
 import que_me_pongo.evento.EventoJob;
 import que_me_pongo.evento.RepositorioEventos;
-import que_me_pongo.evento.listeners.notificaciones.MailListener;
 import que_me_pongo.evento.repetidores.RepeticionesDeEvento;
 import que_me_pongo.guardarropa.Guardarropa;
+import que_me_pongo.proveedorClima.InstanciaProveedorClima;
 import que_me_pongo.proveedorClima.PronosticoClima;
 import que_me_pongo.proveedorClima.ProveedorClima;
 import que_me_pongo.usuario.Premium;
@@ -33,7 +32,7 @@ public class EventoJobTest {
 	
 	@Before
 	public void setProveedorClima() {
-		Configuraciones.set(ProveedorClima.class, prov);
+		InstanciaProveedorClima.setInstancia(prov);
 	}
 	
 	@Test
