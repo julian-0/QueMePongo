@@ -8,16 +8,20 @@ import que_me_pongo.guardarropa.Guardarropa;
 import que_me_pongo.prenda.Prenda;
 import que_me_pongo.prenda.Categoria;
 
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+@Entity
 public class Usuario {
 	private String nombre;
 
 	private String mail;
 
+	@ManyToMany
 	private Set<Guardarropa> guardarropas = new HashSet<Guardarropa>();
 
 	private TipoUsuario tipoUsuario;

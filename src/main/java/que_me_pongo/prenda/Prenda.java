@@ -1,5 +1,6 @@
 package que_me_pongo.prenda;
 
+import javax.persistence.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.time.LocalDate;
@@ -7,8 +8,14 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.LinkedHashSet;
 
+@Entity
 public class Prenda {
+
+	@Id @GeneratedValue
+	private long id;
+	@ManyToOne
 	private TipoDePrenda tipo;
+	@Enumerated(EnumType.STRING)
 	private Material material;
 	private Color colorPrimario;
 	private Color colorSecundario;

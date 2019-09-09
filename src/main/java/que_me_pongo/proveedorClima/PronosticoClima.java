@@ -1,7 +1,9 @@
 package que_me_pongo.proveedorClima;
 
+import javax.persistence.Entity;
 import java.time.LocalDateTime;
 
+@Entity
 public class PronosticoClima {
 	private LocalDateTime fecha;
 	private double temperatura;

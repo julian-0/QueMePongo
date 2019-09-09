@@ -1,6 +1,8 @@
 package que_me_pongo.evento.repetidores;
 
+
 public class RepeticionesDeEvento {
+
 	static public RepeticionDeEvento noRepite() {
 		return (evento) -> {}; 
 	}

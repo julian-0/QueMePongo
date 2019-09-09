@@ -7,6 +7,8 @@ import java.time.ZonedDateTime;
 import java.util.*;
 
 import org.uqbar.commons.model.annotations.Observable;
+import org.uqbar.commons.model.annotations.Transactional;
+import que_me_pongo.LocalDateTimeAttributeConverter;
 import que_me_pongo.evento.listeners.EventoListener;
 import que_me_pongo.evento.repetidores.RepeticionDeEvento;
 import que_me_pongo.evento.repetidores.RepeticionesDeEvento;
@@ -17,17 +19,38 @@ import que_me_pongo.proveedorClima.PronosticoClima;
 import que_me_pongo.sugeridor.Sugeridor;
 import que_me_pongo.usuario.Usuario;
 
-@Observable
+import javax.persistence.*;
+
+@Observable @Entity
 public class Evento {
+    @Id @GeneratedValue
+    private long id;
+
+    @Convert(converter = LocalDateTimeAttributeConverter.class)
     private LocalDateTime fecha;
+
+    @ManyToOne
     private Usuario usuario;
+
+    @ManyToOne
     private Guardarropa guardarropa;
+
     private String descripcion;
+
+    @ManyToOne
     private PronosticoClima pronostico;
+
     private Deque<List<Prenda>> sugerencias, rechazados;
+
     private List<Prenda> aceptado;
+
+    @OneToMany @JoinColumn(name = "evento_id")
     private Collection<EventoListener> listenersSugerir;
+
+    @Transient
     private RepeticionDeEvento repetidor;
+
+    @Enumerated(EnumType.STRING)
     private Set<Categoria> aumentoAbrigo, reduccionAbrigo;
 
     //Se crea un evento y se carga en el repo de eventos
