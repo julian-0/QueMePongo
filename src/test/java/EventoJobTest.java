@@ -7,7 +7,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import que_me_pongo.evento.Evento;
 import que_me_pongo.evento.EventoJob;
 import que_me_pongo.evento.RepositorioEventos;
-import que_me_pongo.evento.repetidores.RepeticionesDeEvento;
+import que_me_pongo.evento.repetidores.RepeticionDeEvento;
 import que_me_pongo.guardarropa.Guardarropa;
 import que_me_pongo.proveedorClima.InstanciaProveedorClima;
 import que_me_pongo.proveedorClima.PronosticoClima;
@@ -43,10 +43,10 @@ public class EventoJobTest {
 				new PronosticoClima(ahora.plusDays(2), 15),
 				new PronosticoClima(ahora.plusDays(3), 15)));
 		
-		Evento evento1 = RepositorioEventos.getInstance().crearEvento(ahora.plusDays(1), usuario, guardarropa,"Ir al campo", new ArrayList(), RepeticionesDeEvento.noRepite());
-    Evento evento2 = RepositorioEventos.getInstance().crearEvento(ahora.plusDays(2), usuario, guardarropa,"Cumpleaños", new ArrayList(), RepeticionesDeEvento.noRepite());
-    Evento evento3 = RepositorioEventos.getInstance().crearEvento(ahora.plusDays(4), usuario, guardarropa,"Casamiento", new ArrayList(), RepeticionesDeEvento.noRepite());
-    Evento evento4 = RepositorioEventos.getInstance().crearEvento(ahora.plusDays(5), usuario, guardarropa,"Bautismo", new ArrayList(), RepeticionesDeEvento.noRepite());
+		Evento evento1 = RepositorioEventos.getInstance().crearEvento(ahora.plusDays(1), usuario, guardarropa,"Ir al campo", new ArrayList(), RepeticionDeEvento.NOREPITE);
+    Evento evento2 = RepositorioEventos.getInstance().crearEvento(ahora.plusDays(2), usuario, guardarropa,"Cumpleaños", new ArrayList(), RepeticionDeEvento.NOREPITE);
+    Evento evento3 = RepositorioEventos.getInstance().crearEvento(ahora.plusDays(4), usuario, guardarropa,"Casamiento", new ArrayList(), RepeticionDeEvento.NOREPITE);
+    Evento evento4 = RepositorioEventos.getInstance().crearEvento(ahora.plusDays(5), usuario, guardarropa,"Bautismo", new ArrayList(), RepeticionDeEvento.NOREPITE);
     
     EventoJob job = new EventoJob();
     

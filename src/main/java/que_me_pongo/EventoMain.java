@@ -2,7 +2,7 @@ package que_me_pongo;
 
 import que_me_pongo.evento.EventoJob;
 import que_me_pongo.evento.RepositorioEventos;
-import que_me_pongo.evento.repetidores.RepeticionesDeEvento;
+import que_me_pongo.evento.repetidores.RepeticionDeEvento;
 import que_me_pongo.guardarropa.Guardarropa;
 import que_me_pongo.prenda.Material;
 import que_me_pongo.prenda.Prenda;
@@ -43,10 +43,10 @@ public class EventoMain {
         guardarropa.agregarPrenda(zapatoB);
         LocalDateTime ahora = LocalDateTime.now();
 
-        RepositorioEventos.getInstance().crearEvento(ahora.plusDays(1), usuario, guardarropa,"Ir al campo", new ArrayList(), RepeticionesDeEvento.noRepite());
-        RepositorioEventos.getInstance().crearEvento(ahora.plusDays(1), usuario, guardarropa,"Cumpleaños", new ArrayList(), RepeticionesDeEvento.diario());
-        RepositorioEventos.getInstance().crearEvento(ahora.plusDays(4), usuario, guardarropa,"Casamiento", new ArrayList(), RepeticionesDeEvento.noRepite());
-        RepositorioEventos.getInstance().crearEvento(ahora.plusDays(5), usuario, guardarropa,"Bautismo", new ArrayList(), RepeticionesDeEvento.noRepite());
+        RepositorioEventos.getInstance().crearEvento(ahora.plusDays(1), usuario, guardarropa,"Ir al campo", new ArrayList(), RepeticionDeEvento.NOREPITE);
+        RepositorioEventos.getInstance().crearEvento(ahora.plusDays(1), usuario, guardarropa,"Cumpleaños", new ArrayList(), RepeticionDeEvento.DIARIO);
+        RepositorioEventos.getInstance().crearEvento(ahora.plusDays(4), usuario, guardarropa,"Casamiento", new ArrayList(), RepeticionDeEvento.NOREPITE);
+        RepositorioEventos.getInstance().crearEvento(ahora.plusDays(5), usuario, guardarropa,"Bautismo", new ArrayList(), RepeticionDeEvento.NOREPITE);
 
 
 
