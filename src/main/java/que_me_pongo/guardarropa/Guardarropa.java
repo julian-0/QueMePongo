@@ -3,16 +3,12 @@ package que_me_pongo.guardarropa;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Sets;
 
+import que_me_pongo.Atuendo;
 import que_me_pongo.prenda.Categoria;
 import que_me_pongo.prenda.Prenda;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -66,20 +62,20 @@ public class Guardarropa implements WithGlobalEntityManager{
 		return this.cantidadPrendas() >= cantidadMaxima;
 	}
 
-	public void reservarAtuendo(LocalDate fecha, List<Prenda> atuendo) {
-		atuendo.forEach(prenda -> prenda.addReserva(fecha));
+	public void reservarAtuendo(LocalDate fecha, Atuendo atuendo) {
+		atuendo.getPrendas().forEach(prenda -> prenda.addReserva(fecha));
 	}
 
-	public void liberarAtuendo(LocalDate fecha, List<Prenda> atuendo) {
-		atuendo.forEach(prenda -> prenda.removeReserva(fecha));
+	public void liberarAtuendo(LocalDate fecha, Atuendo atuendo) {
+		atuendo.getPrendas().forEach(prenda -> prenda.removeReserva(fecha));
 	}
 
-	public Set<List<Prenda>> atuendos(LocalDate fecha){
+	public Set<Atuendo> atuendos(LocalDate fecha){
 		return atuendos().stream().filter(atuendo -> atuendoDisponibleEnFecha(fecha, atuendo)).collect(Collectors.toSet());
 
 	}
 
-	public Set<List<Prenda>> atuendos(){
+	public Set<Atuendo> atuendos(){
 		Set<List<Prenda>> atuendosMinimos = Sets.cartesianProduct(ImmutableList.of(
 				filtrarPorCapa(Categoria.SUPERIOR, 0),
 				getPrendasEn(Categoria.INFERIOR),
@@ -93,8 +89,11 @@ public class Guardarropa implements WithGlobalEntityManager{
 
 		Set<List<Prenda>> atuendosConSuperiores = agregarCapas(Categoria.SUPERIOR, atuendosConAccesorios);
 
-		return atuendosConSuperiores;
+		Set<Atuendo> atuendosListos = new HashSet<>();
 
+		atuendosConSuperiores.stream().forEach(prendas1 -> atuendosListos.add(new Atuendo(prendas1)));
+
+		return atuendosListos;
 	}
 
 	private Set<List<Prenda>> subConjuntos(Set<Prenda> prendas){
@@ -135,8 +134,8 @@ public class Guardarropa implements WithGlobalEntityManager{
 			return 0;
 	}
 
-	private boolean atuendoDisponibleEnFecha(LocalDate fecha, List<Prenda> atuendo) {
-		return atuendo.stream().noneMatch(prenda -> prenda.getReserva(fecha));
+	private boolean atuendoDisponibleEnFecha(LocalDate fecha, Atuendo atuendo) {
+		return atuendo.getPrendas().stream().noneMatch(prenda -> prenda.getReserva(fecha));
 	}
 
 

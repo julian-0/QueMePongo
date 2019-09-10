@@ -82,7 +82,7 @@ public class Evento {
     	return this.descripcion;
     }
 
-    public Deque<List<Prenda>> getSugerencias() { return sugerencias; }
+    public Deque<Atuendo> getSugerencias() { return sugerencias; }
 
     public Collection<EventoListener> getListenersSugerir(){
     	return this.listenersSugerir;
@@ -94,9 +94,9 @@ public class Evento {
     }
 
     public void obtenerSugerencias(Sugeridor sugeridor, PronosticoClima pronostico){
-        sugerencias = new LinkedList<List<Prenda>>(
+        sugerencias = new LinkedList<Atuendo>(
                 sugeridor.sugerir(guardarropa.atuendos(fecha.toLocalDate()), pronostico, usuario));
-        rechazados = new LinkedList<List<Prenda>>();
+        rechazados = new LinkedList<Atuendo>();
         aceptado = null;
         this.pronostico = pronostico;
     }

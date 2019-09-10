@@ -15,4 +15,24 @@ public class Atuendo {
 
     @ManyToMany
     private List<Prenda> prendas;
+
+    public Atuendo(List<Prenda> p){
+        prendas=p;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public List<Prenda> getPrendas() {
+        return prendas;
+    }
+
+    public void setPrendas(List<Prenda> prendas) {
+        this.prendas = prendas;
+    }
 }
