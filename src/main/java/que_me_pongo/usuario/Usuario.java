@@ -27,7 +27,7 @@ public class Usuario {
 	@ManyToMany
 	private Set<Guardarropa> guardarropas = new HashSet<Guardarropa>();
 
-	@ManyToOne
+	@Convert(converter = TipoUsuarioConverter.class)
 	private TipoUsuario tipoUsuario;
 	
 	private Map<Categoria, Double> preferencias = new HashMap();
