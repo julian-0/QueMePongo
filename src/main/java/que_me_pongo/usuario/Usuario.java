@@ -8,8 +8,7 @@ import que_me_pongo.guardarropa.Guardarropa;
 import que_me_pongo.prenda.Prenda;
 import que_me_pongo.prenda.Categoria;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -17,6 +16,10 @@ import java.util.Map;
 
 @Entity
 public class Usuario {
+	@Id
+	@GeneratedValue
+	private long id;
+
 	private String nombre;
 
 	private String mail;
@@ -24,6 +27,7 @@ public class Usuario {
 	@ManyToMany
 	private Set<Guardarropa> guardarropas = new HashSet<Guardarropa>();
 
+	@ManyToOne
 	private TipoUsuario tipoUsuario;
 	
 	private Map<Categoria, Double> preferencias = new HashMap();

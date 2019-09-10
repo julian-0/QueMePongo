@@ -8,6 +8,7 @@ import java.util.*;
 
 import org.uqbar.commons.model.annotations.Observable;
 import org.uqbar.commons.model.annotations.Transactional;
+import que_me_pongo.Atuendo;
 import que_me_pongo.LocalDateTimeAttributeConverter;
 import que_me_pongo.evento.listeners.EventoListener;
 import que_me_pongo.evento.repetidores.RepeticionDeEvento;
@@ -22,6 +23,7 @@ import javax.persistence.*;
 
 @Observable @Entity
 public class Evento {
+
     @Id @GeneratedValue
     private long id;
 
@@ -39,14 +41,16 @@ public class Evento {
     @ManyToOne
     private PronosticoClima pronostico;
 
-    private Deque<List<Prenda>> sugerencias, rechazados;
+    @ManyToMany
+    private Deque<Atuendo> sugerencias, rechazados;
 
-    private List<Prenda> aceptado;
+    @ManyToOne
+    private Atuendo aceptado;
 
     @OneToMany @JoinColumn(name = "evento_id")
     private Collection<EventoListener> listenersSugerir;
 
-    @Transient
+    @Enumerated(EnumType.STRING)
     private RepeticionDeEvento repetidor;
 
     @Enumerated(EnumType.STRING)

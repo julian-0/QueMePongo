@@ -1,5 +1,8 @@
 package que_me_pongo.prenda;
 
+import que_me_pongo.ColoresAttributeConverter;
+import que_me_pongo.Reserva;
+
 import javax.persistence.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -13,14 +16,23 @@ public class Prenda {
 
 	@Id @GeneratedValue
 	private long id;
+
 	@ManyToOne
 	private TipoDePrenda tipo;
+
 	@Enumerated(EnumType.STRING)
 	private Material material;
+
+	@Convert(converter = ColoresAttributeConverter.class)
 	private Color colorPrimario;
+
+	@Convert(converter = ColoresAttributeConverter.class)
 	private Color colorSecundario;
+
 	private BufferedImage imagen = null;
-	private Set<LocalDate> reservas = new LinkedHashSet<LocalDate>();
+
+	@OneToMany @JoinColumn(name="prenda_id")
+	private Set<Reserva> reservas = new LinkedHashSet<Reserva>();
 
 	@Override
 	public boolean equals(Object o) {

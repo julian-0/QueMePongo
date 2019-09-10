@@ -4,8 +4,10 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Sets;
 
 import que_me_pongo.prenda.Categoria;
+import que_me_pongo.prenda.GrupoDePrendas;
 import que_me_pongo.prenda.Prenda;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -21,7 +23,17 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class Guardarropa {
-	private Map<Categoria,Set<Prenda>> prendas = new HashMap<Categoria, Set<Prenda>>();
+	@Id
+	@GeneratedValue
+	private long id;
+
+	@ManyToMany
+	@JoinTable(
+			name="GruposDePrendas",
+			joinColumns={@JoinColumn(name="fk_guardarropa", referencedColumnName="id")},
+			inverseJoinColumns={@JoinColumn(name="fk_grupo", referencedColumnName="id")})
+	@MapKey(name = "categoria")
+	private Map<Categoria, GrupoDePrendas> prendas = new HashMap<Categoria, GrupoDePrendas>();
 
 	public Guardarropa()
 	{
