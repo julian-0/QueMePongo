@@ -13,4 +13,24 @@ public class Reserva {
 
     @Convert(converter = LocalDateAttributeConverter.class)
     private LocalDate fecha;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public LocalDate getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
+    }
+
+    public Reserva(LocalDate f){
+        fecha=f;
+    }
 }

@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Set;
 import java.util.LinkedHashSet;
+import java.util.stream.Collectors;
 
 @Entity
 public class Prenda {
@@ -108,17 +109,17 @@ public class Prenda {
 	public void addReserva(LocalDate fecha) {
 		if(getReserva(fecha))
 			throw new PrendaYaReservadaException();
-		reservas.add(fecha);
+		reservas.add(new Reserva(fecha));
 	}
 	
 	public void removeReserva(LocalDate fecha) {
 		if(!getReserva(fecha))
 			throw new PrendaNoReservadaException();
-		reservas.remove(fecha);
+		reservas.removeIf(reserva -> reserva.getFecha().isEqual(fecha));
 	}
 	
 	public boolean getReserva(LocalDate fecha) {
-		return reservas.contains(fecha);
+		return reservas.stream().anyMatch(reserva -> reserva.getFecha().isEqual(fecha));
 	}
 
 	private void validarColor(Color colorPrimario, Color colorSecundario) {
