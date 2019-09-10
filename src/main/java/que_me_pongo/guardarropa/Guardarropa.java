@@ -9,10 +9,7 @@ import que_me_pongo.prenda.Prenda;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -20,29 +17,46 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class Guardarropa {
-	private Map<Categoria,Set<Prenda>> prendas = new HashMap<Categoria, Set<Prenda>>();
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
-	public Guardarropa()
-	{
-		//Uso un foreach clasico porque values() devuelve un array
-		for(Categoria cat : Categoria.values())
-			prendas.put(cat, new HashSet<Prenda>());
-	}
+import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
+
+@Entity
+public class Guardarropa implements WithGlobalEntityManager{
+	
+	@Id @GeneratedValue
+	private int id;
+	@OneToMany
+	private Set<Prenda> prendas;
+
+	public Guardarropa() {}
 
 	public void agregarPrenda(Prenda prenda) {
 		Objects.requireNonNull(prenda);
-		if(prendas.get(prenda.getCategoria()).contains(prenda))
+		if(prendas.contains(prenda))
 			throw new PrendaYaEnGuardarropasException();
-		prendas.get(prenda.getCategoria()).add(prenda);
+		prendas.add(prenda);
+	}
+	
+	public Set<Prenda> getPrendasEn(Categoria categoria){
+		return entityManager().
+				createQuery("FROM Prenda WHERE guardarropa_id = :id AND categoria = :categoria", Prenda.class).
+				setParameter("id", id).
+				setParameter("categoria", categoria).
+				getResultList().
+				stream().
+				collect(Collectors.toSet());
 	}
 	
 	public int cantidadPrendasEn(Categoria categoria) {
-		return prendas.get(categoria).size();
+		return getPrendasEn(categoria).size();
 	}
 	
 	public int cantidadPrendas() {
-		return this.prendas.values().stream().reduce(0, (acc, list) -> acc + list.size(), Integer::sum);
+		return prendas.size();
 	}
 
 	public boolean estaLleno(int cantidadMaxima){
@@ -65,12 +79,12 @@ public class Guardarropa {
 	public Set<List<Prenda>> atuendos(){
 		Set<List<Prenda>> atuendosMinimos = Sets.cartesianProduct(ImmutableList.of(
 				filtrarPorCapa(Categoria.SUPERIOR, 0),
-				prendas.get(Categoria.INFERIOR),
-				prendas.get(Categoria.CALZADO)
+				getPrendasEn(Categoria.INFERIOR),
+				getPrendasEn(Categoria.CALZADO)
 				));
 		
 		Set<List<List<Prenda>>> paresCombinacionAccesorio = Sets.cartesianProduct(
-				ImmutableList.of(atuendosMinimos, subConjuntos(prendas.get(Categoria.ACCESORIO))));
+				ImmutableList.of(atuendosMinimos, subConjuntos(getPrendasEn(Categoria.ACCESORIO))));
 		
 		Set<List<Prenda>> atuendosConAccesorios = aplanarAtuendos(paresCombinacionAccesorio);
 		
@@ -107,11 +121,11 @@ public class Guardarropa {
 	}
 	
 	private Set<Prenda> filtrarPorCapa(Categoria categoria, int capa) {
-		return prendas.get(categoria).stream().filter(prenda -> prenda.getCapa() == capa).collect(Collectors.toSet());
+		return getPrendasEn(categoria).stream().filter(prenda -> prenda.getCapa() == capa).collect(Collectors.toSet());
 	}
 	
 	private int getCapaMaxima(Categoria categoria) {
-		Optional<Prenda> max = prendas.get(categoria).stream().max(Comparator.comparing(prenda-> prenda.getCapa()));
+		Optional<Prenda> max = getPrendasEn(categoria).stream().max(Comparator.comparing(prenda-> prenda.getCapa()));
 		if(max.isPresent())
 			return max.get().getCapa();
 		else
