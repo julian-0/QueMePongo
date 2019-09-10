@@ -18,9 +18,11 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.criteria.CriteriaQuery;
 
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 
@@ -42,6 +44,7 @@ public class Guardarropa implements WithGlobalEntityManager{
 	}
 	
 	public Set<Prenda> getPrendasEn(Categoria categoria){
+		
 		return entityManager().
 				createQuery("FROM Prenda WHERE guardarropa_id = :id AND categoria = :categoria", Prenda.class).
 				setParameter("id", id).
