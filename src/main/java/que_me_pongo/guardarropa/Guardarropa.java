@@ -89,11 +89,7 @@ public class Guardarropa implements WithGlobalEntityManager{
 
 		Set<List<Prenda>> atuendosConSuperiores = agregarCapas(Categoria.SUPERIOR, atuendosConAccesorios);
 
-		Set<Atuendo> atuendosListos = new HashSet<>();
-
-		atuendosConSuperiores.stream().forEach(prendas1 -> atuendosListos.add(new Atuendo(prendas1)));
-
-		return atuendosListos;
+		return atuendosConSuperiores.stream().map(prendas -> new Atuendo(prendas)).collect(Collectors.toSet());
 	}
 
 	private Set<List<Prenda>> subConjuntos(Set<Prenda> prendas){
