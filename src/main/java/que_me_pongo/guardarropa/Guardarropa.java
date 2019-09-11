@@ -14,11 +14,10 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import javax.persistence.Entity;
-import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.criteria.CriteriaQuery;
 
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 
@@ -27,7 +26,7 @@ public class Guardarropa implements WithGlobalEntityManager{
 
 	@Id @GeneratedValue
 	private int id;
-	@OneToMany
+	@OneToMany @JoinColumn(name = "guardarropa_id")
 	private Set<Prenda> prendas;
 
 	public Guardarropa() {}
