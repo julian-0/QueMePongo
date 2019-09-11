@@ -32,22 +32,22 @@ public class GuardarropaTest {
 	Prenda zapatoA = new Prenda(TipoDePrendaFactory.getInstance().zapatosDeTacon(),Material.CUERO, Color.BLUE, null,null);
 	Prenda zapatoB = new Prenda(TipoDePrendaFactory.getInstance().zapatosDeTacon(),Material.CUERO, Color.GREEN, null,null);
 
-	List<Prenda> atuendoA = Arrays.asList(remera, pantalonA, zapatoA, accesorioA);
-	List<Prenda> atuendoB = Arrays.asList(remera, pantalonA, zapatoB, accesorioA);
-	List<Prenda> atuendoC = Arrays.asList(remera, pantalonA, zapatoA);
-	List<Prenda> atuendoD = Arrays.asList(remera, pantalonA, zapatoB);
-	List<Prenda> atuendoE = Arrays.asList(remera, pantalonB, zapatoA, accesorioA);
-	List<Prenda> atuendoF = Arrays.asList(remera, pantalonB, zapatoB, accesorioA);
-	List<Prenda> atuendoG = Arrays.asList(remera, pantalonB, zapatoA);
-	List<Prenda> atuendoH = Arrays.asList(remera, pantalonB, zapatoB);
-	List<Prenda> atuendoI = Arrays.asList(remeraB, pantalonA, zapatoA, accesorioA);
-	List<Prenda> atuendoJ = Arrays.asList(remeraB, pantalonA, zapatoB, accesorioA);
-	List<Prenda> atuendoK = Arrays.asList(remeraB, pantalonA, zapatoA);
-	List<Prenda> atuendoL = Arrays.asList(remeraB, pantalonA, zapatoB);
-	List<Prenda> atuendoM = Arrays.asList(remeraB, pantalonB, zapatoA, accesorioA);
-	List<Prenda> atuendoN = Arrays.asList(remeraB, pantalonB, zapatoB, accesorioA);
-	List<Prenda> atuendoO = Arrays.asList(remeraB, pantalonB, zapatoA);
-	List<Prenda> atuendoP = Arrays.asList(remeraB, pantalonB, zapatoB);
+	Atuendo atuendoA = new Atuendo(Arrays.asList(remera, pantalonA, zapatoA, accesorioA));
+	Atuendo atuendoB = new Atuendo(Arrays.asList(remera, pantalonA, zapatoB, accesorioA));
+	Atuendo atuendoC = new Atuendo(Arrays.asList(remera, pantalonA, zapatoA));
+	Atuendo atuendoD = new Atuendo(Arrays.asList(remera, pantalonA, zapatoB));
+	Atuendo atuendoE = new Atuendo(Arrays.asList(remera, pantalonB, zapatoA, accesorioA));
+	Atuendo atuendoF = new Atuendo(Arrays.asList(remera, pantalonB, zapatoB, accesorioA));
+	Atuendo atuendoG = new Atuendo(Arrays.asList(remera, pantalonB, zapatoA));
+	Atuendo atuendoH = new Atuendo(Arrays.asList(remera, pantalonB, zapatoB));
+	Atuendo atuendoI = new Atuendo(Arrays.asList(remeraB, pantalonA, zapatoA, accesorioA));
+	Atuendo atuendoJ = new Atuendo(Arrays.asList(remeraB, pantalonA, zapatoB, accesorioA));
+	Atuendo atuendoK = new Atuendo(Arrays.asList(remeraB, pantalonA, zapatoA));
+	Atuendo atuendoL = new Atuendo(Arrays.asList(remeraB, pantalonA, zapatoB));
+	Atuendo atuendoM = new Atuendo(Arrays.asList(remeraB, pantalonB, zapatoA, accesorioA));
+	Atuendo atuendoN = new Atuendo(Arrays.asList(remeraB, pantalonB, zapatoB, accesorioA));
+	Atuendo atuendoO = new Atuendo(Arrays.asList(remeraB, pantalonB, zapatoA));
+	Atuendo atuendoP = new Atuendo(Arrays.asList(remeraB, pantalonB, zapatoB));
 
 	public static <T1, T2> boolean listContainsIgnoreOrder(Collection<List<T1>> list1, List<T2> list2) {
 		return list1.stream().anyMatch(element1 -> new HashSet<>(element1).equals(new HashSet<>(list2)));
@@ -88,15 +88,15 @@ public class GuardarropaTest {
 		guardarropa.agregarPrenda(zapatoA);
 		guardarropa.agregarPrenda(zapatoB);
 
-		Set<List<Prenda>> setAtuendos = new HashSet<>();
+		Set<Atuendo> setAtuendos = new HashSet<>();
 		setAtuendos.addAll(Arrays.asList(atuendoA, atuendoB, atuendoC, atuendoD,
 				atuendoE, atuendoF, atuendoG, atuendoH, atuendoI, atuendoJ, atuendoK,
 				atuendoL, atuendoM, atuendoN, atuendoO, atuendoP));
 
-		Set<List<Prenda>> atuendos = guardarropa.atuendos();
+		Set<Atuendo> atuendos = guardarropa.atuendos();
 
 		Assert.assertEquals(setAtuendos.size(), atuendos.size());
-		setAtuendos.forEach(atuendo -> Assert.assertTrue(atuendos.contains(atuendo)));
+		setAtuendos.forEach(atuendoEsperado -> Assert.assertTrue(atuendos.stream().anyMatch(atuendoGenerado -> atuendoGenerado.mismoAtuendo(atuendoEsperado))));
 	}
 
 	@Test
@@ -120,14 +120,14 @@ public class GuardarropaTest {
 		guardarropa.agregarPrenda(accesorioA);
 		guardarropa.agregarPrenda(accesorioB);
 
-		List<Prenda> atuendoConB1 = Arrays.asList(remera, pantalonA, zapatoA, accesorioB);
-		List<Prenda> atuendoConB2 = Arrays.asList(remera, pantalonA, zapatoA, accesorioB, accesorioA);
+		Atuendo atuendoConB1 = new Atuendo(Arrays.asList(remera, pantalonA, zapatoA, accesorioB));
+		Atuendo atuendoConB2 = new Atuendo(Arrays.asList(remera, pantalonA, zapatoA, accesorioB, accesorioA));
 
-		Set<List<Prenda>> atuendos = guardarropa.atuendos();
-		List<List<Prenda>> setAtuendos = Arrays.asList(atuendoA, atuendoC, atuendoConB1, atuendoConB2);
+		Set<Atuendo> atuendos = guardarropa.atuendos();
+		List<Atuendo> setAtuendos = Arrays.asList(atuendoA, atuendoC, atuendoConB1, atuendoConB2);
 
 		Assert.assertEquals(setAtuendos.size(), atuendos.size());
-		atuendos.forEach(atuendoRecibido -> Assert.assertTrue(listContainsIgnoreOrder(setAtuendos, atuendoRecibido)));
+		setAtuendos.forEach(atuendoEsperado -> Assert.assertTrue(atuendos.stream().anyMatch(atuendoGenerado -> atuendoGenerado.mismoAtuendo(atuendoEsperado))));
 	}
 
 	@Test
@@ -139,14 +139,14 @@ public class GuardarropaTest {
 		guardarropa.agregarPrenda(zapatoA);
 		guardarropa.agregarPrenda(buzo);
 
-		List<Prenda> atuendoConBuzo = Arrays.asList(remera, pantalonA, zapatoA, buzo);
-		List<Prenda> atuendoSinBuzo = Arrays.asList(remera, pantalonA, zapatoA);
+		Atuendo atuendoConBuzo = new Atuendo(Arrays.asList(remera, pantalonA, zapatoA, buzo));
+		Atuendo atuendoSinBuzo = new Atuendo(Arrays.asList(remera, pantalonA, zapatoA));
 
-		Set<List<Prenda>> atuendosGenerados = guardarropa.atuendos();
-		List<List<Prenda>> atuendosEsperados = Arrays.asList(atuendoConBuzo, atuendoSinBuzo);
+		Set<Atuendo> atuendosGenerados = guardarropa.atuendos();
+		List<Atuendo> atuendosEsperados = Arrays.asList(atuendoConBuzo, atuendoSinBuzo);
 
 		Assert.assertEquals(atuendosGenerados.size(), atuendosEsperados.size());
-		atuendosGenerados.forEach(generado -> Assert.assertTrue(listContainsIgnoreOrder(atuendosEsperados, generado)));
+		atuendosEsperados.forEach(atuendoEsperado -> Assert.assertTrue(atuendosGenerados.stream().anyMatch(atuendoGenerado -> atuendoGenerado.mismoAtuendo(atuendoEsperado))));
 	}
 
 	@Test
@@ -160,16 +160,16 @@ public class GuardarropaTest {
 		guardarropa.agregarPrenda(buzo);
 		guardarropa.agregarPrenda(chaleco);
 
-		List<Prenda> atuendoConBuzo = Arrays.asList(remera, pantalonA, zapatoA, buzo);
-		List<Prenda> atuendoConBuzoYChaleco = Arrays.asList(remera, pantalonA, zapatoA, buzo, chaleco);
-		List<Prenda> atuendoConChaleco = Arrays.asList(remera, pantalonA, zapatoA, chaleco);
-		List<Prenda> atuendoSimple = Arrays.asList(remera, pantalonA, zapatoA);
+		Atuendo atuendoConBuzo = new Atuendo(Arrays.asList(remera, pantalonA, zapatoA, buzo));
+		Atuendo atuendoConBuzoYChaleco = new Atuendo(Arrays.asList(remera, pantalonA, zapatoA, buzo, chaleco));
+		Atuendo atuendoConChaleco = new Atuendo(Arrays.asList(remera, pantalonA, zapatoA, chaleco));
+		Atuendo atuendoSimple = new Atuendo(Arrays.asList(remera, pantalonA, zapatoA));
 
-		Set<List<Prenda>> atuendosGenerados = guardarropa.atuendos();
-		List<List<Prenda>> atuendosEsperados = Arrays.asList(atuendoConBuzo, atuendoSimple, atuendoConChaleco, atuendoConBuzoYChaleco);
+		Set<Atuendo> atuendosGenerados = guardarropa.atuendos();
+		List<Atuendo> atuendosEsperados = Arrays.asList(atuendoConBuzo, atuendoSimple, atuendoConChaleco, atuendoConBuzoYChaleco);
 
 		Assert.assertEquals(atuendosGenerados.size(), atuendosEsperados.size());
-		atuendosGenerados.forEach(generado -> Assert.assertTrue(listContainsIgnoreOrder(atuendosEsperados, generado)));
+		atuendosEsperados.forEach(atuendoEsperado -> Assert.assertTrue(atuendosEsperados.stream().anyMatch(atuendoGenerado -> atuendoGenerado.mismoAtuendo(atuendoEsperado))));
 	}
 
 }

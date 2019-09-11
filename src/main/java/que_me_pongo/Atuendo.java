@@ -6,6 +6,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
 @Entity
@@ -24,20 +27,21 @@ public class Atuendo {
     public Atuendo(List<Prenda> p){
         prendas=p;
     }
-
-    public long getId() {
-        return id;
+    
+    public List<Prenda> getPrendas(){
+    	return prendas;
     }
-
-    public void setId(long id) {
-        this.id = id;
+    
+    public boolean tienePrenda(Prenda prenda) {
+    	return getPrendas().contains(prenda);
     }
-
-    public List<Prenda> getPrendas() {
-        return prendas;
+    
+    public int cantidadPrendas() {
+    	return getPrendas().size();
     }
-
-    public void setPrendas(List<Prenda> prendas) {
-        this.prendas = prendas;
-    }
+    
+    public boolean mismoAtuendo(Atuendo otro) {
+  		return cantidadPrendas() == otro.cantidadPrendas() && 
+  				getPrendas().stream().allMatch(prenda -> otro.tienePrenda(prenda));
+  	}
 }
