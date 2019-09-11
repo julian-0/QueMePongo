@@ -43,7 +43,10 @@ public class Evento {
     private PronosticoClima pronostico;
 
     @ManyToMany
-    private Deque<Atuendo> sugerencias, rechazados;
+    private List<Atuendo> sugerencias;
+    
+    @ManyToMany
+    private List<Atuendo> rechazados;
 
     @ManyToOne
     private Atuendo aceptado;
@@ -92,7 +95,7 @@ public class Evento {
     	return this.descripcion;
     }
 
-    public Deque<Atuendo> getSugerencias() { return sugerencias; }
+    public List<Atuendo> getSugerencias() { return sugerencias; }
 
     public Collection<EventoListener> getListenersSugerir(){
     	return this.listenersSugerir;
@@ -128,13 +131,13 @@ public class Evento {
     	validarNoAceptado();
     	
     	//removeFirst tira su propia excepcion si está vacia, tal vez atajarlo antes y tirar una nuestra
-    	rechazados.add(sugerencias.removeFirst());
+    	rechazados.add(sugerencias.remove(0));
     }
     
     public void aceptarSugerencia(Set<Categoria> aumentarAbrigo, Set<Categoria> reducirAbrigo) {
     	validarExistenSugerencias();
     	validarNoAceptado();
-    	aceptado = sugerencias.removeFirst();
+    	aceptado = sugerencias.remove(0);
     	usuario.ajustarPreferencias(aumentarAbrigo, reducirAbrigo);
     	guardarropa.reservarAtuendo(fecha.toLocalDate(), aceptado);
     	this.aumentoAbrigo = aumentarAbrigo;
@@ -144,13 +147,13 @@ public class Evento {
     public void deshacerDecision() {
     	validarExistenSugerencias();
     	if(aceptado != null) {
-    		sugerencias.addFirst(aceptado);
+    		sugerencias.add(0, aceptado);
     		guardarropa.liberarAtuendo(fecha.toLocalDate(), aceptado);
     		aceptado = null;
     		usuario.ajustarPreferencias(reduccionAbrigo, aumentoAbrigo);
     	}
     	else if(!rechazados.isEmpty()) {
-    		sugerencias.addFirst(rechazados.removeLast());
+    		sugerencias.add(0, rechazados.remove(rechazados.size() - 1));
     	}
     	else
     		throw new NoHistorialException();
