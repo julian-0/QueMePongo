@@ -11,6 +11,11 @@
         <class>que_me_pongo.evento.Prenda</class>
         <class>que_me_pongo.evento.PronosticoClima</class>
         <class>que_me_pongo.evento.Usuario</class>
+        <class>que_me_pongo.evento.listeners.EventoListener</class>
+        <class>que_me_pongo.guardarropa.Guardarropa</class>
+        <class>que_me_pongo.proveedorClima.PronosticoClima</class>
+        <class>que_me_pongo.Atuendo</class>
+        <class>que_me_pongo.Reserva</class>
 
         <properties>
             <property name="hibernate.archive.autodetection" value="class"/>
