@@ -5,37 +5,16 @@ import javax.persistence.Converter;
 import java.awt.*;
 
 @Converter
-public class ColoresAttributeConverter implements AttributeConverter<Color, String> {
+public class ColoresAttributeConverter implements AttributeConverter<Color, Integer> {
 
-    private static final String SEPARATOR = "|";
-
-    /**
-     * Convert Color object to a String
-     * with format red|green|blue|alpha
-     */
     @Override
-    public String convertToDatabaseColumn(Color color) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(color.getRed()).append(SEPARATOR)
-                .append(color.getGreen())
-                .append(SEPARATOR)
-                .append(color.getBlue())
-                .append(SEPARATOR)
-                .append(color.getAlpha());
-        return sb.toString();
+    public Integer convertToDatabaseColumn(Color color) {
+        return color.getRGB();
     }
 
-    /**
-     * Convert a String with format red|green|blue|alpha
-     * to a Color object
-     */
     @Override
-    public Color convertToEntityAttribute(String colorString) {
-        String[] rgb = colorString.split(SEPARATOR);
-        return new Color(Integer.parseInt(rgb[0]),
-                Integer.parseInt(rgb[1]),
-                Integer.parseInt(rgb[2]),
-                Integer.parseInt(rgb[3]));
+    public Color convertToEntityAttribute(Integer rgb) {
+        return new Color(rgb);
     }
 
 }
