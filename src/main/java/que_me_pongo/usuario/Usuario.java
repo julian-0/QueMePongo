@@ -3,6 +3,7 @@ package que_me_pongo.usuario;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import que_me_pongo.Atuendo;
 import que_me_pongo.evento.Evento;
 import que_me_pongo.guardarropa.Guardarropa;
 import que_me_pongo.prenda.Prenda;
@@ -58,13 +59,13 @@ public class Usuario {
 		tipoUsuario.agregarPrenda(prenda, guardarropa);
 	}
 
-	public Set<List<Prenda>> atuendos() {
+	public Set<Atuendo> atuendos() {
 		return this.guardarropas.stream().
 				flatMap(guardarropa -> guardarropa.atuendos().stream()).
 				collect(Collectors.toSet());
 	}
 
-	public Set<List<Prenda>> atuendosDe(Guardarropa guardarropa){
+	public Set<Atuendo> atuendosDe(Guardarropa guardarropa){
 		return guardarropa.atuendos();
 	}
 
