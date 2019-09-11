@@ -2,11 +2,13 @@ package que_me_pongo;
 
 import que_me_pongo.prenda.Prenda;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import java.util.List;
 
+@Entity
 public class Atuendo {
 
     @Id
@@ -15,6 +17,9 @@ public class Atuendo {
 
     @ManyToMany
     private List<Prenda> prendas;
+
+    public Atuendo() {
+    }
 
     public Atuendo(List<Prenda> p){
         prendas=p;

@@ -1,10 +1,12 @@
 package que_me_pongo;
 
 import javax.persistence.Convert;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.time.LocalDate;
 
+@Entity
 public class Reserva {
 
     @Id
@@ -13,6 +15,9 @@ public class Reserva {
 
     @Convert(converter = LocalDateAttributeConverter.class)
     private LocalDate fecha;
+
+    public Reserva() {
+    }
 
     public long getId() {
         return id;
