@@ -30,10 +30,17 @@ public class Usuario {
 
 	@Convert(converter = TipoUsuarioConverter.class)
 	private TipoUsuario tipoUsuario;
-	
+
+	@ElementCollection
+	@CollectionTable(name = "user_preferences_mapping",
+	joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")})
+	@MapKeyEnumerated
 	private Map<Categoria, Double> preferencias = new HashMap();
 
-	public Usuario(String name,String email,TipoUsuario tipo){
+	public Usuario() {
+	}
+
+	public Usuario(String name, String email, TipoUsuario tipo){
 		this.nombre = name;
 		this.mail = email;
 		this.tipoUsuario = tipo;
