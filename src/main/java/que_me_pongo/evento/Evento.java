@@ -69,7 +69,10 @@ public class Evento {
     @Enumerated(EnumType.STRING)
     private Set<Categoria> reduccionAbrigo;
 
-    public Evento(LocalDateTime fecha,Usuario usuario, Guardarropa guardarropa,String descripcion,Collection<EventoListener> notificadores) {
+    public Evento() {
+    }
+
+    public Evento(LocalDateTime fecha, Usuario usuario, Guardarropa guardarropa, String descripcion, Collection<EventoListener> notificadores) {
     	settearEstadoInicial(fecha, usuario, guardarropa, descripcion, notificadores);
     	this.repetidor = RepeticionDeEvento.NOREPITE;
     }

@@ -63,6 +63,9 @@ public class Prenda {
 				'}';
 	}
 
+	public Prenda() {
+	}
+
 	public Prenda (TipoDePrenda tipo, Material material, Color colorPrimario, Color colorSecundario, String path) {
 		this.tipo = Objects.requireNonNull(tipo, "es obligatorio introducir un tipo");
 		this.material = Objects.requireNonNull(material, "es obligatorio introducir un material");

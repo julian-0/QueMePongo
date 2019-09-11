@@ -1,7 +1,9 @@
 package que_me_pongo.usuario;
 
 import javax.persistence.AttributeConverter;
+import javax.persistence.Converter;
 
+@Converter
 public class TipoUsuarioConverter implements AttributeConverter<TipoUsuario, String> {
     @Override
     public String convertToDatabaseColumn(TipoUsuario tipoUsuario) {
