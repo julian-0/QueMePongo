@@ -12,7 +12,7 @@ import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 public class TipoDePrendaFactory implements WithGlobalEntityManager {
 	static TipoDePrendaFactory instance = new TipoDePrendaFactory();
 	
-	static TipoDePrendaFactory getInstance() {
+	public static TipoDePrendaFactory getInstance() {
 		return instance;
 	}
 	

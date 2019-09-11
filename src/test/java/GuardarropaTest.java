@@ -24,13 +24,13 @@ import java.util.List;
 
 
 public class GuardarropaTest {
-	Prenda remera = new Prenda(TipoDePrendaFactory.remeraMangaCorta(),Material.SEDA, Color.BLACK, null,null);
-	Prenda remeraB = new Prenda(TipoDePrendaFactory.remeraMangaCorta(),Material.ALGODON, Color.WHITE, null,null);
-	Prenda pantalonA = new Prenda(TipoDePrendaFactory.shorts(),Material.ALGODON, Color.BLACK, null,null);
-	Prenda pantalonB = new Prenda(TipoDePrendaFactory.shorts(),Material.ALGODON, Color.PINK, null,null);
-	Prenda accesorioA = new Prenda(TipoDePrendaFactory.anteojos(),Material.PLASTICO, Color.ORANGE, null,null);
-	Prenda zapatoA = new Prenda(TipoDePrendaFactory.zapatosDeTacon(),Material.CUERO, Color.BLUE, null,null);
-	Prenda zapatoB = new Prenda(TipoDePrendaFactory.zapatosDeTacon(),Material.CUERO, Color.GREEN, null,null);
+	Prenda remera = new Prenda(TipoDePrendaFactory.getInstance().remeraMangaCorta(),Material.SEDA, Color.BLACK, null,null);
+	Prenda remeraB = new Prenda(TipoDePrendaFactory.getInstance().remeraMangaCorta(),Material.ALGODON, Color.WHITE, null,null);
+	Prenda pantalonA = new Prenda(TipoDePrendaFactory.getInstance().shorts(),Material.ALGODON, Color.BLACK, null,null);
+	Prenda pantalonB = new Prenda(TipoDePrendaFactory.getInstance().shorts(),Material.ALGODON, Color.PINK, null,null);
+	Prenda accesorioA = new Prenda(TipoDePrendaFactory.getInstance().anteojos(),Material.PLASTICO, Color.ORANGE, null,null);
+	Prenda zapatoA = new Prenda(TipoDePrendaFactory.getInstance().zapatosDeTacon(),Material.CUERO, Color.BLUE, null,null);
+	Prenda zapatoB = new Prenda(TipoDePrendaFactory.getInstance().zapatosDeTacon(),Material.CUERO, Color.GREEN, null,null);
 
 	List<Prenda> atuendoA = Arrays.asList(remera, pantalonA, zapatoA, accesorioA);
 	List<Prenda> atuendoB = Arrays.asList(remera, pantalonA, zapatoB, accesorioA);
@@ -112,7 +112,7 @@ public class GuardarropaTest {
 
 	@Test
 	public void generaCorrectamenteAtuendosDeVariosAccesorios() {
-		Prenda accesorioB = new Prenda(TipoDePrendaFactory.aros(), Material.PLASTICO, Color.blue, null,null);
+		Prenda accesorioB = new Prenda(TipoDePrendaFactory.getInstance().aros(), Material.PLASTICO, Color.blue, null,null);
 		Guardarropa guardarropa = new Guardarropa();
 		guardarropa.agregarPrenda(remera);
 		guardarropa.agregarPrenda(pantalonA);
@@ -133,7 +133,7 @@ public class GuardarropaTest {
 	@Test
 	public void generaAtuendosDeDosCapas() {
 		Guardarropa guardarropa = new Guardarropa();
-		Prenda buzo = new Prenda(TipoDePrendaFactory.buzo(),Material.ALGODON, Color.black, null,null);
+		Prenda buzo = new Prenda(TipoDePrendaFactory.getInstance().buzo(),Material.ALGODON, Color.black, null,null);
 		guardarropa.agregarPrenda(remera);
 		guardarropa.agregarPrenda(pantalonA);
 		guardarropa.agregarPrenda(zapatoA);
@@ -152,8 +152,8 @@ public class GuardarropaTest {
 	@Test
 	public void generaAtuendosDeVariasCapas() {
 		Guardarropa guardarropa = new Guardarropa();
-		Prenda buzo = new Prenda(TipoDePrendaFactory.buzo(),Material.ALGODON, Color.black, null,null);
-		Prenda chaleco = new Prenda(TipoDePrendaFactory.chaleco(),Material.CUERO, Color.black, null,null);
+		Prenda buzo = new Prenda(TipoDePrendaFactory.getInstance().buzo(),Material.ALGODON, Color.black, null,null);
+		Prenda chaleco = new Prenda(TipoDePrendaFactory.getInstance().chaleco(),Material.CUERO, Color.black, null,null);
 		guardarropa.agregarPrenda(remera);
 		guardarropa.agregarPrenda(pantalonA);
 		guardarropa.agregarPrenda(zapatoA);
