@@ -36,4 +36,7 @@ public class PronosticoClima {
 		//TODO poner más condiciones una vez se rellene la clase
 		return Math.abs(this.temperatura - otro.getTemperatura()) > 10;
 	}
+
+	public PronosticoClima() {
+	}
 }

@@ -30,6 +30,7 @@ public class Prenda {
 	@Convert(converter = ColoresAttributeConverter.class)
 	private Color colorSecundario;
 
+	@Lob
 	private BufferedImage imagen = null;
 
 	@OneToMany @JoinColumn(name="prenda_id")
