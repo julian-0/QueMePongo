@@ -36,7 +36,7 @@ public class TipoDePrendaFactory implements WithGlobalEntityManager {
 	
 	private TipoDePrenda tipoGenerico(TipoDePrenda tipo) {
 		TipoDePrenda tipoEnDB = buscar(tipo.getTipo());
-		if(tipo == null)
+		if(tipoEnDB == null)
 			tipoEnDB = crearEnDB(tipo);
 		return tipoEnDB;
 	}
