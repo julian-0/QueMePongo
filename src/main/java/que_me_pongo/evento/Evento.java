@@ -14,6 +14,7 @@ import que_me_pongo.evento.listeners.EventoListener;
 import que_me_pongo.evento.repetidores.RepeticionDeEvento;
 import que_me_pongo.guardarropa.Guardarropa;
 import que_me_pongo.prenda.Categoria;
+import que_me_pongo.prenda.Material;
 import que_me_pongo.prenda.Prenda;
 import que_me_pongo.proveedorClima.PronosticoClima;
 import que_me_pongo.sugeridor.Sugeridor;
@@ -53,8 +54,17 @@ public class Evento {
     @Enumerated(EnumType.STRING)
     private RepeticionDeEvento repetidor;
 
+    @ElementCollection(targetClass = Categoria.class)
+  	@CollectionTable(name = "aumento_abrigo", joinColumns = @JoinColumn(name = "id_evento"))
+  	@Column(name = "categoria", nullable = false)
     @Enumerated(EnumType.STRING)
-    private Set<Categoria> aumentoAbrigo, reduccionAbrigo;
+    private Set<Categoria> aumentoAbrigo;
+    
+    @ElementCollection(targetClass = Categoria.class)
+  	@CollectionTable(name = "reduccion_abrigo", joinColumns = @JoinColumn(name = "id_evento"))
+  	@Column(name = "categoria", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Set<Categoria> reduccionAbrigo;
 
     public Evento(LocalDateTime fecha,Usuario usuario, Guardarropa guardarropa,String descripcion,Collection<EventoListener> notificadores) {
     	settearEstadoInicial(fecha, usuario, guardarropa, descripcion, notificadores);
