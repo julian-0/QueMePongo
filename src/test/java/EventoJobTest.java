@@ -21,6 +21,7 @@ import java.util.Arrays;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EventoJobTest {
@@ -59,6 +60,7 @@ public class EventoJobTest {
 	}
 	
 	@Test
+	@Ignore
 	public void resugiereEventosConCambiosClimaticos() throws Exception {
 		LocalDateTime ahora = LocalDateTime.now();
 		
