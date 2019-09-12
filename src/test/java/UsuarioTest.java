@@ -1,3 +1,5 @@
+import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
+import org.uqbarproject.jpa.java8.extras.test.AbstractPersistenceTest;
 import que_me_pongo.*;
 import que_me_pongo.guardarropa.Guardarropa;
 import que_me_pongo.prenda.Material;
@@ -21,8 +23,10 @@ import java.util.Set;
 import org.junit.Assert;
 import org.junit.rules.ExpectedException;
 
+import javax.persistence.EntityManager;
 
-public class UsuarioTest {
+
+public class UsuarioTest extends AbstractPersistenceTest implements WithGlobalEntityManager {
 	Prenda remeraA = new Prenda(TipoDePrendaFactory.getInstance().remeraMangaCorta(),Material.SEDA, Color.BLACK, null,null);
 	Prenda remeraB = new Prenda(TipoDePrendaFactory.getInstance().remeraMangaCorta(),Material.ALGODON, Color.WHITE, null,null);
 	Prenda pantalonA = new Prenda(TipoDePrendaFactory.getInstance().shorts(),Material.ALGODON, Color.BLACK, null,null);
@@ -51,9 +55,15 @@ public class UsuarioTest {
 
 	@Test
 	public void usuarioDevuelveLosAtuendosCorrectamente() {
+		EntityManager em = entityManager();
+
 		Usuario usuario = new Usuario("DDS",null,new Premium());
+		em.persist(usuario);
 		Guardarropa guardarropa1 = new Guardarropa(),
 								guardarropa2 = new Guardarropa();
+		em.persist(guardarropa1);
+		em.persist(guardarropa2);
+
 		usuario.agregarGuardarropas(guardarropa1);
 		usuario.agregarGuardarropas(guardarropa2);
 
@@ -62,6 +72,14 @@ public class UsuarioTest {
 
 		Set<Atuendo> conjunto2 = new HashSet<>();
 		conjunto2.addAll(Arrays.asList(atuendoP));
+
+		em.persist(remeraA);
+		em.persist(remeraB);
+		em.persist(pantalonA);
+		em.persist(pantalonB);
+		em.persist(zapatoA);
+		em.persist(zapatoB);
+		em.persist(accesorioA);
 
 		usuario.agregarPrenda(remeraA,guardarropa1);
 		usuario.agregarPrenda(pantalonA,guardarropa1);
@@ -75,8 +93,8 @@ public class UsuarioTest {
 		Set<Atuendo> atuendos = usuario.atuendos();
 
 		Assert.assertEquals(conjunto1.size() + conjunto2.size(), atuendos.size());
-		conjunto1.forEach(atuendo -> Assert.assertTrue(atuendos.contains(atuendo)));
-		conjunto2.forEach(atuendo -> Assert.assertTrue(atuendos.contains(atuendo)));
+		conjunto1.forEach(atuendo -> Assert.assertTrue(atuendos.stream().anyMatch(recibido -> recibido.mismoAtuendo(atuendo))));
+		conjunto2.forEach(atuendo -> Assert.assertTrue(atuendos.stream().anyMatch(recibido -> recibido.mismoAtuendo(atuendo))));
 	}
 
 
