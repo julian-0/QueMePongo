@@ -8,12 +8,14 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
+
 import que_me_pongo.evento.listeners.EventoListener;
 import que_me_pongo.evento.repetidores.RepeticionDeEvento;
 import que_me_pongo.guardarropa.Guardarropa;
 import que_me_pongo.usuario.Usuario;
 
-public class RepositorioEventos {
+public class RepositorioEventos implements WithGlobalEntityManager{
 
     private Set<Evento> eventos = new HashSet<Evento>();
 
@@ -28,9 +30,8 @@ public class RepositorioEventos {
         return instancia;
     }
 
-    //Agrega un evento en el set
     public Evento agendar(Evento evento){//Agrega un evento
-        eventos.add(evento);
+        entityManager().persist(evento);
         return evento;
     }
     
@@ -41,18 +42,21 @@ public class RepositorioEventos {
 
     //Filtra los eventos cuya fecha esta cantDias cerca
     public Set<Evento> proximos(LocalDate fecha, int cantDias){
-        return this.eventos
+        return this.getEventos()
                 .stream()
                 .filter(evento -> evento.esProximo(fecha,cantDias))
                 .collect(Collectors.toSet());
     }
 
     public Set<Evento> getEventos() {
-        return eventos;
+        return entityManager().
+        			 createQuery("FROM Evento", Evento.class).
+        			 getResultList().stream().
+        			 collect(Collectors.toSet());
     }
 
 
     public Set<Evento> filtrarEventos(Date desde, Date hasta){
-        return eventos.stream().filter(e -> e.estaEntreFechas(desde,hasta)).collect(Collectors.toSet());
+        return getEventos().stream().filter(e -> e.estaEntreFechas(desde,hasta)).collect(Collectors.toSet());
     }
 }
