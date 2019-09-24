@@ -39,7 +39,7 @@ public class Evento {
 
     private String descripcion;
 
-    @ManyToOne
+    @Embedded
     private PronosticoClima pronostico;
 
     @ManyToMany

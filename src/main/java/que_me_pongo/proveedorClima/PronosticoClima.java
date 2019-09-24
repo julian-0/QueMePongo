@@ -1,20 +1,15 @@
 package que_me_pongo.proveedorClima;
 
 import javax.persistence.Convert;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.Embeddable;
 
 import que_me_pongo.LocalDateTimeAttributeConverter;
 
 import java.time.LocalDateTime;
 
-@Entity
+@Embeddable
 public class PronosticoClima {
-	@Id
-	@GeneratedValue
-	private Long id;
-
+	
 	@Convert(converter = LocalDateTimeAttributeConverter.class)
 	private LocalDateTime fecha;
 	private double temperatura;
