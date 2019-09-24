@@ -35,7 +35,7 @@ public class Usuario {
 	@CollectionTable(name = "user_preferences_mapping",
 	joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")})
 	@MapKeyEnumerated
-	private Map<Categoria, Double> preferencias = new HashMap();
+	private Map<Categoria, Double> preferencias;
 
 	public Usuario() {
 	}
@@ -44,7 +44,7 @@ public class Usuario {
 		this.nombre = name;
 		this.mail = email;
 		this.tipoUsuario = tipo;
-
+		this.preferencias = new HashMap();
 	}
 
 //	La forma de instanciar una prenda sería:

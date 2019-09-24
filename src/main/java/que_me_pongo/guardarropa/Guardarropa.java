@@ -52,8 +52,7 @@ public class Guardarropa implements WithGlobalEntityManager{
 	public Set<Prenda> getPrendasEn(Categoria categoria){
 		
 		return entityManager().
-				createQuery("FROM Prenda WHERE guardarropa_id = :id AND categoria = :categoria", Prenda.class).
-
+				createQuery("FROM Prenda WHERE guardarropa_id = :id AND tipo.categoria = :categoria", Prenda.class).
 				setParameter("id", id).
 				setParameter("categoria", categoria).
 				getResultList().
