@@ -43,9 +43,11 @@ public class Evento {
     private PronosticoClima pronostico;
 
     @ManyToMany
+    @OrderColumn(name = "ordSugerencias")
     private List<Atuendo> sugerencias;
     
     @ManyToMany
+    @OrderColumn(name = "ordRechazados")
     private List<Atuendo> rechazados;
 
     @ManyToOne
