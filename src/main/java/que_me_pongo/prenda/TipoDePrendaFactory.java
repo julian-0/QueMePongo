@@ -9,7 +9,7 @@ import javax.persistence.NoResultException;
 
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 
-public class TipoDePrendaFactory implements WithGlobalEntityManager {
+public class TipoDePrendaFactory {
 	static TipoDePrendaFactory instance = new TipoDePrendaFactory();
 	
 	public static TipoDePrendaFactory getInstance() {
@@ -17,21 +17,14 @@ public class TipoDePrendaFactory implements WithGlobalEntityManager {
 	}
 	
 	private TipoDePrenda tipoGenerico(TipoDePrenda retornoEnFallo) {
+		RepositorioPrendas repo = RepositorioPrendas.getInstance();
 		try {
-			return entityManager().
-					createQuery("FROM TipoDePrenda WHERE tipo=:tipo",TipoDePrenda.class).
-					setParameter("tipo", retornoEnFallo.getTipo()).
-					getSingleResult();
+			return repo.getTipoDePrenda(retornoEnFallo.getTipo());
 		}
 		catch(NoResultException noResultEx)
 		{
-			return crearEnDB(retornoEnFallo);
+			return repo.createTipoDePrenda(retornoEnFallo);
 		}
-	}
-	
-	private TipoDePrenda crearEnDB(TipoDePrenda tipo) {
-		entityManager().persist(tipo);
-		return tipo;
 	}
 	
 	public TipoDePrenda aros() {
