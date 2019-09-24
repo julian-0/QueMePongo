@@ -1,5 +1,6 @@
 package que_me_pongo.proveedorClima;
 
+import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Embeddable;
 
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 public class PronosticoClima {
 	
 	@Convert(converter = LocalDateTimeAttributeConverter.class)
+	@Column(name = "fechaPronostico")
 	private LocalDateTime fecha;
 	private double temperatura;
 	//TODO Rellenar
