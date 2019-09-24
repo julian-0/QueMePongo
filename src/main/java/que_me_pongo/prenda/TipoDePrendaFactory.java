@@ -16,29 +16,22 @@ public class TipoDePrendaFactory implements WithGlobalEntityManager {
 		return instance;
 	}
 	
-	private TipoDePrenda buscar(Tipo tipo) {
+	private TipoDePrenda tipoGenerico(TipoDePrenda retornoEnFallo) {
 		try {
 			return entityManager().
 					createQuery("FROM TipoDePrenda WHERE tipo=:tipo",TipoDePrenda.class).
-					setParameter("tipo", tipo).
+					setParameter("tipo", retornoEnFallo.getTipo()).
 					getSingleResult();
 		}
 		catch(NoResultException noResultEx)
 		{
-			return null;
+			return crearEnDB(retornoEnFallo);
 		}
 	}
 	
 	private TipoDePrenda crearEnDB(TipoDePrenda tipo) {
 		entityManager().persist(tipo);
 		return tipo;
-	}
-	
-	private TipoDePrenda tipoGenerico(TipoDePrenda tipo) {
-		TipoDePrenda tipoEnDB = buscar(tipo.getTipo());
-		if(tipoEnDB == null)
-			tipoEnDB = crearEnDB(tipo);
-		return tipoEnDB;
 	}
 	
 	public TipoDePrenda aros() {
