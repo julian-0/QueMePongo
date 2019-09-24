@@ -8,16 +8,26 @@ import que_me_pongo.prenda.Categoria;
 import que_me_pongo.prenda.Prenda;
 
 import java.time.LocalDate;
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import javax.persistence.Entity;
+
+
+import javax.persistence.JoinColumn;
+import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.criteria.CriteriaQuery;
 
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 
@@ -39,11 +49,12 @@ public class Guardarropa implements WithGlobalEntityManager{
 			throw new PrendaYaEnGuardarropasException();
 		prendas.add(prenda);
 	}
-
+	
 	public Set<Prenda> getPrendasEn(Categoria categoria){
-
+		
 		return entityManager().
-				createQuery("FROM Prenda P WHERE guardarropa_id = :id AND tipo.categoria = :categoria", Prenda.class).
+				createQuery("FROM Prenda WHERE guardarropa_id = :id AND categoria = :categoria", Prenda.class).
+
 				setParameter("id", id).
 				setParameter("categoria", categoria).
 				getResultList().
