@@ -9,7 +9,7 @@ import que_me_pongo.prenda.Prenda;
 import que_me_pongo.prenda.TipoDePrendaFactory;
 import que_me_pongo.proveedorClima.ClimaOpenWeather;
 import que_me_pongo.proveedorClima.InstanciaProveedorClima;
-import que_me_pongo.usuario.Premium;
+import que_me_pongo.usuario.TipoUsuario;
 import que_me_pongo.usuario.Usuario;
 
 import org.quartz.*;
@@ -23,7 +23,7 @@ public class EventoMain {
 
     public static void main(String[] args) throws SchedulerException{
     		InstanciaProveedorClima.setInstancia(new ClimaOpenWeather());
-        Usuario usuario = new Usuario("Julian","jm.ord98@gmail.com",new Premium());
+        Usuario usuario = new Usuario("Julian","jm.ord98@gmail.com", TipoUsuario.PREMIUM);
 
         Prenda remera = new Prenda(TipoDePrendaFactory.getInstance().remeraMangaCorta(), Material.SEDA, Color.BLACK, null,null);
         Prenda remeraB = new Prenda(TipoDePrendaFactory.getInstance().remeraMangaCorta(),Material.ALGODON, Color.WHITE, null,null);

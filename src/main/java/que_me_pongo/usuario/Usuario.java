@@ -28,7 +28,7 @@ public class Usuario {
 	@ManyToMany
 	private Set<Guardarropa> guardarropas = new HashSet<Guardarropa>();
 
-	@Convert(converter = TipoUsuarioConverter.class)
+	@Enumerated(EnumType.STRING)
 	private TipoUsuario tipoUsuario;
 
 	@ElementCollection
