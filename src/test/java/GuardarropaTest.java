@@ -8,8 +8,6 @@ import que_me_pongo.prenda.Categoria;
 import que_me_pongo.prenda.Material;
 import que_me_pongo.prenda.Prenda;
 import que_me_pongo.prenda.TipoDePrendaFactory;
-import que_me_pongo.usuario.Premium;
-import que_me_pongo.usuario.Usuario;
 
 import org.junit.Assert;
 import org.junit.Rule;
@@ -22,7 +20,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.List;
 
 

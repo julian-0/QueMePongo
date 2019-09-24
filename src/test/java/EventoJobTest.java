@@ -14,7 +14,7 @@ import que_me_pongo.guardarropa.Guardarropa;
 import que_me_pongo.proveedorClima.InstanciaProveedorClima;
 import que_me_pongo.proveedorClima.PronosticoClima;
 import que_me_pongo.proveedorClima.ProveedorClima;
-import que_me_pongo.usuario.Premium;
+import que_me_pongo.usuario.TipoUsuario;
 import que_me_pongo.usuario.Usuario;
 
 import java.time.LocalDateTime;
@@ -30,7 +30,7 @@ import javax.persistence.EntityManager;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EventoJobTest extends AbstractPersistenceTest implements WithGlobalEntityManager {
-    Usuario usuario = new Usuario("Julian", null, new Premium());
+    Usuario usuario = new Usuario("Julian", null, TipoUsuario.PREMIUM);
     Guardarropa guardarropa = new Guardarropa();
 
     @Mock

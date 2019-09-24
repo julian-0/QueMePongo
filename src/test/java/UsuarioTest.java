@@ -5,8 +5,7 @@ import que_me_pongo.guardarropa.Guardarropa;
 import que_me_pongo.prenda.Material;
 import que_me_pongo.prenda.Prenda;
 import que_me_pongo.prenda.TipoDePrendaFactory;
-import que_me_pongo.usuario.Gratuito;
-import que_me_pongo.usuario.Premium;
+import que_me_pongo.usuario.TipoUsuario;
 import que_me_pongo.usuario.Usuario;
 import que_me_pongo.usuario.UsuarioGratuitoNoTieneLugarException;
 
@@ -57,7 +56,7 @@ public class UsuarioTest extends AbstractPersistenceTest implements WithGlobalEn
 	public void usuarioDevuelveLosAtuendosCorrectamente() {
 		EntityManager em = entityManager();
 
-		Usuario usuario = new Usuario("DDS",null,new Premium());
+		Usuario usuario = new Usuario("DDS",null,TipoUsuario.PREMIUM);
 		em.persist(usuario);
 		Guardarropa guardarropa1 = new Guardarropa(),
 								guardarropa2 = new Guardarropa();
@@ -102,7 +101,7 @@ public class UsuarioTest extends AbstractPersistenceTest implements WithGlobalEn
 
 	@Test
 	public void usuarioPremiumPuedeAgregarMuchasPrendas() {
-		Usuario usuario = new Usuario("DDS",null,new Premium());
+		Usuario usuario = new Usuario("DDS",null,TipoUsuario.PREMIUM);
 		Guardarropa guardarropa = new Guardarropa();
 		usuario.agregarGuardarropas(guardarropa);
 
@@ -130,7 +129,7 @@ public class UsuarioTest extends AbstractPersistenceTest implements WithGlobalEn
 		expectedEx.expectMessage("Su guardarropas esta lleno, si desea tener mas lugar puede hacerse socio premium");
 
 		Guardarropa guardarropa = new Guardarropa();
-		Usuario usuario = new Usuario("DDS",null,new Gratuito());
+		Usuario usuario = new Usuario("DDS",null,TipoUsuario.PREMIUM);
 		usuario.agregarGuardarropas(guardarropa);
 
 		usuario.agregarPrenda(remeraA,guardarropa);
