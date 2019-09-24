@@ -4,67 +4,103 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-public class TipoDePrendaFactory {
-	static public TipoDePrenda aros() {
-		return new TipoDePrenda(Tipo.AROS, Categoria.ACCESORIO, Arrays.asList(Material.PLASTICO), 1, 0);
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+
+import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
+
+public class TipoDePrendaFactory implements WithGlobalEntityManager {
+	static TipoDePrendaFactory instance = new TipoDePrendaFactory();
+	
+	public static TipoDePrendaFactory getInstance() {
+		return instance;
 	}
 	
-	static public TipoDePrenda anteojos() {
+	private TipoDePrenda buscar(Tipo tipo) {
+		try {
+			return entityManager().
+					createQuery("FROM TipoDePrenda WHERE tipo=:tipo",TipoDePrenda.class).
+					setParameter("tipo", tipo).
+					getSingleResult();
+		}
+		catch(NoResultException noResultEx)
+		{
+			return null;
+		}
+	}
+	
+	private TipoDePrenda crearEnDB(TipoDePrenda tipo) {
+		entityManager().persist(tipo);
+		return tipo;
+	}
+	
+	private TipoDePrenda tipoGenerico(TipoDePrenda tipo) {
+		TipoDePrenda tipoEnDB = buscar(tipo.getTipo());
+		if(tipoEnDB == null)
+			tipoEnDB = crearEnDB(tipo);
+		return tipoEnDB;
+	}
+	
+	public TipoDePrenda aros() {
+		return tipoGenerico(new TipoDePrenda(Tipo.AROS, Categoria.ACCESORIO, Arrays.asList(Material.PLASTICO), 1, 0));
+	}
+	
+	public TipoDePrenda anteojos() {
 		List<Material> materiales = new LinkedList<Material>();
   	materiales.add(Material.PLASTICO);
-  	return new TipoDePrenda(Tipo.ANTEOJOS, Categoria.ACCESORIO, materiales, 2, 0);
+  	return tipoGenerico(new TipoDePrenda(Tipo.ANTEOJOS, Categoria.ACCESORIO, materiales, 2, 0));
 	}
 	
-	static public TipoDePrenda remeraMangaCorta() {
+	public TipoDePrenda remeraMangaCorta() {
 		List<Material> materiales = new LinkedList<Material>();
   	materiales.add(Material.ALGODON);
   	materiales.add(Material.SEDA);
   	materiales.add(Material.DRIFIT);
-  	return new TipoDePrenda(Tipo.REMERAMANGASCORTAS, Categoria.SUPERIOR, materiales, 0, 1);
+  	return tipoGenerico(new TipoDePrenda(Tipo.REMERAMANGASCORTAS, Categoria.SUPERIOR, materiales, 0, 1));
 	}
 	
-	static public TipoDePrenda remeraMangaLarga() {
+	public TipoDePrenda remeraMangaLarga() {
 		List<Material> materiales = new LinkedList<Material>();
   	materiales.add(Material.ALGODON);
   	materiales.add(Material.SEDA);
   	materiales.add(Material.DRIFIT);
-  	return new TipoDePrenda(Tipo.REMERAMANGASLARGAS, Categoria.SUPERIOR, materiales, 0, 1.5);
+  	return tipoGenerico(new TipoDePrenda(Tipo.REMERAMANGASLARGAS, Categoria.SUPERIOR, materiales, 0, 1.5));
 	}
 	
-	static public TipoDePrenda shorts() {
+	public TipoDePrenda shorts() {
 		List<Material> materiales = new LinkedList<Material>();
   	materiales.add(Material.ALGODON);
   	materiales.add(Material.DRIFIT);
-  	return new TipoDePrenda(Tipo.SHORT, Categoria.INFERIOR, materiales, 0, 1);
+  	return tipoGenerico(new TipoDePrenda(Tipo.SHORT, Categoria.INFERIOR, materiales, 0, 1));
 	}
 	
-	static public TipoDePrenda pantalon() {
+	public TipoDePrenda pantalon() {
 		List<Material> materiales = new LinkedList<Material>();
   	materiales.add(Material.ALGODON);
   	materiales.add(Material.DRIFIT);
-  	return new TipoDePrenda(Tipo.PANTALON, Categoria.INFERIOR, materiales, 0, 2);
+  	return tipoGenerico(new TipoDePrenda(Tipo.PANTALON, Categoria.INFERIOR, materiales, 0, 2));
 	}
 	
-	static public TipoDePrenda buzo() {
+	public TipoDePrenda buzo() {
 		List<Material> materiales = new LinkedList<Material>();
   	materiales.add(Material.ALGODON);
   	materiales.add(Material.SEDA);
-  	return new TipoDePrenda(Tipo.BUZO, Categoria.SUPERIOR, materiales, 2, 3);
+  	return tipoGenerico(new TipoDePrenda(Tipo.BUZO, Categoria.SUPERIOR, materiales, 2, 3));
 	}
 	
-	static public TipoDePrenda zapatosDeTacon() {
+	public TipoDePrenda zapatosDeTacon() {
 		List<Material> materiales = new LinkedList<Material>();
   	materiales.add(Material.CUERO);
-  	return new TipoDePrenda(Tipo.ZAPATOSDETACON, Categoria.CALZADO, materiales, 0, 1);
+  	return tipoGenerico(new TipoDePrenda(Tipo.ZAPATOSDETACON, Categoria.CALZADO, materiales, 0, 1));
 	}
 	
-	static public TipoDePrenda chaleco() {
+	public TipoDePrenda chaleco() {
 		List<Material> materiales = Arrays.asList(Material.ALGODON, Material.CUERO);
-		return new TipoDePrenda(Tipo.CHALECO, Categoria.SUPERIOR, materiales, 1, 2);
+		return tipoGenerico(new TipoDePrenda(Tipo.CHALECO, Categoria.SUPERIOR, materiales, 1, 2));
 	}
 	
-	static public TipoDePrenda guantes() {
+	public TipoDePrenda guantes() {
 		List<Material> materiales = Arrays.asList(Material.ALGODON, Material.CUERO);
-		return new TipoDePrenda(Tipo.GUANTES, Categoria.ACCESORIO, materiales, 3, 2);
+		return tipoGenerico(new TipoDePrenda(Tipo.GUANTES, Categoria.ACCESORIO, materiales, 3, 2));
 	}
 }

@@ -3,13 +3,13 @@ package que_me_pongo.usuario;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import que_me_pongo.Atuendo;
 import que_me_pongo.evento.Evento;
 import que_me_pongo.guardarropa.Guardarropa;
 import que_me_pongo.prenda.Prenda;
 import que_me_pongo.prenda.Categoria;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -17,6 +17,10 @@ import java.util.Map;
 
 @Entity
 public class Usuario {
+	@Id
+	@GeneratedValue
+	private long id;
+
 	private String nombre;
 
 	private String mail;
@@ -24,11 +28,19 @@ public class Usuario {
 	@ManyToMany
 	private Set<Guardarropa> guardarropas = new HashSet<Guardarropa>();
 
+	@Convert(converter = TipoUsuarioConverter.class)
 	private TipoUsuario tipoUsuario;
-	
+
+	@ElementCollection
+	@CollectionTable(name = "user_preferences_mapping",
+	joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")})
+	@MapKeyEnumerated
 	private Map<Categoria, Double> preferencias = new HashMap();
 
-	public Usuario(String name,String email,TipoUsuario tipo){
+	public Usuario() {
+	}
+
+	public Usuario(String name, String email, TipoUsuario tipo){
 		this.nombre = name;
 		this.mail = email;
 		this.tipoUsuario = tipo;
@@ -54,13 +66,13 @@ public class Usuario {
 		tipoUsuario.agregarPrenda(prenda, guardarropa);
 	}
 
-	public Set<List<Prenda>> atuendos() {
+	public Set<Atuendo> atuendos() {
 		return this.guardarropas.stream().
 				flatMap(guardarropa -> guardarropa.atuendos().stream()).
 				collect(Collectors.toSet());
 	}
 
-	public Set<List<Prenda>> atuendosDe(Guardarropa guardarropa){
+	public Set<Atuendo> atuendosDe(Guardarropa guardarropa){
 		return guardarropa.atuendos();
 	}
 

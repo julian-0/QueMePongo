@@ -8,12 +8,13 @@ import java.util.*;
 
 import org.uqbar.commons.model.annotations.Observable;
 import org.uqbar.commons.model.annotations.Transactional;
+import que_me_pongo.Atuendo;
 import que_me_pongo.LocalDateTimeAttributeConverter;
 import que_me_pongo.evento.listeners.EventoListener;
 import que_me_pongo.evento.repetidores.RepeticionDeEvento;
-import que_me_pongo.evento.repetidores.RepeticionesDeEvento;
 import que_me_pongo.guardarropa.Guardarropa;
 import que_me_pongo.prenda.Categoria;
+import que_me_pongo.prenda.Material;
 import que_me_pongo.prenda.Prenda;
 import que_me_pongo.proveedorClima.PronosticoClima;
 import que_me_pongo.sugeridor.Sugeridor;
@@ -23,6 +24,7 @@ import javax.persistence.*;
 
 @Observable @Entity
 public class Evento {
+
     @Id @GeneratedValue
     private long id;
 
@@ -40,23 +42,39 @@ public class Evento {
     @ManyToOne
     private PronosticoClima pronostico;
 
-    private Deque<List<Prenda>> sugerencias, rechazados;
+    @ManyToMany
+    private List<Atuendo> sugerencias;
+    
+    @ManyToMany
+    private List<Atuendo> rechazados;
 
-    private List<Prenda> aceptado;
+    @ManyToOne
+    private Atuendo aceptado;
 
     @OneToMany @JoinColumn(name = "evento_id")
     private Collection<EventoListener> listenersSugerir;
 
-    @Transient
+    @Enumerated(EnumType.STRING)
     private RepeticionDeEvento repetidor;
 
+    @ElementCollection(targetClass = Categoria.class)
+  	@CollectionTable(name = "aumento_abrigo", joinColumns = @JoinColumn(name = "id_evento"))
+  	@Column(name = "categoria", nullable = false)
     @Enumerated(EnumType.STRING)
-    private Set<Categoria> aumentoAbrigo, reduccionAbrigo;
+    private Set<Categoria> aumentoAbrigo;
+    
+    @ElementCollection(targetClass = Categoria.class)
+  	@CollectionTable(name = "reduccion_abrigo", joinColumns = @JoinColumn(name = "id_evento"))
+  	@Column(name = "categoria", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Set<Categoria> reduccionAbrigo;
 
-    //Se crea un evento y se carga en el repo de eventos
-    public Evento(LocalDateTime fecha,Usuario usuario, Guardarropa guardarropa,String descripcion,Collection<EventoListener> notificadores) {
+    public Evento() {
+    }
+
+    public Evento(LocalDateTime fecha, Usuario usuario, Guardarropa guardarropa, String descripcion, Collection<EventoListener> notificadores) {
     	settearEstadoInicial(fecha, usuario, guardarropa, descripcion, notificadores);
-    	this.repetidor = RepeticionesDeEvento.noRepite();
+    	this.repetidor = RepeticionDeEvento.NOREPITE;
     }
     
     public Evento(LocalDateTime fecha,Usuario usuario,Guardarropa guardarropa,String descripcion,Collection<EventoListener> notificadores, RepeticionDeEvento tiempoParaRepetir) {
@@ -80,7 +98,7 @@ public class Evento {
     	return this.descripcion;
     }
 
-    public Deque<List<Prenda>> getSugerencias() { return sugerencias; }
+    public List<Atuendo> getSugerencias() { return sugerencias; }
 
     public Collection<EventoListener> getListenersSugerir(){
     	return this.listenersSugerir;
@@ -92,9 +110,9 @@ public class Evento {
     }
 
     public void obtenerSugerencias(Sugeridor sugeridor, PronosticoClima pronostico){
-        sugerencias = new LinkedList<List<Prenda>>(
+        sugerencias = new LinkedList<Atuendo>(
                 sugeridor.sugerir(guardarropa.atuendos(fecha.toLocalDate()), pronostico, usuario));
-        rechazados = new LinkedList<List<Prenda>>();
+        rechazados = new LinkedList<Atuendo>();
         aceptado = null;
         this.pronostico = pronostico;
     }
@@ -116,13 +134,13 @@ public class Evento {
     	validarNoAceptado();
     	
     	//removeFirst tira su propia excepcion si está vacia, tal vez atajarlo antes y tirar una nuestra
-    	rechazados.add(sugerencias.removeFirst());
+    	rechazados.add(sugerencias.remove(0));
     }
     
     public void aceptarSugerencia(Set<Categoria> aumentarAbrigo, Set<Categoria> reducirAbrigo) {
     	validarExistenSugerencias();
     	validarNoAceptado();
-    	aceptado = sugerencias.removeFirst();
+    	aceptado = sugerencias.remove(0);
     	usuario.ajustarPreferencias(aumentarAbrigo, reducirAbrigo);
     	guardarropa.reservarAtuendo(fecha.toLocalDate(), aceptado);
     	this.aumentoAbrigo = aumentarAbrigo;
@@ -132,13 +150,13 @@ public class Evento {
     public void deshacerDecision() {
     	validarExistenSugerencias();
     	if(aceptado != null) {
-    		sugerencias.addFirst(aceptado);
+    		sugerencias.add(0, aceptado);
     		guardarropa.liberarAtuendo(fecha.toLocalDate(), aceptado);
     		aceptado = null;
     		usuario.ajustarPreferencias(reduccionAbrigo, aumentoAbrigo);
     	}
     	else if(!rechazados.isEmpty()) {
-    		sugerencias.addFirst(rechazados.removeLast());
+    		sugerencias.add(0, rechazados.remove(rechazados.size() - 1));
     	}
     	else
     		throw new NoHistorialException();

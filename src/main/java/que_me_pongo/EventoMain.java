@@ -2,7 +2,7 @@ package que_me_pongo;
 
 import que_me_pongo.evento.EventoJob;
 import que_me_pongo.evento.RepositorioEventos;
-import que_me_pongo.evento.repetidores.RepeticionesDeEvento;
+import que_me_pongo.evento.repetidores.RepeticionDeEvento;
 import que_me_pongo.guardarropa.Guardarropa;
 import que_me_pongo.prenda.Material;
 import que_me_pongo.prenda.Prenda;
@@ -25,13 +25,13 @@ public class EventoMain {
     		InstanciaProveedorClima.setInstancia(new ClimaOpenWeather());
         Usuario usuario = new Usuario("Julian","jm.ord98@gmail.com",new Premium());
 
-        Prenda remera = new Prenda(TipoDePrendaFactory.remeraMangaCorta(), Material.SEDA, Color.BLACK, null,null);
-        Prenda remeraB = new Prenda(TipoDePrendaFactory.remeraMangaCorta(),Material.ALGODON, Color.WHITE, null,null);
-        Prenda pantalonA = new Prenda(TipoDePrendaFactory.shorts(),Material.ALGODON, Color.BLACK, null,null);
-        Prenda pantalonB = new Prenda(TipoDePrendaFactory.shorts(),Material.ALGODON, Color.PINK, null,null);
-        Prenda accesorioA = new Prenda(TipoDePrendaFactory.anteojos(),Material.PLASTICO, Color.ORANGE, null,null);
-        Prenda zapatoA = new Prenda(TipoDePrendaFactory.zapatosDeTacon(),Material.CUERO, Color.BLUE, null,null);
-        Prenda zapatoB = new Prenda(TipoDePrendaFactory.zapatosDeTacon(),Material.CUERO, Color.GREEN, null,null);
+        Prenda remera = new Prenda(TipoDePrendaFactory.getInstance().remeraMangaCorta(), Material.SEDA, Color.BLACK, null,null);
+        Prenda remeraB = new Prenda(TipoDePrendaFactory.getInstance().remeraMangaCorta(),Material.ALGODON, Color.WHITE, null,null);
+        Prenda pantalonA = new Prenda(TipoDePrendaFactory.getInstance().shorts(),Material.ALGODON, Color.BLACK, null,null);
+        Prenda pantalonB = new Prenda(TipoDePrendaFactory.getInstance().shorts(),Material.ALGODON, Color.PINK, null,null);
+        Prenda accesorioA = new Prenda(TipoDePrendaFactory.getInstance().anteojos(),Material.PLASTICO, Color.ORANGE, null,null);
+        Prenda zapatoA = new Prenda(TipoDePrendaFactory.getInstance().zapatosDeTacon(),Material.CUERO, Color.BLUE, null,null);
+        Prenda zapatoB = new Prenda(TipoDePrendaFactory.getInstance().zapatosDeTacon(),Material.CUERO, Color.GREEN, null,null);
 
         Guardarropa guardarropa = new Guardarropa();
         guardarropa.agregarPrenda(remera);
@@ -43,10 +43,10 @@ public class EventoMain {
         guardarropa.agregarPrenda(zapatoB);
         LocalDateTime ahora = LocalDateTime.now();
 
-        RepositorioEventos.getInstance().crearEvento(ahora.plusDays(1), usuario, guardarropa,"Ir al campo", new ArrayList(), RepeticionesDeEvento.noRepite());
-        RepositorioEventos.getInstance().crearEvento(ahora.plusDays(1), usuario, guardarropa,"Cumpleaños", new ArrayList(), RepeticionesDeEvento.diario());
-        RepositorioEventos.getInstance().crearEvento(ahora.plusDays(4), usuario, guardarropa,"Casamiento", new ArrayList(), RepeticionesDeEvento.noRepite());
-        RepositorioEventos.getInstance().crearEvento(ahora.plusDays(5), usuario, guardarropa,"Bautismo", new ArrayList(), RepeticionesDeEvento.noRepite());
+        RepositorioEventos.getInstance().crearEvento(ahora.plusDays(1), usuario, guardarropa,"Ir al campo", new ArrayList(), RepeticionDeEvento.NOREPITE);
+        RepositorioEventos.getInstance().crearEvento(ahora.plusDays(1), usuario, guardarropa,"Cumpleaños", new ArrayList(), RepeticionDeEvento.DIARIO);
+        RepositorioEventos.getInstance().crearEvento(ahora.plusDays(4), usuario, guardarropa,"Casamiento", new ArrayList(), RepeticionDeEvento.NOREPITE);
+        RepositorioEventos.getInstance().crearEvento(ahora.plusDays(5), usuario, guardarropa,"Bautismo", new ArrayList(), RepeticionDeEvento.NOREPITE);
 
 
 

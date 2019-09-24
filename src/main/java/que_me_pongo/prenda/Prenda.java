@@ -1,5 +1,8 @@
 package que_me_pongo.prenda;
 
+import que_me_pongo.ColoresAttributeConverter;
+import que_me_pongo.Reserva;
+
 import javax.persistence.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -7,20 +10,31 @@ import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Set;
 import java.util.LinkedHashSet;
+import java.util.stream.Collectors;
 
 @Entity
 public class Prenda {
 
 	@Id @GeneratedValue
 	private long id;
+
 	@ManyToOne
 	private TipoDePrenda tipo;
+
 	@Enumerated(EnumType.STRING)
 	private Material material;
+
+	@Convert(converter = ColoresAttributeConverter.class)
 	private Color colorPrimario;
+
+	@Convert(converter = ColoresAttributeConverter.class)
 	private Color colorSecundario;
+
+	@Lob
 	private BufferedImage imagen = null;
-	private Set<LocalDate> reservas = new LinkedHashSet<LocalDate>();
+
+	@OneToMany @JoinColumn(name="prenda_id")
+	private Set<Reserva> reservas = new LinkedHashSet<Reserva>();
 
 	@Override
 	public boolean equals(Object o) {
@@ -48,6 +62,9 @@ public class Prenda {
 				", colorPrimario=" + colorPrimario +
 				", colorSecundario=" + colorSecundario +
 				'}';
+	}
+
+	public Prenda() {
 	}
 
 	public Prenda (TipoDePrenda tipo, Material material, Color colorPrimario, Color colorSecundario, String path) {
@@ -96,17 +113,17 @@ public class Prenda {
 	public void addReserva(LocalDate fecha) {
 		if(getReserva(fecha))
 			throw new PrendaYaReservadaException();
-		reservas.add(fecha);
+		reservas.add(new Reserva(fecha));
 	}
 	
 	public void removeReserva(LocalDate fecha) {
 		if(!getReserva(fecha))
 			throw new PrendaNoReservadaException();
-		reservas.remove(fecha);
+		reservas.removeIf(reserva -> reserva.getFecha().isEqual(fecha));
 	}
 	
 	public boolean getReserva(LocalDate fecha) {
-		return reservas.contains(fecha);
+		return reservas.stream().anyMatch(reserva -> reserva.getFecha().isEqual(fecha));
 	}
 
 	private void validarColor(Color colorPrimario, Color colorSecundario) {

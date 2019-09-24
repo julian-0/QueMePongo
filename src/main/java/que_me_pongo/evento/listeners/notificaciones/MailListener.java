@@ -11,7 +11,7 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import java.util.Properties;
 
-public class MailListener implements EventoListener {
+public class MailListener extends EventoListener {
 
 	private String myMail = "quemepongoNotify@gmail.com";
 	private String password = "quemepongo123";
