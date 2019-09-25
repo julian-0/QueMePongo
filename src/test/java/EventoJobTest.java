@@ -103,7 +103,9 @@ public class EventoJobTest extends AbstractPersistenceTest implements WithGlobal
 
         job.execute(null);
         
+        Assert.assertTrue(evento1.getSugirio());
         Assert.assertNotSame(sugEv1, evento1.getSugerenciasPendientes());
+        Assert.assertTrue(evento2.getSugirio());
         Assert.assertNotSame(sugEv2, evento2.getSugerenciasPendientes());
         Assert.assertNull(evento3.getSugerenciasPendientes());
         Assert.assertNull(evento4.getSugerenciasPendientes());

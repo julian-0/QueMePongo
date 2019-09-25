@@ -9,6 +9,7 @@ import java.util.*;
 import org.uqbar.commons.model.annotations.Observable;
 
 import que_me_pongo.atuendo.Atuendo;
+import que_me_pongo.atuendo.RepositorioAtuendos;
 import que_me_pongo.LocalDateTimeAttributeConverter;
 import que_me_pongo.evento.listeners.EventoListener;
 import que_me_pongo.evento.repetidores.RepeticionDeEvento;
@@ -40,15 +41,16 @@ public class Evento {
     @Embedded
     private PronosticoClima pronostico;
 
-    @ManyToMany
+    private boolean tieneSugerencias = false;
+    @OneToMany
     @OrderColumn(name = "ordSugerencias")
     private List<Atuendo> sugerencias;
     
-    @ManyToMany
+    @OneToMany
     @OrderColumn(name = "ordRechazados")
     private List<Atuendo> rechazados;
 
-    @ManyToOne
+    @OneToOne
     private Atuendo aceptado;
 
     @OneToMany @JoinColumn(name = "eventoId")
@@ -98,7 +100,7 @@ public class Evento {
     	return this.descripcion;
     }
 
-    public List<Atuendo> getSugerencias() { return sugerencias; }
+    public List<Atuendo> getSugerenciasPendientes() { return sugerencias; }
 
     public Collection<EventoListener> getListenersSugerir(){
     	return this.listenersSugerir;
@@ -115,12 +117,15 @@ public class Evento {
         rechazados = new LinkedList<Atuendo>();
         aceptado = null;
         this.pronostico = pronostico;
+        RepositorioAtuendos repo = RepositorioAtuendos.getInstance();
+        sugerencias.forEach(atuendo -> repo.createAtuendos(atuendo));
     }
 
     //Le va a cargar una lista de atuendos al usuario en su lista atuendos pendientes
     public void sugerir(Sugeridor sugeridor, PronosticoClima pronostico){
         this.obtenerSugerencias(sugeridor,pronostico);
         listenersSugerir.forEach(listener -> listener.sugerenciasRealizadas(this));
+        tieneSugerencias = true;
         repetidor.generarRepeticion(this);
     }
 
@@ -170,7 +175,7 @@ public class Evento {
     }
     
     public boolean getSugirio() {
-    	return sugerencias != null;
+    	return tieneSugerencias;
     }
     
     private void validarNoAceptado() {
