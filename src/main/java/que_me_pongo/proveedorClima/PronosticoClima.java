@@ -14,6 +14,10 @@ public class PronosticoClima {
 	@Convert(converter = LocalDateTimeAttributeConverter.class)
 	@Column(name = "fechaPronostico")
 	private LocalDateTime fecha;
+	/*Un bug de hibernate hace que los numeros 
+	 *sean not-null por defecto.
+	 */
+	@Column(nullable = true)
 	private double temperatura;
 	//TODO Rellenar
 	

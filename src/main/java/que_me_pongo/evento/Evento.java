@@ -53,7 +53,7 @@ public class Evento {
     @ManyToOne
     private Atuendo aceptado;
 
-    @OneToMany @JoinColumn(name = "evento_id")
+    @OneToMany @JoinColumn(name = "eventoId")
     private Collection<EventoListener> listenersSugerir;
 
     @Enumerated(EnumType.STRING)
