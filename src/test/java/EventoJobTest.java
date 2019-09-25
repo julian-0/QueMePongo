@@ -45,7 +45,6 @@ public class EventoJobTest extends AbstractPersistenceTest implements WithGlobal
     }
 
     @Test
-    @Ignore
     public void sugiereEventosProximos() throws Exception {
         LocalDateTime ahora = LocalDateTime.now();
         Mockito.when(prov.getPronostico()).thenReturn(Arrays.asList(new PronosticoClima(ahora, 15),

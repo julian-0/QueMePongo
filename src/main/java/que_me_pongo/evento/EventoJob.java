@@ -12,7 +12,7 @@ import que_me_pongo.proveedorClima.PronosticoClima;
 import que_me_pongo.sugeridor.Sugeridor;
 
 import java.util.List;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 public class EventoJob implements Job {
@@ -20,7 +20,7 @@ public class EventoJob implements Job {
     public void execute(JobExecutionContext context) throws JobExecutionException {
 
         List<PronosticoClima> pronosticos = InstanciaProveedorClima.getInstancia().getPronostico();
-    		LocalDate date = LocalDate.now();
+    		LocalDateTime date = LocalDateTime.now();
         Sugeridor sugeridor = new Sugeridor(2, 4, 1);
         Set<Evento> proximos = RepositorioEventos.getInstance().proximos(date, 3);
         
