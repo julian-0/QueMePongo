@@ -1,6 +1,7 @@
 import que_me_pongo.*;
 import que_me_pongo.prenda.Material;
 import que_me_pongo.prenda.Prenda;
+import que_me_pongo.prenda.RepositorioPrendas;
 import que_me_pongo.prenda.TipoDePrenda;
 import que_me_pongo.prenda.TipoDePrendaFactory;
 
@@ -10,7 +11,7 @@ import java.awt.Color;
 public class PrendaFactory {
     
     static private Prenda crearPrenda(TipoDePrenda tipo, Material material, Color colorPrimario, Color colorSecundario) {
-    	return new Prenda(tipo, material, colorPrimario, colorSecundario, null);	
+    	return RepositorioPrendas.getInstance().createPrenda(new Prenda(tipo, material, colorPrimario, colorSecundario, null));	
     }
     
     static public Prenda anteojos(Material material, Color colorPrimario, Color colorSecundario) {

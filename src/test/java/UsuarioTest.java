@@ -1,6 +1,7 @@
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.test.AbstractPersistenceTest;
-import que_me_pongo.*;
+
+import que_me_pongo.atuendo.Atuendo;
 import que_me_pongo.guardarropa.Guardarropa;
 import que_me_pongo.prenda.Material;
 import que_me_pongo.prenda.Prenda;
@@ -13,10 +14,8 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import java.awt.Color;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.junit.Assert;

@@ -2,7 +2,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.Assert;
 
-import que_me_pongo.Atuendo;
 import que_me_pongo.prenda.Material;
 import que_me_pongo.prenda.Prenda;
 import que_me_pongo.proveedorClima.PronosticoClima;
@@ -20,6 +19,8 @@ import java.util.Set;
 
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import que_me_pongo.atuendo.Atuendo;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SugeridorTest {

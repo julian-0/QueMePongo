@@ -7,15 +7,13 @@ import java.time.ZonedDateTime;
 import java.util.*;
 
 import org.uqbar.commons.model.annotations.Observable;
-import org.uqbar.commons.model.annotations.Transactional;
-import que_me_pongo.Atuendo;
+
+import que_me_pongo.atuendo.Atuendo;
 import que_me_pongo.LocalDateTimeAttributeConverter;
 import que_me_pongo.evento.listeners.EventoListener;
 import que_me_pongo.evento.repetidores.RepeticionDeEvento;
 import que_me_pongo.guardarropa.Guardarropa;
 import que_me_pongo.prenda.Categoria;
-import que_me_pongo.prenda.Material;
-import que_me_pongo.prenda.Prenda;
 import que_me_pongo.proveedorClima.PronosticoClima;
 import que_me_pongo.sugeridor.Sugeridor;
 import que_me_pongo.usuario.Usuario;

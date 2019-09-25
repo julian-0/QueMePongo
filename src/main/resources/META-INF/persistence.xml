@@ -14,7 +14,7 @@
         <class>que_me_pongo.evento.listeners.EventoListener</class>
         <class>que_me_pongo.prenda.Prenda</class>
         <class>que_me_pongo.prenda.TipoDePrenda</class>
-        <class>que_me_pongo.Atuendo</class>
+        <class>que_me_pongo.atuendo.Atuendo</class>
         <class>que_me_pongo.Reserva</class>
 
         <properties>
@@ -24,7 +24,7 @@
 
             <property name="hibernate.connection.url" value="jdbc:mysql://localhost/quemepongo?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC" />
             <property name="hibernate.connection.username" value="root" /> 
-            <property name="hibernate.connection.password" value="root1234" />
+            <property name="hibernate.connection.password" value="password" />
 
             <!--<property name="hibernate.connection.driver_class" value="org.hsqldb.jdbcDriver"/>
             <property name="hibernate.connection.url" value="jdbc:hsqldb:mem:app-db"/>

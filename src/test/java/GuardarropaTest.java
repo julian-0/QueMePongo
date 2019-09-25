@@ -1,12 +1,14 @@
-import org.junit.Before;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.test.AbstractPersistenceTest;
-import que_me_pongo.*;
+
+import que_me_pongo.atuendo.Atuendo;
 import que_me_pongo.guardarropa.Guardarropa;
 import que_me_pongo.guardarropa.PrendaYaEnGuardarropasException;
+import que_me_pongo.guardarropa.RepositorioGuardarropas;
 import que_me_pongo.prenda.Categoria;
 import que_me_pongo.prenda.Material;
 import que_me_pongo.prenda.Prenda;
+import que_me_pongo.prenda.RepositorioPrendas;
 import que_me_pongo.prenda.TipoDePrendaFactory;
 
 import org.junit.Assert;
@@ -17,7 +19,6 @@ import org.junit.rules.ExpectedException;
 import javax.persistence.EntityManager;
 import java.awt.Color;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.List;
@@ -25,13 +26,14 @@ import java.util.List;
 
 
 public class GuardarropaTest extends AbstractPersistenceTest implements WithGlobalEntityManager {
-	Prenda remera = new Prenda(TipoDePrendaFactory.getInstance().remeraMangaCorta(),Material.SEDA, Color.BLACK, null,null);
-	Prenda remeraB = new Prenda(TipoDePrendaFactory.getInstance().remeraMangaCorta(),Material.ALGODON, Color.WHITE, null,null);
-	Prenda pantalonA = new Prenda(TipoDePrendaFactory.getInstance().shorts(),Material.ALGODON, Color.BLACK, null,null);
-	Prenda pantalonB = new Prenda(TipoDePrendaFactory.getInstance().shorts(),Material.ALGODON, Color.PINK, null,null);
-	Prenda accesorioA = new Prenda(TipoDePrendaFactory.getInstance().anteojos(),Material.PLASTICO, Color.ORANGE, null,null);
-	Prenda zapatoA = new Prenda(TipoDePrendaFactory.getInstance().zapatosDeTacon(),Material.CUERO, Color.BLUE, null,null);
-	Prenda zapatoB = new Prenda(TipoDePrendaFactory.getInstance().zapatosDeTacon(),Material.CUERO, Color.GREEN, null,null);
+	RepositorioPrendas repoPrenda = RepositorioPrendas.getInstance();
+	Prenda remera = repoPrenda.createPrenda(new Prenda(TipoDePrendaFactory.getInstance().remeraMangaCorta(),Material.SEDA, Color.BLACK, null,null));
+	Prenda remeraB = repoPrenda.createPrenda(new Prenda(TipoDePrendaFactory.getInstance().remeraMangaCorta(),Material.ALGODON, Color.WHITE, null,null));
+	Prenda pantalonA = repoPrenda.createPrenda(new Prenda(TipoDePrendaFactory.getInstance().shorts(),Material.ALGODON, Color.BLACK, null,null));
+	Prenda pantalonB = repoPrenda.createPrenda(new Prenda(TipoDePrendaFactory.getInstance().shorts(),Material.ALGODON, Color.PINK, null,null));
+	Prenda accesorioA = repoPrenda.createPrenda(new Prenda(TipoDePrendaFactory.getInstance().anteojos(),Material.PLASTICO, Color.ORANGE, null,null));
+	Prenda zapatoA = repoPrenda.createPrenda(new Prenda(TipoDePrendaFactory.getInstance().zapatosDeTacon(),Material.CUERO, Color.BLUE, null,null));
+	Prenda zapatoB = repoPrenda.createPrenda(new Prenda(TipoDePrendaFactory.getInstance().zapatosDeTacon(),Material.CUERO, Color.GREEN, null,null));
 
 	Atuendo atuendoA = new Atuendo(Arrays.asList(remera, pantalonA, zapatoA, accesorioA));
 	Atuendo atuendoB = new Atuendo(Arrays.asList(remera, pantalonA, zapatoB, accesorioA));
@@ -49,23 +51,6 @@ public class GuardarropaTest extends AbstractPersistenceTest implements WithGlob
 	Atuendo atuendoN = new Atuendo(Arrays.asList(remeraB, pantalonB, zapatoB, accesorioA));
 	Atuendo atuendoO = new Atuendo(Arrays.asList(remeraB, pantalonB, zapatoA));
 	Atuendo atuendoP = new Atuendo(Arrays.asList(remeraB, pantalonB, zapatoB));
-
-	@Before
-	public void setUp() {
-		EntityManager em = entityManager();
-
-		em.persist(remera);
-		em.persist(remeraB);
-		em.persist(pantalonA);
-		em.persist(pantalonB);
-		em.persist(accesorioA);
-		em.persist(zapatoA);
-		em.persist(zapatoB);
-	}
-
-	public static <T1, T2> boolean listContainsIgnoreOrder(Collection<List<T1>> list1, List<T2> list2) {
-		return list1.stream().anyMatch(element1 -> new HashSet<>(element1).equals(new HashSet<>(list2)));
-	}
 
 	@Test
 	public void cargaRemeraEnGuardarropa() {
@@ -97,10 +82,7 @@ public class GuardarropaTest extends AbstractPersistenceTest implements WithGlob
 
 	@Test
 	public void generaCorrectamenteLosAtuendos() {
-		EntityManager em = entityManager();
-
-		Guardarropa guardarropa = new Guardarropa();
-		em.persist(guardarropa);
+		Guardarropa guardarropa = RepositorioGuardarropas.getInstance().createGuardarropas(new Guardarropa());
 
 		guardarropa.agregarPrenda(remera);
 		guardarropa.agregarPrenda(remeraB);
@@ -109,6 +91,8 @@ public class GuardarropaTest extends AbstractPersistenceTest implements WithGlob
 		guardarropa.agregarPrenda(accesorioA);
 		guardarropa.agregarPrenda(zapatoA);
 		guardarropa.agregarPrenda(zapatoB);
+		
+		withTransaction(() -> entityManager().flush());
 
 		Set<Atuendo> setAtuendos = new HashSet<>();
 		setAtuendos.addAll(Arrays.asList(atuendoA, atuendoB, atuendoC, atuendoD,
@@ -123,7 +107,7 @@ public class GuardarropaTest extends AbstractPersistenceTest implements WithGlob
 
 	@Test
 	public void sinNoTieneSuficientesPrendasGeneraUnaColeccionVacia() {
-		Guardarropa guardarropa = new Guardarropa();
+		Guardarropa guardarropa = RepositorioGuardarropas.getInstance().createGuardarropas(new Guardarropa());
 
 		guardarropa.agregarPrenda(remera);
 		guardarropa.agregarPrenda(remeraB);
@@ -134,19 +118,20 @@ public class GuardarropaTest extends AbstractPersistenceTest implements WithGlob
 
 	@Test
 	public void generaCorrectamenteAtuendosDeVariosAccesorios() {
-		EntityManager em = entityManager();
+		
 
 		Prenda accesorioB = new Prenda(TipoDePrendaFactory.getInstance().aros(), Material.PLASTICO, Color.blue, null,null);
-		em.persist(accesorioB);
+		repoPrenda.createPrenda(accesorioB);
 
-		Guardarropa guardarropa = new Guardarropa();
-		em.persist(guardarropa);
+		Guardarropa guardarropa = RepositorioGuardarropas.getInstance().createGuardarropas(new Guardarropa());
 
 		guardarropa.agregarPrenda(remera);
 		guardarropa.agregarPrenda(pantalonA);
 		guardarropa.agregarPrenda(zapatoA);
 		guardarropa.agregarPrenda(accesorioA);
 		guardarropa.agregarPrenda(accesorioB);
+		
+		withTransaction(() -> entityManager().flush());
 
 		Atuendo atuendoConB1 = new Atuendo(Arrays.asList(remera, pantalonA, zapatoA, accesorioB));
 		Atuendo atuendoConB2 = new Atuendo(Arrays.asList(remera, pantalonA, zapatoA, accesorioB, accesorioA));
@@ -160,18 +145,17 @@ public class GuardarropaTest extends AbstractPersistenceTest implements WithGlob
 
 	@Test
 	public void generaAtuendosDeDosCapas() {
-		EntityManager em = entityManager();
-
-		Guardarropa guardarropa = new Guardarropa();
-		em.persist(guardarropa);
+		Guardarropa guardarropa = RepositorioGuardarropas.getInstance().createGuardarropas(new Guardarropa());
 		Prenda buzo = new Prenda(TipoDePrendaFactory.getInstance().buzo(),Material.ALGODON, Color.black, null,null);
-		em.persist(buzo);
+		repoPrenda.createPrenda(buzo);
 
 		guardarropa.agregarPrenda(remera);
 		guardarropa.agregarPrenda(pantalonA);
 		guardarropa.agregarPrenda(zapatoA);
 		guardarropa.agregarPrenda(buzo);
-
+		
+		withTransaction(() -> entityManager().flush());
+		
 		Atuendo atuendoConBuzo = new Atuendo(Arrays.asList(remera, pantalonA, zapatoA, buzo));
 		Atuendo atuendoSinBuzo = new Atuendo(Arrays.asList(remera, pantalonA, zapatoA));
 
@@ -184,21 +168,21 @@ public class GuardarropaTest extends AbstractPersistenceTest implements WithGlob
 
 	@Test
 	public void generaAtuendosDeVariasCapas() {
-		EntityManager em = entityManager();
 
-		Guardarropa guardarropa = new Guardarropa();
+		Guardarropa guardarropa = RepositorioGuardarropas.getInstance().createGuardarropas(new Guardarropa());
 		Prenda buzo = new Prenda(TipoDePrendaFactory.getInstance().buzo(),Material.ALGODON, Color.black, null,null);
 		Prenda chaleco = new Prenda(TipoDePrendaFactory.getInstance().chaleco(),Material.CUERO, Color.black, null,null);
 
-		em.persist(guardarropa);
-		em.persist(buzo);
-		em.persist(chaleco);
+		repoPrenda.createPrenda(buzo);
+		repoPrenda.createPrenda(chaleco);
 
 		guardarropa.agregarPrenda(remera);
 		guardarropa.agregarPrenda(pantalonA);
 		guardarropa.agregarPrenda(zapatoA);
 		guardarropa.agregarPrenda(buzo);
 		guardarropa.agregarPrenda(chaleco);
+		
+		withTransaction(() -> entityManager().flush());
 
 		Atuendo atuendoConBuzo = new Atuendo(Arrays.asList(remera, pantalonA, zapatoA, buzo));
 		Atuendo atuendoConBuzoYChaleco = new Atuendo(Arrays.asList(remera, pantalonA, zapatoA, buzo, chaleco));

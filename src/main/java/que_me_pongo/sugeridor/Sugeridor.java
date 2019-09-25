@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import com.google.common.collect.Range;
 
-import que_me_pongo.Atuendo;
+import que_me_pongo.atuendo.Atuendo;
 import que_me_pongo.prenda.Prenda;
 import que_me_pongo.proveedorClima.PronosticoClima;
 import que_me_pongo.usuario.Usuario;

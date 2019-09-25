@@ -1,4 +1,4 @@
-package que_me_pongo;
+package que_me_pongo.atuendo;
 
 import que_me_pongo.prenda.Prenda;
 
@@ -7,8 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 
 @Entity

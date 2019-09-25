@@ -11,9 +11,11 @@ import que_me_pongo.evento.EventoJob;
 import que_me_pongo.evento.RepositorioEventos;
 import que_me_pongo.evento.repetidores.RepeticionDeEvento;
 import que_me_pongo.guardarropa.Guardarropa;
+import que_me_pongo.guardarropa.RepositorioGuardarropas;
 import que_me_pongo.proveedorClima.InstanciaProveedorClima;
 import que_me_pongo.proveedorClima.PronosticoClima;
 import que_me_pongo.proveedorClima.ProveedorClima;
+import que_me_pongo.usuario.RepositorioUsuarios;
 import que_me_pongo.usuario.TipoUsuario;
 import que_me_pongo.usuario.Usuario;
 
@@ -39,9 +41,8 @@ public class EventoJobTest extends AbstractPersistenceTest implements WithGlobal
     @Before
     public void setProveedorClima() {
         InstanciaProveedorClima.setInstancia(prov);
-        EntityManager em = entityManager();
-        em.persist(usuario);
-        em.persist(guardarropa);
+        RepositorioUsuarios.getInstance().createUsuario(usuario);
+        RepositorioGuardarropas.getInstance().createGuardarropas(guardarropa);
     }
 
     @Test

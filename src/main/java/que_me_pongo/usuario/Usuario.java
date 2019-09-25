@@ -3,16 +3,16 @@ package que_me_pongo.usuario;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import que_me_pongo.Atuendo;
-import que_me_pongo.evento.Evento;
 import que_me_pongo.guardarropa.Guardarropa;
 import que_me_pongo.prenda.Prenda;
 import que_me_pongo.prenda.Categoria;
 
 import javax.persistence.*;
+
+import que_me_pongo.atuendo.Atuendo;
+
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 
 @Entity

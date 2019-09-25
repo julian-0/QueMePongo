@@ -3,7 +3,7 @@ package que_me_pongo.guardarropa;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Sets;
 
-import que_me_pongo.Atuendo;
+import que_me_pongo.atuendo.Atuendo;
 import que_me_pongo.prenda.Categoria;
 import que_me_pongo.prenda.Prenda;
 

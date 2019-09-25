@@ -6,13 +6,14 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
+import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 
 import que_me_pongo.evento.listeners.EventoListener;
 import que_me_pongo.evento.repetidores.RepeticionDeEvento;
 import que_me_pongo.guardarropa.Guardarropa;
 import que_me_pongo.usuario.Usuario;
 
-public class RepositorioEventos implements WithGlobalEntityManager {
+public class RepositorioEventos implements WithGlobalEntityManager, TransactionalOps {
 
     public static RepositorioEventos instancia;
 
@@ -26,7 +27,7 @@ public class RepositorioEventos implements WithGlobalEntityManager {
     }
 
     public Evento agendar(Evento evento){//Agrega un evento
-        entityManager().persist(evento);
+        withTransaction(() -> entityManager().persist(evento));
         return evento;
     }
     

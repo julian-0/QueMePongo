@@ -1,8 +1,9 @@
 package que_me_pongo.prenda;
 
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
+import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 
-public class RepositorioPrendas implements WithGlobalEntityManager {
+public class RepositorioPrendas implements WithGlobalEntityManager, TransactionalOps {
 	static private RepositorioPrendas instance;
 	
 	static public RepositorioPrendas getInstance() {
@@ -19,12 +20,12 @@ public class RepositorioPrendas implements WithGlobalEntityManager {
 	}
 	
 	public TipoDePrenda createTipoDePrenda(TipoDePrenda tipo) {
-		entityManager().persist(tipo);
+		withTransaction(() -> entityManager().persist(tipo));
 		return tipo;
 	}
 	
 	public Prenda createPrenda(Prenda prenda) {
-		entityManager().persist(prenda);
+		withTransaction(() -> entityManager().persist(prenda));
 		return prenda;
 	}
 

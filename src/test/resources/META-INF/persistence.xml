@@ -15,7 +15,7 @@
         <class>que_me_pongo.evento.listeners.EventoListener</class>
         <class>que_me_pongo.prenda.Prenda</class>
         <class>que_me_pongo.prenda.TipoDePrenda</class>
-        <class>que_me_pongo.Atuendo</class>
+        <class>que_me_pongo.atuendo.Atuendo</class>
         <class>que_me_pongo.Reserva</class>
       
         <properties>
