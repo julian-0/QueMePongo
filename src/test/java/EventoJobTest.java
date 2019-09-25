@@ -6,6 +6,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.test.AbstractPersistenceTest;
+
+import que_me_pongo.atuendo.Atuendo;
 import que_me_pongo.evento.Evento;
 import que_me_pongo.evento.EventoJob;
 import que_me_pongo.evento.RepositorioEventos;
@@ -69,7 +71,6 @@ public class EventoJobTest extends AbstractPersistenceTest implements WithGlobal
     }
 
     @Test
-    @Ignore
     public void resugiereEventosConCambiosClimaticos() throws Exception {
         LocalDateTime ahora = LocalDateTime.now();
 
@@ -78,10 +79,10 @@ public class EventoJobTest extends AbstractPersistenceTest implements WithGlobal
                 new PronosticoClima(ahora.plusDays(2), 15),
                 new PronosticoClima(ahora.plusDays(3), 15)));
 
-        Evento evento1 = Mockito.spy(new Evento(ahora.plusDays(1), usuario, guardarropa, "Ir al campo", new ArrayList()));
-        Evento evento2 = Mockito.spy(new Evento(ahora.plusDays(2), usuario, guardarropa, "Cumpleaños", new ArrayList()));
-        Evento evento3 = Mockito.spy(new Evento(ahora.plusDays(4), usuario, guardarropa, "Casamiento", new ArrayList()));
-        Evento evento4 = Mockito.spy(new Evento(ahora.plusDays(5), usuario, guardarropa, "Bautismo", new ArrayList()));
+        Evento evento1 = new Evento(ahora.plusDays(1), usuario, guardarropa, "Ir al campo", new ArrayList());
+        Evento evento2 = new Evento(ahora.plusDays(2), usuario, guardarropa, "Cumpleaños", new ArrayList());
+        Evento evento3 = new Evento(ahora.plusDays(4), usuario, guardarropa, "Casamiento", new ArrayList());
+        Evento evento4 = new Evento(ahora.plusDays(5), usuario, guardarropa, "Bautismo", new ArrayList());
 
         RepositorioEventos.getInstance().agendar(evento1);
         RepositorioEventos.getInstance().agendar(evento2);
@@ -91,6 +92,9 @@ public class EventoJobTest extends AbstractPersistenceTest implements WithGlobal
         EventoJob job = new EventoJob();
 
         job.execute(null);
+        
+        List<Atuendo> sugEv1 = evento1.getSugerenciasPendientes();
+        List<Atuendo> sugEv2 = evento2.getSugerenciasPendientes();
 
         Mockito.when(prov.getPronostico()).thenReturn(Arrays.asList(new PronosticoClima(ahora, 0),
                 new PronosticoClima(ahora.plusDays(1), 0),
@@ -98,15 +102,11 @@ public class EventoJobTest extends AbstractPersistenceTest implements WithGlobal
                 new PronosticoClima(ahora.plusDays(3), 0)));
 
         job.execute(null);
+        
+        Assert.assertNotSame(sugEv1, evento1.getSugerenciasPendientes());
+        Assert.assertNotSame(sugEv2, evento2.getSugerenciasPendientes());
+        Assert.assertNull(evento3.getSugerenciasPendientes());
+        Assert.assertNull(evento4.getSugerenciasPendientes());
 
-        Mockito.verify(evento1, Mockito.times(1)).sugerir(Mockito.any(), Mockito.any());
-        Mockito.verify(evento2, Mockito.times(1)).sugerir(Mockito.any(), Mockito.any());
-        Mockito.verify(evento3, Mockito.times(0)).sugerir(Mockito.any(), Mockito.any());
-        Mockito.verify(evento4, Mockito.times(0)).sugerir(Mockito.any(), Mockito.any());
-
-        Mockito.verify(evento1, Mockito.times(1)).resugerir(Mockito.any(), Mockito.any());
-        Mockito.verify(evento2, Mockito.times(1)).resugerir(Mockito.any(), Mockito.any());
-        Mockito.verify(evento3, Mockito.times(0)).resugerir(Mockito.any(), Mockito.any());
-        Mockito.verify(evento4, Mockito.times(0)).resugerir(Mockito.any(), Mockito.any());
     }
 }
