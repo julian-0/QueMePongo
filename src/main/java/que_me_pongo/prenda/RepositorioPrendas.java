@@ -22,5 +22,10 @@ public class RepositorioPrendas implements WithGlobalEntityManager {
 		entityManager().persist(tipo);
 		return tipo;
 	}
+	
+	public Prenda createTipoDePrenda(Prenda prenda) {
+		entityManager().persist(prenda);
+		return prenda;
+	}
 
 }
