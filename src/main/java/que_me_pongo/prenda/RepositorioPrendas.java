@@ -5,7 +5,7 @@ import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 public class RepositorioPrendas implements WithGlobalEntityManager {
 	static private RepositorioPrendas instance;
 	
-	static RepositorioPrendas getInstance() {
+	static public RepositorioPrendas getInstance() {
 		if(instance == null)
 			instance = new RepositorioPrendas();
 		return instance;
@@ -23,7 +23,7 @@ public class RepositorioPrendas implements WithGlobalEntityManager {
 		return tipo;
 	}
 	
-	public Prenda createTipoDePrenda(Prenda prenda) {
+	public Prenda createPrenda(Prenda prenda) {
 		entityManager().persist(prenda);
 		return prenda;
 	}

@@ -13,7 +13,7 @@ public class RepositorioGuardarropas implements WithGlobalEntityManager {
 	
 	private RepositorioGuardarropas(){}
 	
-	public Guardarropa createUsuario(Guardarropa guardarropa) {
+	public Guardarropa createGuardarropas(Guardarropa guardarropa) {
 		entityManager().persist(guardarropa);
 		return guardarropa;
 	}
