@@ -4,11 +4,14 @@ import que_me_pongo.evento.EventoJob;
 import que_me_pongo.evento.RepositorioEventos;
 import que_me_pongo.evento.repetidores.RepeticionDeEvento;
 import que_me_pongo.guardarropa.Guardarropa;
+import que_me_pongo.guardarropa.RepositorioGuardarropas;
 import que_me_pongo.prenda.Material;
 import que_me_pongo.prenda.Prenda;
+import que_me_pongo.prenda.RepositorioPrendas;
 import que_me_pongo.prenda.TipoDePrendaFactory;
 import que_me_pongo.proveedorClima.ClimaOpenWeather;
 import que_me_pongo.proveedorClima.InstanciaProveedorClima;
+import que_me_pongo.usuario.RepositorioUsuarios;
 import que_me_pongo.usuario.TipoUsuario;
 import que_me_pongo.usuario.Usuario;
 
@@ -23,17 +26,19 @@ public class EventoMain {
 
     public static void main(String[] args) throws SchedulerException{
     		InstanciaProveedorClima.setInstancia(new ClimaOpenWeather());
-        Usuario usuario = new Usuario("Julian","jm.ord98@gmail.com", TipoUsuario.PREMIUM);
+        Usuario usuario = RepositorioUsuarios.getInstance().createUsuario(new Usuario("Julian",null, TipoUsuario.PREMIUM));
+        
+        RepositorioPrendas repoPrendas = RepositorioPrendas.getInstance();
 
-        Prenda remera = new Prenda(TipoDePrendaFactory.getInstance().remeraMangaCorta(), Material.SEDA, Color.BLACK, null,null);
-        Prenda remeraB = new Prenda(TipoDePrendaFactory.getInstance().remeraMangaCorta(),Material.ALGODON, Color.WHITE, null,null);
-        Prenda pantalonA = new Prenda(TipoDePrendaFactory.getInstance().shorts(),Material.ALGODON, Color.BLACK, null,null);
-        Prenda pantalonB = new Prenda(TipoDePrendaFactory.getInstance().shorts(),Material.ALGODON, Color.PINK, null,null);
-        Prenda accesorioA = new Prenda(TipoDePrendaFactory.getInstance().anteojos(),Material.PLASTICO, Color.ORANGE, null,null);
-        Prenda zapatoA = new Prenda(TipoDePrendaFactory.getInstance().zapatosDeTacon(),Material.CUERO, Color.BLUE, null,null);
-        Prenda zapatoB = new Prenda(TipoDePrendaFactory.getInstance().zapatosDeTacon(),Material.CUERO, Color.GREEN, null,null);
+        Prenda remera = repoPrendas.createPrenda(new Prenda(TipoDePrendaFactory.getInstance().remeraMangaCorta(), Material.SEDA, Color.BLACK, null,null));
+        Prenda remeraB = repoPrendas.createPrenda(new Prenda(TipoDePrendaFactory.getInstance().remeraMangaCorta(),Material.ALGODON, Color.WHITE, null,null));
+        Prenda pantalonA = repoPrendas.createPrenda(new Prenda(TipoDePrendaFactory.getInstance().shorts(),Material.ALGODON, Color.BLACK, null,null));
+        Prenda pantalonB = repoPrendas.createPrenda(new Prenda(TipoDePrendaFactory.getInstance().shorts(),Material.ALGODON, Color.PINK, null,null));
+        Prenda accesorioA = repoPrendas.createPrenda(new Prenda(TipoDePrendaFactory.getInstance().anteojos(),Material.PLASTICO, Color.ORANGE, null,null));
+        Prenda zapatoA = repoPrendas.createPrenda(new Prenda(TipoDePrendaFactory.getInstance().zapatosDeTacon(),Material.CUERO, Color.BLUE, null,null));
+        Prenda zapatoB = repoPrendas.createPrenda(new Prenda(TipoDePrendaFactory.getInstance().zapatosDeTacon(),Material.CUERO, Color.GREEN, null,null));
 
-        Guardarropa guardarropa = new Guardarropa();
+        Guardarropa guardarropa = RepositorioGuardarropas.getInstance().createGuardarropas(new Guardarropa());
         guardarropa.agregarPrenda(remera);
         guardarropa.agregarPrenda(remeraB);
         guardarropa.agregarPrenda(pantalonA);
