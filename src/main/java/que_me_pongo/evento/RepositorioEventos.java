@@ -17,8 +17,6 @@ import que_me_pongo.usuario.Usuario;
 
 public class RepositorioEventos implements WithGlobalEntityManager{
 
-    private Set<Evento> eventos = new HashSet<Evento>();
-
     public static RepositorioEventos instancia;
 
     private RepositorioEventos(){}
@@ -41,11 +39,14 @@ public class RepositorioEventos implements WithGlobalEntityManager{
     }
 
     //Filtra los eventos cuya fecha esta cantDias cerca
-    public Set<Evento> proximos(LocalDate fecha, int cantDias){
-        return this.getEventos()
-                .stream()
-                .filter(evento -> evento.esProximo(fecha,cantDias))
-                .collect(Collectors.toSet());
+    public Set<Evento> proximos(LocalDateTime fecha, int cantDias){
+    	return entityManager().
+				   createQuery("FROM Evento WHERE fecha BETWEEN :hoy AND :limite", Evento.class).
+				   setParameter("hoy", fecha).
+				   setParameter("limite", fecha.plusDays(cantDias)).
+				   getResultList().
+				   stream().
+				   collect(Collectors.toSet());
     }
 
     public Set<Evento> getEventos() {
@@ -57,6 +58,13 @@ public class RepositorioEventos implements WithGlobalEntityManager{
 
 
     public Set<Evento> filtrarEventos(Date desde, Date hasta){
-        return getEventos().stream().filter(e -> e.estaEntreFechas(desde,hasta)).collect(Collectors.toSet());
+    		return entityManager().
+				   createQuery("FROM Evento WHERE fecha BETWEEN :desde AND :hasta", Evento.class).
+				   setParameter("hoy", desde).
+				   setParameter("hasta", hasta).
+				   getResultList().
+				   stream().
+				   collect(Collectors.toSet());
     }
+    
 }
