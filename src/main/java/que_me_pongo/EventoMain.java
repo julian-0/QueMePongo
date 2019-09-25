@@ -25,36 +25,6 @@ import java.util.ArrayList;
 public class EventoMain {
 
     public static void main(String[] args) throws SchedulerException{
-    		InstanciaProveedorClima.setInstancia(new ClimaOpenWeather());
-        Usuario usuario = RepositorioUsuarios.getInstance().createUsuario(new Usuario("Julian",null, TipoUsuario.PREMIUM));
-        
-        RepositorioPrendas repoPrendas = RepositorioPrendas.getInstance();
-
-        Prenda remera = repoPrendas.createPrenda(new Prenda(TipoDePrendaFactory.getInstance().remeraMangaCorta(), Material.SEDA, Color.BLACK, null,null));
-        Prenda remeraB = repoPrendas.createPrenda(new Prenda(TipoDePrendaFactory.getInstance().remeraMangaCorta(),Material.ALGODON, Color.WHITE, null,null));
-        Prenda pantalonA = repoPrendas.createPrenda(new Prenda(TipoDePrendaFactory.getInstance().shorts(),Material.ALGODON, Color.BLACK, null,null));
-        Prenda pantalonB = repoPrendas.createPrenda(new Prenda(TipoDePrendaFactory.getInstance().shorts(),Material.ALGODON, Color.PINK, null,null));
-        Prenda accesorioA = repoPrendas.createPrenda(new Prenda(TipoDePrendaFactory.getInstance().anteojos(),Material.PLASTICO, Color.ORANGE, null,null));
-        Prenda zapatoA = repoPrendas.createPrenda(new Prenda(TipoDePrendaFactory.getInstance().zapatosDeTacon(),Material.CUERO, Color.BLUE, null,null));
-        Prenda zapatoB = repoPrendas.createPrenda(new Prenda(TipoDePrendaFactory.getInstance().zapatosDeTacon(),Material.CUERO, Color.GREEN, null,null));
-
-        Guardarropa guardarropa = RepositorioGuardarropas.getInstance().createGuardarropas(new Guardarropa());
-        guardarropa.agregarPrenda(remera);
-        guardarropa.agregarPrenda(remeraB);
-        guardarropa.agregarPrenda(pantalonA);
-        guardarropa.agregarPrenda(pantalonB);
-        guardarropa.agregarPrenda(accesorioA);
-        guardarropa.agregarPrenda(zapatoA);
-        guardarropa.agregarPrenda(zapatoB);
-        LocalDateTime ahora = LocalDateTime.now();
-
-        RepositorioEventos.getInstance().crearEvento(ahora.plusDays(1), usuario, guardarropa,"Ir al campo", new ArrayList(), RepeticionDeEvento.NOREPITE);
-        RepositorioEventos.getInstance().crearEvento(ahora.plusDays(1), usuario, guardarropa,"Cumpleaños", new ArrayList(), RepeticionDeEvento.DIARIO);
-        RepositorioEventos.getInstance().crearEvento(ahora.plusDays(4), usuario, guardarropa,"Casamiento", new ArrayList(), RepeticionDeEvento.NOREPITE);
-        RepositorioEventos.getInstance().crearEvento(ahora.plusDays(5), usuario, guardarropa,"Bautismo", new ArrayList(), RepeticionDeEvento.NOREPITE);
-
-
-
         Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
         scheduler.start();
 
@@ -67,12 +37,14 @@ public class EventoMain {
                 .withIdentity("CronTrigger")
                 .withSchedule(SimpleScheduleBuilder
                         .simpleSchedule()
-                        .withIntervalInHours(24)    //Se ejecuta cada 24 horas
+                        .withIntervalInMinutes(1)    //Se ejecuta cada 24 horas
                         .repeatForever())           //Se ejecuta para siempre
                 .build();
 
         // Registro dentro del Scheduler
         scheduler.scheduleJob(jobDetail, trigger);
+        
+        new ExampleDataCreator().createData();
     }
 
 }
