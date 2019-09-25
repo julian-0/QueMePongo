@@ -1,10 +1,7 @@
 package que_me_pongo.evento;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -15,7 +12,7 @@ import que_me_pongo.evento.repetidores.RepeticionDeEvento;
 import que_me_pongo.guardarropa.Guardarropa;
 import que_me_pongo.usuario.Usuario;
 
-public class RepositorioEventos implements WithGlobalEntityManager{
+public class RepositorioEventos implements WithGlobalEntityManager {
 
     public static RepositorioEventos instancia;
 
@@ -40,13 +37,7 @@ public class RepositorioEventos implements WithGlobalEntityManager{
 
     //Filtra los eventos cuya fecha esta cantDias cerca
     public Set<Evento> proximos(LocalDateTime fecha, int cantDias){
-    	return entityManager().
-				   createQuery("FROM Evento WHERE fecha BETWEEN :hoy AND :limite", Evento.class).
-				   setParameter("hoy", fecha).
-				   setParameter("limite", fecha.plusDays(cantDias)).
-				   getResultList().
-				   stream().
-				   collect(Collectors.toSet());
+    	return filtrarEventos(fecha, fecha.plusDays(cantDias)); 
     }
 
     public Set<Evento> getEventos() {
@@ -57,10 +48,10 @@ public class RepositorioEventos implements WithGlobalEntityManager{
     }
 
 
-    public Set<Evento> filtrarEventos(Date desde, Date hasta){
+    public Set<Evento> filtrarEventos(LocalDateTime desde, LocalDateTime hasta){
     		return entityManager().
 				   createQuery("FROM Evento WHERE fecha BETWEEN :desde AND :hasta", Evento.class).
-				   setParameter("hoy", desde).
+				   setParameter("desde", desde).
 				   setParameter("hasta", hasta).
 				   getResultList().
 				   stream().

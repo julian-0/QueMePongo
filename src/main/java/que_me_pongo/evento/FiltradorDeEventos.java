@@ -2,6 +2,8 @@ package que_me_pongo.evento;
 
 import org.uqbar.commons.model.annotations.Observable;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -26,7 +28,13 @@ public class FiltradorDeEventos {
     }
 
     public void filtrarEventos(){
-        eventos = repo.filtrarEventos(desde,hasta);
+    	LocalDateTime LDTDesde = desde.toInstant()
+          										 .atZone(ZoneId.systemDefault())
+          										 .toLocalDateTime();
+    	LocalDateTime LDTHasta = hasta.toInstant()
+          										 .atZone(ZoneId.systemDefault())
+          										 .toLocalDateTime();
+      eventos = repo.filtrarEventos(LDTDesde,LDTHasta);
     }
 
     public Date getDesde() { return desde; }
