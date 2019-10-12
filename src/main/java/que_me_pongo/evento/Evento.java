@@ -9,7 +9,6 @@ import java.util.*;
 import org.uqbar.commons.model.annotations.Observable;
 
 import que_me_pongo.atuendo.Atuendo;
-import que_me_pongo.atuendo.RepositorioAtuendos;
 import que_me_pongo.LocalDateTimeAttributeConverter;
 import que_me_pongo.evento.listeners.EventoListener;
 import que_me_pongo.evento.repetidores.RepeticionDeEvento;
@@ -42,15 +41,18 @@ public class Evento {
     private PronosticoClima pronostico;
 
     private boolean tieneSugerencias = false;
-    @OneToMany
+    
+    @OneToMany(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "eventoId")
     @OrderColumn(name = "ordSugerencias")
     private List<Atuendo> sugerencias;
     
-    @OneToMany
+    @OneToMany(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "eventoId")
     @OrderColumn(name = "ordRechazados")
     private List<Atuendo> rechazados;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     private Atuendo aceptado;
 
     @OneToMany @JoinColumn(name = "eventoId")
@@ -70,9 +72,8 @@ public class Evento {
   	@Column(name = "categoria", nullable = false)
     @Enumerated(EnumType.STRING)
     private Set<Categoria> reduccionAbrigo;
-
-    public Evento() {
-    }
+    
+    private Evento() {}
 
     public Evento(LocalDateTime fecha, Usuario usuario, Guardarropa guardarropa, String descripcion, Collection<EventoListener> notificadores) {
     	settearEstadoInicial(fecha, usuario, guardarropa, descripcion, notificadores);
@@ -117,8 +118,6 @@ public class Evento {
         rechazados = new LinkedList<Atuendo>();
         aceptado = null;
         this.pronostico = pronostico;
-        RepositorioAtuendos repo = RepositorioAtuendos.getInstance();
-        sugerencias.forEach(atuendo -> repo.createAtuendos(atuendo));
     }
 
     //Le va a cargar una lista de atuendos al usuario en su lista atuendos pendientes

@@ -19,8 +19,7 @@ public class Atuendo {
     @ManyToMany
     private List<Prenda> prendas;
 
-    public Atuendo() {
-    }
+    private Atuendo() {}
 
     public Atuendo(List<Prenda> p){
         prendas=p;

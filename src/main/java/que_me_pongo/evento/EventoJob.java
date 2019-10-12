@@ -40,7 +40,7 @@ public class EventoJob implements Job, WithGlobalEntityManager, TransactionalOps
     	}
     	catch(RuntimeException e)
     	{
-    		System.out.println(e);
+    		e.printStackTrace();
     	}
     }
     
