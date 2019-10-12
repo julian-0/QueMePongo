@@ -25,7 +25,7 @@ public class Usuario {
 
 	private String mail;
 
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.PERSIST)
 	private Set<Guardarropa> guardarropas = new HashSet<Guardarropa>();
 
 	@Enumerated(EnumType.STRING)

@@ -29,10 +29,10 @@ public class Evento {
     @Convert(converter = LocalDateTimeAttributeConverter.class)
     private LocalDateTime fecha;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Usuario usuario;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Guardarropa guardarropa;
 
     private String descripcion;
@@ -55,7 +55,7 @@ public class Evento {
     @OneToOne(cascade = CascadeType.PERSIST)
     private Atuendo aceptado;
 
-    @OneToMany @JoinColumn(name = "eventoId")
+    @ManyToMany
     private Collection<EventoListener> listenersSugerir;
 
     @Enumerated(EnumType.STRING)
@@ -73,7 +73,8 @@ public class Evento {
     @Enumerated(EnumType.STRING)
     private Set<Categoria> reduccionAbrigo;
     
-    private Evento() {}
+    @SuppressWarnings("unused")
+		private Evento() {}
 
     public Evento(LocalDateTime fecha, Usuario usuario, Guardarropa guardarropa, String descripcion, Collection<EventoListener> notificadores) {
     	settearEstadoInicial(fecha, usuario, guardarropa, descripcion, notificadores);
@@ -82,7 +83,7 @@ public class Evento {
     
     public Evento(LocalDateTime fecha,Usuario usuario,Guardarropa guardarropa,String descripcion,Collection<EventoListener> notificadores, RepeticionDeEvento tiempoParaRepetir) {
       settearEstadoInicial(fecha, usuario, guardarropa, descripcion, notificadores);
-      this.repetidor = tiempoParaRepetir; 
+      this.repetidor = tiempoParaRepetir;
     }
     
     public LocalDateTime getFecha() {
@@ -199,7 +200,8 @@ public class Evento {
     }
     
     public void generarRepeticion(LocalDateTime nuevaFecha) {
-    	RepositorioEventos.getInstance().crearEvento(nuevaFecha, this.usuario, this.guardarropa, this.descripcion, this.listenersSugerir, this.repetidor);
+    	Collection<EventoListener> listeners = new LinkedList<EventoListener>(this.listenersSugerir);
+    	RepositorioEventos.getInstance().crearEvento(nuevaFecha, this.usuario, this.guardarropa, this.descripcion, listeners, this.repetidor);
     }
 
     public boolean chequearPronostico(PronosticoClima nuevoPronostico) {
