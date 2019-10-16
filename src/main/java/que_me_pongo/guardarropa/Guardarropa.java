@@ -48,7 +48,11 @@ public class Guardarropa implements WithGlobalEntityManager{
 			throw new PrendaYaEnGuardarropasException();
 		prendas.add(prenda);
 	}
-	
+
+	public int getId() {
+		return id;
+	}
+
 	public Set<Prenda> getPrendasEn(Categoria categoria){
 		
 		return entityManager().
