@@ -1,61 +1,64 @@
-import que_me_pongo.*;
+import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
+import org.uqbarproject.jpa.java8.extras.test.AbstractPersistenceTest;
+
+import que_me_pongo.atuendo.Atuendo;
 import que_me_pongo.guardarropa.Guardarropa;
 import que_me_pongo.guardarropa.PrendaYaEnGuardarropasException;
+import que_me_pongo.guardarropa.RepositorioGuardarropas;
 import que_me_pongo.prenda.Categoria;
 import que_me_pongo.prenda.Material;
 import que_me_pongo.prenda.Prenda;
+import que_me_pongo.prenda.RepositorioPrendas;
 import que_me_pongo.prenda.TipoDePrendaFactory;
-import que_me_pongo.usuario.Premium;
-import que_me_pongo.usuario.Usuario;
 
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import javax.persistence.EntityManager;
 import java.awt.Color;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.List;
 
 
 
-public class GuardarropaTest {
-	Prenda remera = new Prenda(TipoDePrendaFactory.remeraMangaCorta(),Material.SEDA, Color.BLACK, null,null);
-	Prenda remeraB = new Prenda(TipoDePrendaFactory.remeraMangaCorta(),Material.ALGODON, Color.WHITE, null,null);
-	Prenda pantalonA = new Prenda(TipoDePrendaFactory.shorts(),Material.ALGODON, Color.BLACK, null,null);
-	Prenda pantalonB = new Prenda(TipoDePrendaFactory.shorts(),Material.ALGODON, Color.PINK, null,null);
-	Prenda accesorioA = new Prenda(TipoDePrendaFactory.anteojos(),Material.PLASTICO, Color.ORANGE, null,null);
-	Prenda zapatoA = new Prenda(TipoDePrendaFactory.zapatosDeTacon(),Material.CUERO, Color.BLUE, null,null);
-	Prenda zapatoB = new Prenda(TipoDePrendaFactory.zapatosDeTacon(),Material.CUERO, Color.GREEN, null,null);
+public class GuardarropaTest extends AbstractPersistenceTest implements WithGlobalEntityManager {
+	RepositorioPrendas repoPrenda = RepositorioPrendas.getInstance();
+	Prenda remera = repoPrenda.createPrenda(new Prenda(TipoDePrendaFactory.getInstance().remeraMangaCorta(),Material.SEDA, Color.BLACK, null,null));
+	Prenda remeraB = repoPrenda.createPrenda(new Prenda(TipoDePrendaFactory.getInstance().remeraMangaCorta(),Material.ALGODON, Color.WHITE, null,null));
+	Prenda pantalonA = repoPrenda.createPrenda(new Prenda(TipoDePrendaFactory.getInstance().shorts(),Material.ALGODON, Color.BLACK, null,null));
+	Prenda pantalonB = repoPrenda.createPrenda(new Prenda(TipoDePrendaFactory.getInstance().shorts(),Material.ALGODON, Color.PINK, null,null));
+	Prenda accesorioA = repoPrenda.createPrenda(new Prenda(TipoDePrendaFactory.getInstance().anteojos(),Material.PLASTICO, Color.ORANGE, null,null));
+	Prenda zapatoA = repoPrenda.createPrenda(new Prenda(TipoDePrendaFactory.getInstance().zapatosDeTacon(),Material.CUERO, Color.BLUE, null,null));
+	Prenda zapatoB = repoPrenda.createPrenda(new Prenda(TipoDePrendaFactory.getInstance().zapatosDeTacon(),Material.CUERO, Color.GREEN, null,null));
 
-	List<Prenda> atuendoA = Arrays.asList(remera, pantalonA, zapatoA, accesorioA);
-	List<Prenda> atuendoB = Arrays.asList(remera, pantalonA, zapatoB, accesorioA);
-	List<Prenda> atuendoC = Arrays.asList(remera, pantalonA, zapatoA);
-	List<Prenda> atuendoD = Arrays.asList(remera, pantalonA, zapatoB);
-	List<Prenda> atuendoE = Arrays.asList(remera, pantalonB, zapatoA, accesorioA);
-	List<Prenda> atuendoF = Arrays.asList(remera, pantalonB, zapatoB, accesorioA);
-	List<Prenda> atuendoG = Arrays.asList(remera, pantalonB, zapatoA);
-	List<Prenda> atuendoH = Arrays.asList(remera, pantalonB, zapatoB);
-	List<Prenda> atuendoI = Arrays.asList(remeraB, pantalonA, zapatoA, accesorioA);
-	List<Prenda> atuendoJ = Arrays.asList(remeraB, pantalonA, zapatoB, accesorioA);
-	List<Prenda> atuendoK = Arrays.asList(remeraB, pantalonA, zapatoA);
-	List<Prenda> atuendoL = Arrays.asList(remeraB, pantalonA, zapatoB);
-	List<Prenda> atuendoM = Arrays.asList(remeraB, pantalonB, zapatoA, accesorioA);
-	List<Prenda> atuendoN = Arrays.asList(remeraB, pantalonB, zapatoB, accesorioA);
-	List<Prenda> atuendoO = Arrays.asList(remeraB, pantalonB, zapatoA);
-	List<Prenda> atuendoP = Arrays.asList(remeraB, pantalonB, zapatoB);
-
-	public static <T1, T2> boolean listContainsIgnoreOrder(Collection<List<T1>> list1, List<T2> list2) {
-		return list1.stream().anyMatch(element1 -> new HashSet<>(element1).equals(new HashSet<>(list2)));
-	}
+	Atuendo atuendoA = new Atuendo(Arrays.asList(remera, pantalonA, zapatoA, accesorioA));
+	Atuendo atuendoB = new Atuendo(Arrays.asList(remera, pantalonA, zapatoB, accesorioA));
+	Atuendo atuendoC = new Atuendo(Arrays.asList(remera, pantalonA, zapatoA));
+	Atuendo atuendoD = new Atuendo(Arrays.asList(remera, pantalonA, zapatoB));
+	Atuendo atuendoE = new Atuendo(Arrays.asList(remera, pantalonB, zapatoA, accesorioA));
+	Atuendo atuendoF = new Atuendo(Arrays.asList(remera, pantalonB, zapatoB, accesorioA));
+	Atuendo atuendoG = new Atuendo(Arrays.asList(remera, pantalonB, zapatoA));
+	Atuendo atuendoH = new Atuendo(Arrays.asList(remera, pantalonB, zapatoB));
+	Atuendo atuendoI = new Atuendo(Arrays.asList(remeraB, pantalonA, zapatoA, accesorioA));
+	Atuendo atuendoJ = new Atuendo(Arrays.asList(remeraB, pantalonA, zapatoB, accesorioA));
+	Atuendo atuendoK = new Atuendo(Arrays.asList(remeraB, pantalonA, zapatoA));
+	Atuendo atuendoL = new Atuendo(Arrays.asList(remeraB, pantalonA, zapatoB));
+	Atuendo atuendoM = new Atuendo(Arrays.asList(remeraB, pantalonB, zapatoA, accesorioA));
+	Atuendo atuendoN = new Atuendo(Arrays.asList(remeraB, pantalonB, zapatoB, accesorioA));
+	Atuendo atuendoO = new Atuendo(Arrays.asList(remeraB, pantalonB, zapatoA));
+	Atuendo atuendoP = new Atuendo(Arrays.asList(remeraB, pantalonB, zapatoB));
 
 	@Test
 	public void cargaRemeraEnGuardarropa() {
+		EntityManager em = entityManager();
+
 		Guardarropa guardarropa = new Guardarropa();
+		em.persist(guardarropa);
+
 		Assert.assertEquals(0, guardarropa.cantidadPrendasEn(Categoria.SUPERIOR));
 		guardarropa.agregarPrenda(remera);
 		Assert.assertEquals(1, guardarropa.cantidadPrendasEn(Categoria.SUPERIOR));
@@ -79,7 +82,8 @@ public class GuardarropaTest {
 
 	@Test
 	public void generaCorrectamenteLosAtuendos() {
-		Guardarropa guardarropa = new Guardarropa();
+		Guardarropa guardarropa = RepositorioGuardarropas.getInstance().createGuardarropas(new Guardarropa());
+
 		guardarropa.agregarPrenda(remera);
 		guardarropa.agregarPrenda(remeraB);
 		guardarropa.agregarPrenda(pantalonA);
@@ -87,21 +91,23 @@ public class GuardarropaTest {
 		guardarropa.agregarPrenda(accesorioA);
 		guardarropa.agregarPrenda(zapatoA);
 		guardarropa.agregarPrenda(zapatoB);
+		
+		withTransaction(() -> entityManager().flush());
 
-		Set<List<Prenda>> setAtuendos = new HashSet<>();
+		Set<Atuendo> setAtuendos = new HashSet<>();
 		setAtuendos.addAll(Arrays.asList(atuendoA, atuendoB, atuendoC, atuendoD,
 				atuendoE, atuendoF, atuendoG, atuendoH, atuendoI, atuendoJ, atuendoK,
 				atuendoL, atuendoM, atuendoN, atuendoO, atuendoP));
 
-		Set<List<Prenda>> atuendos = guardarropa.atuendos();
+		Set<Atuendo> atuendos = guardarropa.atuendos();
 
 		Assert.assertEquals(setAtuendos.size(), atuendos.size());
-		setAtuendos.forEach(atuendo -> Assert.assertTrue(atuendos.contains(atuendo)));
+		setAtuendos.forEach(atuendoEsperado -> Assert.assertTrue(atuendos.stream().anyMatch(atuendoGenerado -> atuendoGenerado.mismoAtuendo(atuendoEsperado))));
 	}
 
 	@Test
 	public void sinNoTieneSuficientesPrendasGeneraUnaColeccionVacia() {
-		Guardarropa guardarropa = new Guardarropa();
+		Guardarropa guardarropa = RepositorioGuardarropas.getInstance().createGuardarropas(new Guardarropa());
 
 		guardarropa.agregarPrenda(remera);
 		guardarropa.agregarPrenda(remeraB);
@@ -112,64 +118,82 @@ public class GuardarropaTest {
 
 	@Test
 	public void generaCorrectamenteAtuendosDeVariosAccesorios() {
-		Prenda accesorioB = new Prenda(TipoDePrendaFactory.aros(), Material.PLASTICO, Color.blue, null,null);
-		Guardarropa guardarropa = new Guardarropa();
+		
+
+		Prenda accesorioB = new Prenda(TipoDePrendaFactory.getInstance().aros(), Material.PLASTICO, Color.blue, null,null);
+		repoPrenda.createPrenda(accesorioB);
+
+		Guardarropa guardarropa = RepositorioGuardarropas.getInstance().createGuardarropas(new Guardarropa());
+
 		guardarropa.agregarPrenda(remera);
 		guardarropa.agregarPrenda(pantalonA);
 		guardarropa.agregarPrenda(zapatoA);
 		guardarropa.agregarPrenda(accesorioA);
 		guardarropa.agregarPrenda(accesorioB);
+		
+		withTransaction(() -> entityManager().flush());
 
-		List<Prenda> atuendoConB1 = Arrays.asList(remera, pantalonA, zapatoA, accesorioB);
-		List<Prenda> atuendoConB2 = Arrays.asList(remera, pantalonA, zapatoA, accesorioB, accesorioA);
+		Atuendo atuendoConB1 = new Atuendo(Arrays.asList(remera, pantalonA, zapatoA, accesorioB));
+		Atuendo atuendoConB2 = new Atuendo(Arrays.asList(remera, pantalonA, zapatoA, accesorioB, accesorioA));
 
-		Set<List<Prenda>> atuendos = guardarropa.atuendos();
-		List<List<Prenda>> setAtuendos = Arrays.asList(atuendoA, atuendoC, atuendoConB1, atuendoConB2);
+		Set<Atuendo> atuendos = guardarropa.atuendos();
+		List<Atuendo> setAtuendos = Arrays.asList(atuendoA, atuendoC, atuendoConB1, atuendoConB2);
 
 		Assert.assertEquals(setAtuendos.size(), atuendos.size());
-		atuendos.forEach(atuendoRecibido -> Assert.assertTrue(listContainsIgnoreOrder(setAtuendos, atuendoRecibido)));
+		setAtuendos.forEach(atuendoEsperado -> Assert.assertTrue(atuendos.stream().anyMatch(atuendoGenerado -> atuendoGenerado.mismoAtuendo(atuendoEsperado))));
 	}
 
 	@Test
 	public void generaAtuendosDeDosCapas() {
-		Guardarropa guardarropa = new Guardarropa();
-		Prenda buzo = new Prenda(TipoDePrendaFactory.buzo(),Material.ALGODON, Color.black, null,null);
+		Guardarropa guardarropa = RepositorioGuardarropas.getInstance().createGuardarropas(new Guardarropa());
+		Prenda buzo = new Prenda(TipoDePrendaFactory.getInstance().buzo(),Material.ALGODON, Color.black, null,null);
+		repoPrenda.createPrenda(buzo);
+
 		guardarropa.agregarPrenda(remera);
 		guardarropa.agregarPrenda(pantalonA);
 		guardarropa.agregarPrenda(zapatoA);
 		guardarropa.agregarPrenda(buzo);
+		
+		withTransaction(() -> entityManager().flush());
+		
+		Atuendo atuendoConBuzo = new Atuendo(Arrays.asList(remera, pantalonA, zapatoA, buzo));
+		Atuendo atuendoSinBuzo = new Atuendo(Arrays.asList(remera, pantalonA, zapatoA));
 
-		List<Prenda> atuendoConBuzo = Arrays.asList(remera, pantalonA, zapatoA, buzo);
-		List<Prenda> atuendoSinBuzo = Arrays.asList(remera, pantalonA, zapatoA);
-
-		Set<List<Prenda>> atuendosGenerados = guardarropa.atuendos();
-		List<List<Prenda>> atuendosEsperados = Arrays.asList(atuendoConBuzo, atuendoSinBuzo);
+		Set<Atuendo> atuendosGenerados = guardarropa.atuendos();
+		List<Atuendo> atuendosEsperados = Arrays.asList(atuendoConBuzo, atuendoSinBuzo);
 
 		Assert.assertEquals(atuendosGenerados.size(), atuendosEsperados.size());
-		atuendosGenerados.forEach(generado -> Assert.assertTrue(listContainsIgnoreOrder(atuendosEsperados, generado)));
+		atuendosEsperados.forEach(atuendoEsperado -> Assert.assertTrue(atuendosGenerados.stream().anyMatch(atuendoGenerado -> atuendoGenerado.mismoAtuendo(atuendoEsperado))));
 	}
 
 	@Test
 	public void generaAtuendosDeVariasCapas() {
-		Guardarropa guardarropa = new Guardarropa();
-		Prenda buzo = new Prenda(TipoDePrendaFactory.buzo(),Material.ALGODON, Color.black, null,null);
-		Prenda chaleco = new Prenda(TipoDePrendaFactory.chaleco(),Material.CUERO, Color.black, null,null);
+
+		Guardarropa guardarropa = RepositorioGuardarropas.getInstance().createGuardarropas(new Guardarropa());
+		Prenda buzo = new Prenda(TipoDePrendaFactory.getInstance().buzo(),Material.ALGODON, Color.black, null,null);
+		Prenda chaleco = new Prenda(TipoDePrendaFactory.getInstance().chaleco(),Material.CUERO, Color.black, null,null);
+
+		repoPrenda.createPrenda(buzo);
+		repoPrenda.createPrenda(chaleco);
+
 		guardarropa.agregarPrenda(remera);
 		guardarropa.agregarPrenda(pantalonA);
 		guardarropa.agregarPrenda(zapatoA);
 		guardarropa.agregarPrenda(buzo);
 		guardarropa.agregarPrenda(chaleco);
+		
+		withTransaction(() -> entityManager().flush());
 
-		List<Prenda> atuendoConBuzo = Arrays.asList(remera, pantalonA, zapatoA, buzo);
-		List<Prenda> atuendoConBuzoYChaleco = Arrays.asList(remera, pantalonA, zapatoA, buzo, chaleco);
-		List<Prenda> atuendoConChaleco = Arrays.asList(remera, pantalonA, zapatoA, chaleco);
-		List<Prenda> atuendoSimple = Arrays.asList(remera, pantalonA, zapatoA);
+		Atuendo atuendoConBuzo = new Atuendo(Arrays.asList(remera, pantalonA, zapatoA, buzo));
+		Atuendo atuendoConBuzoYChaleco = new Atuendo(Arrays.asList(remera, pantalonA, zapatoA, buzo, chaleco));
+		Atuendo atuendoConChaleco = new Atuendo(Arrays.asList(remera, pantalonA, zapatoA, chaleco));
+		Atuendo atuendoSimple = new Atuendo(Arrays.asList(remera, pantalonA, zapatoA));
 
-		Set<List<Prenda>> atuendosGenerados = guardarropa.atuendos();
-		List<List<Prenda>> atuendosEsperados = Arrays.asList(atuendoConBuzo, atuendoSimple, atuendoConChaleco, atuendoConBuzoYChaleco);
+		Set<Atuendo> atuendosGenerados = guardarropa.atuendos();
+		List<Atuendo> atuendosEsperados = Arrays.asList(atuendoConBuzo, atuendoSimple, atuendoConChaleco, atuendoConBuzoYChaleco);
 
 		Assert.assertEquals(atuendosGenerados.size(), atuendosEsperados.size());
-		atuendosGenerados.forEach(generado -> Assert.assertTrue(listContainsIgnoreOrder(atuendosEsperados, generado)));
+		atuendosEsperados.forEach(atuendoEsperado -> Assert.assertTrue(atuendosEsperados.stream().anyMatch(atuendoGenerado -> atuendoGenerado.mismoAtuendo(atuendoEsperado))));
 	}
 
 }

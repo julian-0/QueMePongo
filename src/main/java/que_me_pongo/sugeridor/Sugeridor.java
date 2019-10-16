@@ -1,13 +1,11 @@
 package que_me_pongo.sugeridor;
 
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.google.common.collect.Range;
 
-import que_me_pongo.prenda.Categoria;
+import que_me_pongo.atuendo.Atuendo;
 import que_me_pongo.prenda.Prenda;
 import que_me_pongo.proveedorClima.PronosticoClima;
 import que_me_pongo.usuario.Usuario;
@@ -23,8 +21,8 @@ public class Sugeridor {
 		this.cantParaExtender = cantParaExtender;
 	}
 	
-	public Set<List<Prenda>> sugerir(Set<List<Prenda>> atuendos, PronosticoClima pronostico, Usuario usuario) {
-		Set<List<Prenda>> sugeridos = this.filtrar(atuendos, pronostico, usuario, margenBase);
+	public Set<Atuendo> sugerir(Set<Atuendo> atuendos, PronosticoClima pronostico, Usuario usuario) {
+		Set<Atuendo> sugeridos = this.filtrar(atuendos, pronostico, usuario, margenBase);
 		
 		if(sugeridos.size() <= this.cantParaExtender)
 			sugeridos = this.filtrar(atuendos, pronostico, usuario, margenExtendido);
@@ -32,15 +30,15 @@ public class Sugeridor {
 		return sugeridos;
 	}
 	
-	private Set<List<Prenda>> filtrar(Set<List<Prenda>> atuendos, PronosticoClima pronostico, Usuario usuario, double margen) {
+	private Set<Atuendo> filtrar(Set<Atuendo> atuendos, PronosticoClima pronostico, Usuario usuario, double margen) {
 		return atuendos.stream().
 		 filter(atuendo -> sugerirAtuendo(atuendo, pronostico, usuario, margen)).
 		 collect(Collectors.toSet());
 	}
 	
-	private boolean sugerirAtuendo(List<Prenda> atuendo, PronosticoClima pronostico, Usuario usuario, double margen) {
-		double nivelAbrigoTotal = atuendo.stream().reduce(.0, this::reducirNivelAbrigo, (n1, n2) -> n1 + n2);
-		double pesoPreferencias = atuendo.stream().reduce(.0, (acc, prenda) -> acc - usuario.getPreferencia(prenda.getCategoria()), (n1, n2) -> n1 + n2); 
+	private boolean sugerirAtuendo(Atuendo atuendo, PronosticoClima pronostico, Usuario usuario, double margen) {
+		double nivelAbrigoTotal = atuendo.getPrendas().stream().reduce(.0, this::reducirNivelAbrigo, (n1, n2) -> n1 + n2);
+		double pesoPreferencias = atuendo.getPrendas().stream().reduce(.0, (acc, prenda) -> acc - usuario.getPreferencia(prenda.getCategoria()), (n1, n2) -> n1 + n2);
 		return Range.closed(pronostico.getTemperatura()-margen, pronostico.getTemperatura()+margen).
 								 contains(aTemperatura(nivelAbrigoTotal + pesoPreferencias));
 	}
