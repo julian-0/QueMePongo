@@ -51,6 +51,9 @@ public class Usuario {
 		this.tipoUsuario = tipo;
 		this.preferencias = new HashMap();
 		this.passwordDigest = hashPassword(password);
+
+		this.guardarropas.add(new Guardarropa());
+		this.guardarropas.add(new Guardarropa());
 	}
 
 //	La forma de instanciar una prenda sería:
