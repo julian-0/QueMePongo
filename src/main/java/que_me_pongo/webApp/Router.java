@@ -1,5 +1,6 @@
 package que_me_pongo.webApp;
 
+import que_me_pongo.webApp.controllers.ListarGuardarropasController;
 import que_me_pongo.webApp.controllers.LogInController;
 import spark.Spark;
 
@@ -8,5 +9,7 @@ public class Router {
 		LogInController loginController = new LogInController();
 		Spark.get("/login", loginController::show);
 		Spark.post("/login", loginController::create);
+		ListarGuardarropasController listarGuardarropasController = new ListarGuardarropasController();
+		Spark.get("/listarGuardarropas", listarGuardarropasController::show);
 	}
 }
