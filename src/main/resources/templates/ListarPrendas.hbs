@@ -2,18 +2,18 @@
 <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/lux/bootstrap.min.css" rel="stylesheet" integrity="sha384-hVpXlpdRmJ+uXGwD5W6HZMnR9ENcKVRn855pPbuI/mwPIEKAuKgTKgGksVGmlAvt" crossorigin="anonymous">
 <form name="listadoGuardarropas" method="get">
     <div class="bs-docs-section">
-         <div class="col-md-4">
+        <div class="col-md-4">
 
             <div class="bs-component">
                 <div class="jumbotron">
-                <h2>Sus guardarropas</h2>
+                    <h2>Sus prendas</h2>
                     <hr class="my-4">
                     <div class="card border-primary mb-3" style="max-width: 20rem;">
                         <div class="list-group">
-                        <a href="#" class="list-group-item list-group-item-action active">{{guardarropa1}}
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action active">{{guardarropa2}}
-                        </a>
+                        {{#each this}}
+                            <a href="#" class="list-group-item list-group-item-action active">{{this}}
+                            </a>
+                        {{/each}}
                         </div>
                     </div>
                 </div>
