@@ -55,7 +55,7 @@ public class UsuarioTest extends AbstractPersistenceTest implements WithGlobalEn
 	public void usuarioDevuelveLosAtuendosCorrectamente() {
 		EntityManager em = entityManager();
 
-		Usuario usuario = new Usuario("DDS",null,TipoUsuario.PREMIUM);
+		Usuario usuario = new Usuario("DDS",null,TipoUsuario.PREMIUM, "");
 		em.persist(usuario);
 		Guardarropa guardarropa1 = new Guardarropa(),
 								guardarropa2 = new Guardarropa();
@@ -100,7 +100,7 @@ public class UsuarioTest extends AbstractPersistenceTest implements WithGlobalEn
 
 	@Test
 	public void usuarioPremiumPuedeAgregarMuchasPrendas() {
-		Usuario usuario = new Usuario("DDS",null,TipoUsuario.PREMIUM);
+		Usuario usuario = new Usuario("DDS",null,TipoUsuario.PREMIUM, "");
 		Guardarropa guardarropa = new Guardarropa();
 		usuario.agregarGuardarropas(guardarropa);
 
@@ -128,7 +128,7 @@ public class UsuarioTest extends AbstractPersistenceTest implements WithGlobalEn
 		//expectedEx.expectMessage("Su guardarropas esta lleno, si desea tener mas lugar puede hacerse socio premium");
 
 		Guardarropa guardarropa = new Guardarropa();
-		Usuario usuario = new Usuario("DDS",null,TipoUsuario.GRATUITO);
+		Usuario usuario = new Usuario("DDS",null,TipoUsuario.GRATUITO, "");
 		usuario.agregarGuardarropas(guardarropa);
 
 		usuario.agregarPrenda(remeraA,guardarropa);

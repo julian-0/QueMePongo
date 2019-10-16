@@ -9,8 +9,11 @@ import que_me_pongo.prenda.Categoria;
 
 import javax.persistence.*;
 
+import com.google.common.hash.Hashing;
+
 import que_me_pongo.atuendo.Atuendo;
 
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -20,10 +23,12 @@ public class Usuario {
 	@Id
 	@GeneratedValue
 	private long id;
-
+	
 	private String nombre;
 
 	private String mail;
+
+	private String passwordDigest;
 
 	@ManyToMany(cascade = CascadeType.PERSIST)
 	private Set<Guardarropa> guardarropas = new HashSet<Guardarropa>();
@@ -37,14 +42,15 @@ public class Usuario {
 	@MapKeyEnumerated
 	private Map<Categoria, Double> preferencias;
 
-	public Usuario() {
+	private Usuario() {
 	}
 
-	public Usuario(String name, String email, TipoUsuario tipo){
+	public Usuario(String name, String email, TipoUsuario tipo, String password){
 		this.nombre = name;
 		this.mail = email;
 		this.tipoUsuario = tipo;
 		this.preferencias = new HashMap();
+		this.passwordDigest = hashPassword(password);
 	}
 
 //	La forma de instanciar una prenda sería:
@@ -57,6 +63,8 @@ public class Usuario {
 	public String getNombre() { return nombre; }
 
 	public String getMail() { return mail; }
+	
+	public String getPasswordDigest() { return passwordDigest; }
 
 	public void agregarGuardarropas(Guardarropa guardarropa){
 		guardarropas.add(guardarropa);
@@ -85,5 +93,15 @@ public class Usuario {
 		return preferencias.getOrDefault(categoria, 0.);
 	}
 	
+	public boolean chequearPassword(String password) {
+		String toCheckDigest = hashPassword(password); 
+		return toCheckDigest.equals(passwordDigest);
+	}
+	
+	private String hashPassword(String password) {
+		return Hashing.sha256()
+					 .hashString(password, StandardCharsets.UTF_8)
+					 .toString();
+	}
 
 }

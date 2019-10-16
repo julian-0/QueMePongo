@@ -14,6 +14,10 @@ import que_me_pongo.evento.RepositorioEventos;
 import que_me_pongo.evento.repetidores.RepeticionDeEvento;
 import que_me_pongo.guardarropa.Guardarropa;
 import que_me_pongo.guardarropa.RepositorioGuardarropas;
+import que_me_pongo.prenda.Material;
+import que_me_pongo.prenda.Prenda;
+import que_me_pongo.prenda.RepositorioPrendas;
+import que_me_pongo.prenda.TipoDePrendaFactory;
 import que_me_pongo.proveedorClima.InstanciaProveedorClima;
 import que_me_pongo.proveedorClima.PronosticoClima;
 import que_me_pongo.proveedorClima.ProveedorClima;
@@ -21,6 +25,7 @@ import que_me_pongo.usuario.RepositorioUsuarios;
 import que_me_pongo.usuario.TipoUsuario;
 import que_me_pongo.usuario.Usuario;
 
+import java.awt.Color;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,7 +39,7 @@ import javax.persistence.EntityManager;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EventoJobTest extends AbstractPersistenceTest implements WithGlobalEntityManager {
-    Usuario usuario = new Usuario("Julian", null, TipoUsuario.PREMIUM);
+    Usuario usuario = new Usuario("Julian", null, TipoUsuario.PREMIUM, "");
     Guardarropa guardarropa = new Guardarropa();
 
     @Mock
@@ -109,6 +114,45 @@ public class EventoJobTest extends AbstractPersistenceTest implements WithGlobal
         Assert.assertNotSame(sugEv2, evento2.getSugerenciasPendientes());
         Assert.assertNull(evento3.getSugerenciasPendientes());
         Assert.assertNull(evento4.getSugerenciasPendientes());
+
+    }
+    
+    @Test
+    public void seGenerarLasRepeticiones() throws Exception {
+        LocalDateTime ahora = LocalDateTime.now();
+
+        Mockito.when(prov.getPronostico()).thenReturn(Arrays.asList(new PronosticoClima(ahora, 15),
+                new PronosticoClima(ahora.plusDays(1), 15),
+                new PronosticoClima(ahora.plusDays(2), 15),
+                new PronosticoClima(ahora.plusDays(3), 15)));
+
+        Evento evento = new Evento(ahora.plusDays(1), usuario, guardarropa, "Ir al campo", new ArrayList(), RepeticionDeEvento.DIARIO);
+
+        RepositorioEventos.getInstance().agendar(evento);
+        
+        RepositorioPrendas repoPrendas = RepositorioPrendas.getInstance();
+        
+        Prenda remera = repoPrendas.createPrenda(new Prenda(TipoDePrendaFactory.getInstance().remeraMangaCorta(), Material.SEDA, Color.BLACK, null,null));
+        Prenda remeraB = repoPrendas.createPrenda(new Prenda(TipoDePrendaFactory.getInstance().remeraMangaCorta(),Material.ALGODON, Color.WHITE, null,null));
+        Prenda pantalonA = repoPrendas.createPrenda(new Prenda(TipoDePrendaFactory.getInstance().shorts(),Material.ALGODON, Color.BLACK, null,null));
+        Prenda pantalonB = repoPrendas.createPrenda(new Prenda(TipoDePrendaFactory.getInstance().shorts(),Material.ALGODON, Color.PINK, null,null));
+        Prenda accesorioA = repoPrendas.createPrenda(new Prenda(TipoDePrendaFactory.getInstance().anteojos(),Material.PLASTICO, Color.ORANGE, null,null));
+        Prenda zapatoA = repoPrendas.createPrenda(new Prenda(TipoDePrendaFactory.getInstance().zapatosDeTacon(),Material.CUERO, Color.BLUE, null,null));
+        Prenda zapatoB = repoPrendas.createPrenda(new Prenda(TipoDePrendaFactory.getInstance().zapatosDeTacon(),Material.CUERO, Color.GREEN, null,null));
+        
+        guardarropa.agregarPrenda(remera);
+        guardarropa.agregarPrenda(remeraB);
+        guardarropa.agregarPrenda(pantalonA);
+        guardarropa.agregarPrenda(pantalonB);
+        guardarropa.agregarPrenda(accesorioA);
+        guardarropa.agregarPrenda(zapatoA);
+        guardarropa.agregarPrenda(zapatoB);
+
+        EventoJob job = new EventoJob();
+
+        job.execute(null);
+        
+        Assert.assertEquals(2, RepositorioEventos.getInstance().getEventos().size());
 
     }
 }

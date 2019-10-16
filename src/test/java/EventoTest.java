@@ -19,7 +19,7 @@ import que_me_pongo.usuario.TipoUsuario;
 import que_me_pongo.usuario.Usuario;
 
 public class EventoTest extends AbstractPersistenceTest implements WithGlobalEntityManager {
-    Usuario usuario = new Usuario("Julian", null, TipoUsuario.PREMIUM);
+    Usuario usuario = new Usuario("Julian", null, TipoUsuario.PREMIUM, "");
     Guardarropa guardarropa = new Guardarropa();
 
 

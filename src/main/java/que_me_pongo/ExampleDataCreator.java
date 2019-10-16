@@ -8,6 +8,7 @@ import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 
 import que_me_pongo.evento.RepositorioEventos;
+import que_me_pongo.evento.listeners.EventoListener;
 import que_me_pongo.evento.repetidores.RepeticionDeEvento;
 import que_me_pongo.guardarropa.Guardarropa;
 import que_me_pongo.guardarropa.RepositorioGuardarropas;
@@ -25,7 +26,7 @@ public class ExampleDataCreator implements WithGlobalEntityManager, Transactiona
 
 	public void createData() {
 		InstanciaProveedorClima.setInstancia(new ClimaOpenWeather());
-    Usuario usuario = RepositorioUsuarios.getInstance().createUsuario(new Usuario("Julian",null, TipoUsuario.PREMIUM));
+    Usuario usuario = RepositorioUsuarios.getInstance().createUsuario(new Usuario("Julian",null, TipoUsuario.PREMIUM, "password"));
     
     RepositorioPrendas repoPrendas = RepositorioPrendas.getInstance();
 
@@ -47,10 +48,10 @@ public class ExampleDataCreator implements WithGlobalEntityManager, Transactiona
     guardarropa.agregarPrenda(zapatoB);
     LocalDateTime ahora = LocalDateTime.now();
 
-    RepositorioEventos.getInstance().crearEvento(ahora.plusDays(1), usuario, guardarropa,"Ir al campo", new ArrayList(), RepeticionDeEvento.NOREPITE);
-    RepositorioEventos.getInstance().crearEvento(ahora.plusDays(1), usuario, guardarropa,"Cumpleaños", new ArrayList(), RepeticionDeEvento.DIARIO);
-    RepositorioEventos.getInstance().crearEvento(ahora.plusDays(4), usuario, guardarropa,"Casamiento", new ArrayList(), RepeticionDeEvento.NOREPITE);
-    RepositorioEventos.getInstance().crearEvento(ahora.plusDays(5), usuario, guardarropa,"Bautismo", new ArrayList(), RepeticionDeEvento.NOREPITE);
+    RepositorioEventos.getInstance().crearEvento(ahora.plusDays(1), usuario, guardarropa,"Ir al campo", new ArrayList<EventoListener>(), RepeticionDeEvento.NOREPITE);
+    RepositorioEventos.getInstance().crearEvento(ahora.plusDays(1), usuario, guardarropa,"Cumpleaños", new ArrayList<EventoListener>(), RepeticionDeEvento.DIARIO);
+    RepositorioEventos.getInstance().crearEvento(ahora.plusDays(4), usuario, guardarropa,"Casamiento", new ArrayList<EventoListener>(), RepeticionDeEvento.NOREPITE);
+    RepositorioEventos.getInstance().crearEvento(ahora.plusDays(5), usuario, guardarropa,"Bautismo", new ArrayList<EventoListener>(), RepeticionDeEvento.NOREPITE);
     
     beginTransaction();
     	entityManager().flush();
