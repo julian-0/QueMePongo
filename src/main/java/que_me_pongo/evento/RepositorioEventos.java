@@ -62,8 +62,10 @@ public class RepositorioEventos implements WithGlobalEntityManager, Transactiona
     
     public Set<Evento> eventosDeUsuario(Usuario usuario, LocalDateTime desde, LocalDateTime hasta) {
     	return entityManager()
-    			.createQuery("FROM Evento WHERE usuario_id = :usuario", Evento.class)
+    			.createQuery("FROM Evento WHERE usuario_id = :usuario AND fecha BETWEEN :desde AND :hasta", Evento.class)
     			.setParameter("usuario", usuario)
+    			.setParameter("desde", desde)
+    			.setParameter("hasta", hasta)
     			.getResultList().stream().collect(Collectors.toSet());
     }
     

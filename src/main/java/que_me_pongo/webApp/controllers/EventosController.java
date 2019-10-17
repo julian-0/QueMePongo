@@ -1,5 +1,6 @@
 package que_me_pongo.webApp.controllers;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -31,19 +32,18 @@ public class EventosController {
 			res.status(401);
 			return "";
 		}
-		Set<Evento> eventos = RepositorioEventos.getInstance().eventosDeUsuario(usuario, null, null);
+		
+		String startString = req.queryParams("start"),
+					 endString = req.queryParams("end");
+		
+		LocalDateTime.parse(startString.substring(0, 19));
+		
+		Set<Evento> eventos = RepositorioEventos.getInstance().eventosDeUsuario(usuario, LocalDateTime.parse(startString.substring(0, 19)), LocalDateTime.parse(endString.substring(0, 19)));
 		
 		List<EntradaCalendario> list = eventos.stream()
 																	 .map(evento -> new EntradaCalendario(evento.getDescripcion(), evento.getFecha()))
 																	 .collect(Collectors.toList());
-		/*
-		 * StringBuilder stringBuilder = new StringBuilder("["); List<String>
-		 * eventosJson = eventos.stream().map(evento -> new
-		 * StringBuilder().append("{title:"). append(evento.getDescripcion()).
-		 * append(",start:"). append(evento.getFecha()). append("}").toString())
-		 * .collect(Collectors.toList()); stringBuilder.append(String.join(",",
-		 * eventosJson)); stringBuilder.append("]");
-		 */
+		
 		res.type("application/json");
 		return new Gson().toJson(list);
 	}
