@@ -1,7 +1,13 @@
 package que_me_pongo.guardarropa;
 
+import com.google.common.base.Optional;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
+import que_me_pongo.usuario.RepositorioUsuarios;
+import que_me_pongo.usuario.Usuario;
+
+import java.util.Set;
+
 
 public class RepositorioGuardarropas implements WithGlobalEntityManager, TransactionalOps {
 	static private RepositorioGuardarropas instancia;
@@ -17,5 +23,12 @@ public class RepositorioGuardarropas implements WithGlobalEntityManager, Transac
 	public Guardarropa createGuardarropas(Guardarropa guardarropa) {
 		withTransaction(() -> entityManager().persist(guardarropa));
 		return guardarropa;
+	}
+
+	public Set<Guardarropa> buscarPorUsuario(String nombreUsuario){
+
+		Optional<Usuario> usuario = RepositorioUsuarios.getInstance().buscarPorNombre(nombreUsuario);
+
+		return usuario.get().getGuardarropas();
 	}
 }
