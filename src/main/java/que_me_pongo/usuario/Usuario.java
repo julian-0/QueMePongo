@@ -24,6 +24,10 @@ public class Usuario {
 	@GeneratedValue
 	private long id;
 	
+	public long getId() {
+		return id;
+	}
+
 	private String nombre;
 
 	private String mail;

@@ -3,6 +3,7 @@ package que_me_pongo.evento;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Set;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
@@ -57,6 +58,13 @@ public class RepositorioEventos implements WithGlobalEntityManager, Transactiona
 				   getResultList().
 				   stream().
 				   collect(Collectors.toSet());
+    }
+    
+    public Set<Evento> eventosDeUsuario(Usuario usuario, LocalDateTime desde, LocalDateTime hasta) {
+    	return entityManager()
+    			.createQuery("FROM Evento WHERE usuario_id = :usuario", Evento.class)
+    			.setParameter("usuario", usuario)
+    			.getResultList().stream().collect(Collectors.toSet());
     }
     
 }
