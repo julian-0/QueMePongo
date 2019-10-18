@@ -9,6 +9,6 @@ public class WebAppMain {
 		Spark.port(9000);
 		DebugScreen.enableDebugScreen();
 		Router.configurar();
+		new DB().configurarTransacciones();
 	}
-
 }
