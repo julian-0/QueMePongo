@@ -59,7 +59,11 @@ public class Evento {
     @OneToOne(cascade = CascadeType.PERSIST)
     private Atuendo aceptado;
 
-    @ManyToMany
+    public Atuendo getAceptado() {
+			return aceptado;
+		}
+
+		@ManyToMany
     private Collection<EventoListener> listenersSugerir;
 
     @Enumerated(EnumType.STRING)
@@ -107,6 +111,8 @@ public class Evento {
     }
 
     public List<Atuendo> getSugerenciasPendientes() { return sugerencias; }
+    
+    public Atuendo getProximaSugerenciaPendiente() { return sugerencias.get(0); }
 
     public Collection<EventoListener> getListenersSugerir(){
     	return this.listenersSugerir;
@@ -142,18 +148,20 @@ public class Evento {
     	validarExistenSugerencias();
     	validarNoAceptado();
     	
-    	//removeFirst tira su propia excepcion si está vacia, tal vez atajarlo antes y tirar una nuestra
     	rechazados.add(sugerencias.remove(0));
     }
     
-    public void aceptarSugerencia(Set<Categoria> aumentarAbrigo, Set<Categoria> reducirAbrigo) {
+    public void aceptarSugerencia() {
     	validarExistenSugerencias();
     	validarNoAceptado();
     	aceptado = sugerencias.remove(0);
-    	usuario.ajustarPreferencias(aumentarAbrigo, reducirAbrigo);
+    	rechazados.addAll(sugerencias);
+    	sugerencias.clear();
     	guardarropa.reservarAtuendo(fecha.toLocalDate(), aceptado);
-    	this.aumentoAbrigo = aumentarAbrigo;
-    	this.reduccionAbrigo = reducirAbrigo;
+    }
+    
+    public void setOpiniones(Set<Categoria> aumentarAbrigo, Set<Categoria> reducirAbrigo) {
+    	usuario.ajustarPreferencias(aumentarAbrigo, reducirAbrigo);
     }
     
     public void deshacerDecision() {
@@ -162,7 +170,8 @@ public class Evento {
     		sugerencias.add(0, aceptado);
     		guardarropa.liberarAtuendo(fecha.toLocalDate(), aceptado);
     		aceptado = null;
-    		usuario.ajustarPreferencias(reduccionAbrigo, aumentoAbrigo);
+    		if(aumentoAbrigo != null) 
+    			usuario.ajustarPreferencias(reduccionAbrigo, aumentoAbrigo);
     	}
     	else if(!rechazados.isEmpty()) {
     		sugerencias.add(0, rechazados.remove(rechazados.size() - 1));
@@ -180,6 +189,14 @@ public class Evento {
     
     public boolean getSugirio() {
     	return tieneSugerencias;
+    }
+    
+    public boolean sugerenciaAceptada() {
+    	return aceptado != null;
+    }
+    
+    public boolean sugerenciasVacias() {
+    	return getSugirio() && sugerencias.isEmpty() && aceptado == null;
     }
     
     private void validarNoAceptado() {
