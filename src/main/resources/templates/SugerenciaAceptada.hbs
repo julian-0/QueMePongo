@@ -1,0 +1,10 @@
+<h1>Atuendo aceptado</h1>
+{{#if automatico }}
+  <b>A falta de otras opciones se selecciono este atuendo automaticamente</b>
+{{/if }}
+
+<ul>
+{{#each prendas }}
+  <li>{{ this }}</li>
+{{/each }}
+</ul>
