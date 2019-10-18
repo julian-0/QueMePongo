@@ -3,6 +3,7 @@ package que_me_pongo.webApp;
 import que_me_pongo.webApp.controllers.EventosController;
 import que_me_pongo.webApp.controllers.GuardarropasController;
 import que_me_pongo.webApp.controllers.LogInController;
+import que_me_pongo.webApp.controllers.SugerenciasController;
 import spark.Spark;
 
 public class Router {
@@ -15,6 +16,10 @@ public class Router {
 		Spark.get("/guardarropas", guardarropasController::show);
 		EventosController eventosController = new EventosController();
 		Spark.get("/eventos", eventosController::index);
+		Spark.get("/evento/:id", eventosController::show);
 		Spark.get("/eventosJson", eventosController::entradasCalendario);
+		SugerenciasController sugerenciasController = new SugerenciasController();
+		Spark.get("/evento/:id/sugerencias", sugerenciasController::show);
+		Spark.post("/evento/:id/sugerencias", sugerenciasController::show);
 	}
 }
