@@ -10,7 +10,7 @@ public class EntradaCalendario {
 	public EntradaCalendario(Evento evento) {
 		this.title = evento.getDescripcion();
 		this.start = evento.getFecha().toString().substring(0, 19);
-		this.url = "/Eventos/" + evento.getId();
+		this.url = "/evento/" + evento.getId();
 	}
 
 }
