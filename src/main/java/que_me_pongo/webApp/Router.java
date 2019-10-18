@@ -20,6 +20,6 @@ public class Router {
 		Spark.get("/eventosJson", eventosController::entradasCalendario);
 		SugerenciasController sugerenciasController = new SugerenciasController();
 		Spark.get("/evento/:id/sugerencias", sugerenciasController::show);
-		Spark.post("/evento/:id/sugerencias", sugerenciasController::show);
+		Spark.post("/evento/:id/sugerencias", sugerenciasController::modificar);
 	}
 }
