@@ -36,14 +36,6 @@ public class SugerenciasController {
 			mapa.put("prendas", aceptado.getPrendas());
 			modelAndView = new ModelAndView(mapa, "SugerenciaAceptada.hbs");
 		}
-		//Este if podria pasarse a la logica del modelo y que se haga solo cuando se generan las sugerencias.
-		else if(evento.getSugerenciasPendientes().size() == 1) {
-			Atuendo proximo = evento.getProximaSugerenciaPendiente();
-			evento.aceptarSugerencia();
-			mapa.put("automatico", true);
-			mapa.put("prendas", proximo.getPrendas());
-			modelAndView = new ModelAndView(mapa, "SugerenciaAceptada.hbs");
-		}
 		else {
 			Atuendo proximo = evento.getProximaSugerenciaPendiente();
 			mapa.put("prendas", proximo.getPrendas());
