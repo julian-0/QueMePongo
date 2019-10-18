@@ -7,7 +7,9 @@ import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 
 import com.google.common.base.Optional;
 
-public class RepositorioUsuarios implements WithGlobalEntityManager, TransactionalOps {
+import que_me_pongo.QueriesInterfaces;
+
+public class RepositorioUsuarios implements QueriesInterfaces, TransactionalOps {
 	static private RepositorioUsuarios instancia;
 	
 	static public RepositorioUsuarios getInstance() {
@@ -29,17 +31,5 @@ public class RepositorioUsuarios implements WithGlobalEntityManager, Transaction
 	
 	public Optional<Usuario> buscarPorMail(String mail) {
 		return buscarUno("FROM Usuario WHERE mail = :mail", "mail", mail);				 
-	}
-	
-	private Optional<Usuario> buscarUno(String query, String parameter, String value) {
-		try {
-			Usuario usuario = entityManager().createQuery(query, Usuario.class)
-		 			.setParameter(parameter, value)
-		 			.getSingleResult();
-			return Optional.of(usuario);
-		}
-		catch(NoResultException e) {
-			return Optional.absent();
-		}
 	}
 }

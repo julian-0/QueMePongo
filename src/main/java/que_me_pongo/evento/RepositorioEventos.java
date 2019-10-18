@@ -9,12 +9,15 @@ import java.util.stream.Collectors;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 
+import com.google.common.base.Optional;
+
+import que_me_pongo.QueriesInterfaces;
 import que_me_pongo.evento.listeners.EventoListener;
 import que_me_pongo.evento.repetidores.RepeticionDeEvento;
 import que_me_pongo.guardarropa.Guardarropa;
 import que_me_pongo.usuario.Usuario;
 
-public class RepositorioEventos implements WithGlobalEntityManager, TransactionalOps {
+public class RepositorioEventos implements QueriesInterfaces, TransactionalOps {
 
     public static RepositorioEventos instancia;
 
@@ -47,6 +50,10 @@ public class RepositorioEventos implements WithGlobalEntityManager, Transactiona
         			 createQuery("FROM Evento", Evento.class).
         			 getResultList().stream().
         			 collect(Collectors.toSet());
+    }
+    
+    public Optional<Evento> getEvento(Long id) {
+    	return buscarUno("FROM Evento WHERE id = :id", "id", id);
     }
 
 
