@@ -47,12 +47,12 @@ public class Evento {
     private boolean tieneSugerencias = false;
     
     @OneToMany(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "eventoId")
+    @JoinTable(name = "Evento_Atuendo_Sugerencias")
     @OrderColumn(name = "ordSugerencias")
     private List<Atuendo> sugerencias;
     
     @OneToMany(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "eventoId")
+    @JoinTable(name = "Evento_Atuendo_Rechazados")
     @OrderColumn(name = "ordRechazados")
     private List<Atuendo> rechazados;
 
