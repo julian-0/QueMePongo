@@ -26,7 +26,11 @@ public class Evento {
     @Id @GeneratedValue
     private long id;
 
-    @Convert(converter = LocalDateTimeAttributeConverter.class)
+    public long getId() {
+			return id;
+		}
+
+		@Convert(converter = LocalDateTimeAttributeConverter.class)
     private LocalDateTime fecha;
 
     @ManyToOne(cascade = CascadeType.PERSIST)

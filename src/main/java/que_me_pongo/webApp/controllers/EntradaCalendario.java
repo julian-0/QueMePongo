@@ -1,14 +1,16 @@
 package que_me_pongo.webApp.controllers;
 
-import java.time.LocalDateTime;
+import que_me_pongo.evento.Evento;
 
 public class EntradaCalendario {
 	public String title;
 	public String start;
+	public String url;
 	
-	public EntradaCalendario(String title, LocalDateTime start) {
-		this.title = title;
-		this.start = start.toString().substring(0, 19);
+	public EntradaCalendario(Evento evento) {
+		this.title = evento.getDescripcion();
+		this.start = evento.getFecha().toString().substring(0, 19);
+		this.url = "/Eventos/" + evento.getId();
 	}
 
 }

@@ -25,7 +25,7 @@ public class EventosController {
 		return new HandlebarsTemplateEngine().render(modelAndView);
 	}
 	
-	public String json(Request req, Response res) {
+	public String entradasCalendario(Request req, Response res) {
 		Usuario usuario = req.session().attribute("usuario");
 		if(usuario == null)
 		{
@@ -41,7 +41,7 @@ public class EventosController {
 		Set<Evento> eventos = RepositorioEventos.getInstance().eventosDeUsuario(usuario, LocalDateTime.parse(startString.substring(0, 19)), LocalDateTime.parse(endString.substring(0, 19)));
 		
 		List<EntradaCalendario> list = eventos.stream()
-																	 .map(evento -> new EntradaCalendario(evento.getDescripcion(), evento.getFecha()))
+																	 .map(evento -> new EntradaCalendario(evento))
 																	 .collect(Collectors.toList());
 		
 		res.type("application/json");

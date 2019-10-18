@@ -15,6 +15,6 @@ public class Router {
 		Spark.get("/guardarropas", guardarropasController::show);
 		EventosController eventosController = new EventosController();
 		Spark.get("/eventos", eventosController::index);
-		Spark.get("/eventosJson", eventosController::json);
+		Spark.get("/eventosJson", eventosController::entradasCalendario);
 	}
 }
