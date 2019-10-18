@@ -33,7 +33,7 @@ public class Prenda {
 	@Lob
 	private BufferedImage imagen = null;
 
-	@OneToMany @JoinColumn(name="prenda_id")
+	@OneToMany(cascade = CascadeType.ALL) @JoinColumn(name="prenda_id")
 	private Set<Reserva> reservas = new LinkedHashSet<Reserva>();
 
 	@Override
