@@ -129,6 +129,9 @@ public class Evento {
         rechazados = new LinkedList<Atuendo>();
         aceptado = null;
         this.pronostico = pronostico;
+        
+        if(sugerencias.size() == 1)
+        	this.aceptarSugerencia();
     }
 
     //Le va a cargar una lista de atuendos al usuario en su lista atuendos pendientes
