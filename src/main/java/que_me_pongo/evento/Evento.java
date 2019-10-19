@@ -46,12 +46,19 @@ public class Evento {
 
     private boolean tieneSugerencias = false;
     
-    @OneToMany(cascade = CascadeType.PERSIST)
+    /*
+     * La relación de las sugerencias y los rechazados es OneToMany
+     * pero Hibernate resuelve la lista ordenada manteniendo los 
+     * valores de la columna indice y actualizado la columna de id
+     * lo que choca con las constraint de OneToMany.
+     */
+    
+    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
     @JoinTable(name = "Evento_Atuendo_Sugerencias")
     @OrderColumn(name = "ordSugerencias")
     private List<Atuendo> sugerencias;
     
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
     @JoinTable(name = "Evento_Atuendo_Rechazados")
     @OrderColumn(name = "ordRechazados")
     private List<Atuendo> rechazados;
