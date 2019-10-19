@@ -18,7 +18,10 @@ public class SugerenciasController {
 	public String show(Request req, Response res) {
 		Usuario usuario = req.session().attribute("usuario");
 		if(req.session().attribute("usuario") == null)
+		{
 			res.redirect("/login");
+			return null;
+		}
 		
 		String stringId = req.params("id");
 		Long id = Long.valueOf(stringId);
