@@ -1,8 +1,9 @@
+<h1>Sus guardarropas</h1>
 <b>{{ resultado }}</b>
 <form name="listadoGuardarropas" method="get">
     <ul>
         {{#each guardarropas}}
-            <li>{{@index}}. Guardarropa de id: {{id}}</li>
+            <li><a href="{{link}}/{{id}}"> {{@index}}. Guardarropa de id: {{id}} </a></li>
         {{/each}}
     </ul>
 </form>

@@ -42,6 +42,15 @@ public class Guardarropa implements WithGlobalEntityManager{
 		prendas = new HashSet<Prenda>();
 	}
 
+	public Set<Prenda> getPrendas() {
+		return entityManager().
+				createQuery("FROM Prenda WHERE guardarropa_id = :id", Prenda.class).
+				setParameter("id", id).
+				getResultList().
+				stream().
+				collect(Collectors.toSet());
+	}
+
 	public void agregarPrenda(Prenda prenda) {
 		Objects.requireNonNull(prenda);
 		if(prendas.contains(prenda))
