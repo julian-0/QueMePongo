@@ -18,8 +18,10 @@ public class GuardarropasController {
         Usuario user = req.session().attribute("usuario");
         Map<String, Object> mapa = new HashMap<String, Object>();
 
-        if(user==null)
+        if(user==null) {
             mapa.put("resultado", "Primero inicie sesión");
+            res.redirect("/login");
+        }
         else{
             Set<Guardarropa> guardarropas = user.getGuardarropas();
             mapa.put("guardarropas", guardarropas);
