@@ -44,7 +44,14 @@ public class Evento {
     @Embedded
     private PronosticoClima pronostico;
 
+    /*
+     * Dado que el orm no hace diferencia entre no tener
+     * coleccion y tener una vacia, ya no podemos usar null
+     * para distinguir, arreglo booleanos.
+     */
     private boolean tieneSugerencias = false;
+    
+    private boolean tieneOpiniones = false;
     
     /*
      * La relación de las sugerencias y los rechazados es OneToMany
@@ -172,6 +179,11 @@ public class Evento {
     
     public void setOpiniones(Set<Categoria> aumentarAbrigo, Set<Categoria> reducirAbrigo) {
     	usuario.ajustarPreferencias(aumentarAbrigo, reducirAbrigo);
+    	tieneOpiniones = true;
+    }
+    
+    public boolean opinado() {
+    	return tieneOpiniones;
     }
     
     public void deshacerDecision() {
@@ -180,8 +192,10 @@ public class Evento {
     		sugerencias.add(0, aceptado);
     		guardarropa.liberarAtuendo(fecha.toLocalDate(), aceptado);
     		aceptado = null;
-    		if(aumentoAbrigo != null) 
+    		if(tieneOpiniones) {
     			usuario.ajustarPreferencias(reduccionAbrigo, aumentoAbrigo);
+    			tieneOpiniones = false;
+    		}
     	}
     	else if(!rechazados.isEmpty()) {
     		sugerencias.add(0, rechazados.remove(rechazados.size() - 1));

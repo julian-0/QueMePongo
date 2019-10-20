@@ -1,5 +1,6 @@
 package que_me_pongo.webApp;
 
+import que_me_pongo.webApp.controllers.AtuendoAceptadoController;
 import que_me_pongo.webApp.controllers.EventosController;
 import que_me_pongo.webApp.controllers.GuardarropasController;
 import que_me_pongo.webApp.controllers.LogInController;
@@ -20,6 +21,9 @@ public class Router {
 		Spark.get("/eventosJson", eventosController::entradasCalendario);
 		SugerenciasController sugerenciasController = new SugerenciasController();
 		Spark.get("/evento/:id/sugerencias", sugerenciasController::show);
-		Spark.post("/evento/:id/sugerencias", sugerenciasController::modificar);
+		Spark.post("/evento/:id/sugerencias", sugerenciasController::edit);
+		AtuendoAceptadoController aceptadoController = new AtuendoAceptadoController();
+		Spark.get("/evento/:id/atuendo", aceptadoController::show);
+		Spark.post("/evento/:id/atuendo", aceptadoController::edit);
 	}
 }

@@ -1,7 +1,12 @@
 package que_me_pongo.webApp.controllers;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.google.common.base.Optional;
 
@@ -15,7 +20,7 @@ import spark.Request;
 import spark.Response;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-public class SugerenciasController {
+public class AtuendoAceptadoController {
 	public String show(Request req, Response res) {
 		Usuario usuario = req.session().attribute("usuario");
 		if(usuario == null)
@@ -33,18 +38,12 @@ public class SugerenciasController {
 		}
 		Evento evento = talVezEvento.get();
 		
+		Atuendo aceptado = evento.getAceptado();
 		Map<String, Object> mapa = new HashMap();
-		ModelAndView modelAndView;
-		if(evento.sugerenciaAceptada()) {
-			res.redirect("/evento/" + evento.getId() + "/atuendo");
-			return null;
-		}
-		else {
-			Atuendo proximo = evento.getProximaSugerenciaPendiente();
-			mapa.put("prendas", proximo.getPrendas());
-			modelAndView = new ModelAndView(mapa, "Sugerencias.hbs");
-		}
-		
+		mapa.put("prendas", aceptado.getPrendas());
+		mapa.put("categorias", Categoria.values());
+		mapa.put("clasifico", evento.opinado());
+		ModelAndView modelAndView = new ModelAndView(mapa, "SugerenciaAceptada.hbs");
 		return new HandlebarsTemplateEngine().render(modelAndView);
 	}
 	
@@ -58,33 +57,22 @@ public class SugerenciasController {
 		}
 		Evento evento = talVezEvento.get();
 		
-		String rechazoString = req.queryParams("rechazo"); 
-		boolean rechazo = req.queryParams("rechazo") != null;
-		boolean acepto = req.queryParams("acepto") != null;
-		ModelAndView modelAndView = null;
+		String eleccion;
+		Set<Categoria> aumentos = new HashSet(),
+										reducciones = new HashSet();
+		for(Categoria categoria : Categoria.values()) {
+			eleccion = req.queryParams(categoria.toString()); 
+			if(eleccion.equals("aumentar"))
+				aumentos.add(categoria);
+			else if(eleccion.equals("disminuir"))
+				reducciones.add(categoria);
+		}
+		evento.setOpiniones(aumentos, reducciones);
 		
-		if(rechazo) {
-			Map<String, Object> mapa = new HashMap();
-			evento.rechazarSugerencia();
-			if(evento.getSugerenciasPendientes().size() == 1) {
-				Atuendo proximo = evento.getProximaSugerenciaPendiente();
-				evento.aceptarSugerencia();
-				mapa.put("automatico", true);
-				mapa.put("prendas", proximo.getPrendas());
-				modelAndView = new ModelAndView(mapa, "SugerenciaAceptada.hbs");
-			}
-			else {
-				Atuendo proximo = evento.getProximaSugerenciaPendiente();
-				mapa.put("prendas", proximo.getPrendas());
-				modelAndView = new ModelAndView(mapa, "Sugerencias.hbs");
-			}
-		}
-		else if(acepto) {
-			evento.aceptarSugerencia();
-			res.redirect("/evento/" + evento.getId() + "/atuendo");
-			return null;
-		}
+		Map<String, Object> mapa = new HashMap();
+		mapa.put("prendas", evento.getAceptado().getPrendas());
+		mapa.put("clasifico", true);
+		ModelAndView modelAndView = new ModelAndView(mapa, "SugerenciaAceptada.hbs");
 		return new HandlebarsTemplateEngine().render(modelAndView);
 	}
-
 }

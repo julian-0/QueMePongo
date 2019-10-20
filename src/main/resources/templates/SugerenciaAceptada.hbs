@@ -2,9 +2,24 @@
 {{#if automatico }}
   <b>A falta de otras opciones se selecciono este atuendo automaticamente</b>
 {{/if }}
-
+<h2>Prendas</h2>
 <ul>
 {{#each prendas }}
   <li>{{ this }}</li>
 {{/each }}
 </ul>
+
+<h2>Clasificar</h2>
+{{#if clasifico }}
+  Ya opino para esta elección.
+{{else }}
+<form method="POST">
+  {{#each categorias }}
+    {{ this }}:<br>
+    <input type="radio" name="{{ this }}" value="aumentar"> Incrementar abrigo<br>
+    <input type="radio" name="{{ this }}" value="disminuir"> Reducir abrigo<br>
+    <input type="radio" name="{{ this }}" value="nada" checked> No modificar<br>
+  {{/each }}
+  <input type="submit" value="Guardar">
+</form>
+{{/if }}
