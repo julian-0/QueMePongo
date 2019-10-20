@@ -10,10 +10,11 @@
                     <hr class="my-4">
                     <div class="card border-primary mb-3" style="max-width: 20rem;">
                         <div class="list-group">
-                        <a href="#" class="list-group-item list-group-item-action active">{{guardarropa1}}
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action active">{{guardarropa2}}
-                        </a>
+                            {{#each guardarropas}}
+                                <a href="#" class="list-group-item list-group-item-action active">
+                                    Soy el guardarropa n° {{@index}} con id: {{id}}
+                                </a>
+                            {{/each}}
                         </div>
                     </div>
                 </div>
