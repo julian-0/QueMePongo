@@ -70,7 +70,7 @@ public class Evento {
     @OrderColumn(name = "ordRechazados")
     private List<Atuendo> rechazados;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
     private Atuendo aceptado;
 
     public Atuendo getAceptado() {
@@ -178,6 +178,8 @@ public class Evento {
     }
     
     public void setOpiniones(Set<Categoria> aumentarAbrigo, Set<Categoria> reducirAbrigo) {
+    	aumentoAbrigo = aumentarAbrigo;
+    	reduccionAbrigo = reducirAbrigo;
     	usuario.ajustarPreferencias(aumentarAbrigo, reducirAbrigo);
     	tieneOpiniones = true;
     }
