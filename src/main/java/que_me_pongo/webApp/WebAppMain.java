@@ -13,8 +13,5 @@ public class WebAppMain {
 		DebugScreen.enableDebugScreen();
 		Router.configurar();
 		new DB().configurarTransacciones();
-
-		//Usuario user = new Usuario("julian","aaaa", TipoUsuario.PREMIUM,"password");
-		//RepositorioUsuarios.getInstance().createUsuario(user);
 	}
 }
