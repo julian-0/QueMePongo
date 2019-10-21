@@ -113,9 +113,9 @@ public class EventosController {
 		String descripcion = request.queryParams("descripcion");
 		System.out.println("Descripcion: " + descripcion);
 
-		response.redirect("/evento/nuevo");
+		response.redirect("/eventos");
 
-		Optional<Guardarropa> guardarropa = RepositorioGuardarropas.getInstance().buscarPorId(guardarropaId);
+		Optional<Guardarropa> guardarropa = RepositorioGuardarropas.getInstance().buscarPorId(Integer.parseInt(guardarropaId));
 
 		RepositorioEventos.getInstance().crearEvento(LocalDateTime.parse(fecha), usuario, guardarropa.get(), descripcion, null, RepeticionDeEvento.valueOf(repeticion));
 
