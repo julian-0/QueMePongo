@@ -1,5 +1,7 @@
 package que_me_pongo.prenda;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -14,6 +16,23 @@ public class TipoDePrendaFactory {
 	
 	public static TipoDePrendaFactory getInstance() {
 		return instance;
+	}
+	
+	public static TipoDePrenda parse(String nombre) throws NoSuchMethodException {
+		Method metodoPrenda = TipoDePrendaFactory.class.getMethod(nombre);
+		try {
+			return (TipoDePrenda) metodoPrenda.invoke(TipoDePrendaFactory.getInstance());
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			return null;
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			return null;
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			return null;
+		}
+		
 	}
 	
 	private TipoDePrenda tipoGenerico(TipoDePrenda retornoEnFallo) {
