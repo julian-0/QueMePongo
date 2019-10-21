@@ -1,5 +1,8 @@
 package que_me_pongo.webApp;
 import que_me_pongo.ExampleDataCreator;
+import que_me_pongo.usuario.RepositorioUsuarios;
+import que_me_pongo.usuario.TipoUsuario;
+import que_me_pongo.usuario.Usuario;
 import spark.Spark;
 import spark.debug.DebugScreen;
 
