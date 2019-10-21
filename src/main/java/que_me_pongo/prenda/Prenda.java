@@ -78,6 +78,29 @@ public class Prenda {
 			this.imagen = RedimensionadorImagen.getInstance().redimensionar(path);
 	}
 
+	public void setTipo(TipoDePrenda tipo) {
+		this.tipo = Objects.requireNonNull(tipo, "es obligatorio introducir un tipo");
+	}
+
+	public void setMaterial(Material material) {
+		this.material = Objects.requireNonNull(material, "es obligatorio introducir un material");
+		this.validarMateriales(material);
+	}
+
+	public void setColorPrimario(Color colorPrimario) {
+		this.colorPrimario = Objects.requireNonNull(colorPrimario, "es obligatorio introducir un color primario");
+	}
+
+	public void setColorSecundario(Color colorSecundario) {
+		this.validarColor(this.colorPrimario, colorSecundario);
+		this.colorSecundario = colorSecundario;
+	}
+
+	public void setImagen(String path) {
+		if(path != null)
+			this.imagen = RedimensionadorImagen.getInstance().redimensionar(path);
+	}
+
 	public Tipo getTipo() {
 		return tipo.getTipo();
 	}

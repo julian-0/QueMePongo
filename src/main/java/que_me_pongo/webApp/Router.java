@@ -1,10 +1,6 @@
 package que_me_pongo.webApp;
 
-import que_me_pongo.webApp.controllers.AtuendoAceptadoController;
-import que_me_pongo.webApp.controllers.EventosController;
-import que_me_pongo.webApp.controllers.GuardarropasController;
-import que_me_pongo.webApp.controllers.LogInController;
-import que_me_pongo.webApp.controllers.SugerenciasController;
+import que_me_pongo.webApp.controllers.*;
 import spark.Spark;
 
 public class Router {
@@ -17,6 +13,10 @@ public class Router {
 		GuardarropasController guardarropasController = new GuardarropasController();
 		Spark.get("/guardarropas", guardarropasController::show);
 		Spark.get("/guardarropas/:id", guardarropasController::listarPrendas);
+
+		PrendasController prendasController = new PrendasController();
+		Spark.get("/guardarropas/:id/prenda", prendasController::show);
+		Spark.post("/guardarropas/:id/prenda", prendasController::nueva);
 
 		EventosController eventosController = new EventosController();
 		Spark.get("/eventos", eventosController::index);

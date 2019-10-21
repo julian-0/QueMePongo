@@ -43,8 +43,11 @@ public class GuardarropasController {
             String id = req.params("id");
             Optional<Guardarropa> optGuarda = RepositorioGuardarropas.getInstance().buscarPorId(Integer.parseInt(id));
 
-            if(optGuarda.isPresent())
+            if(optGuarda.isPresent()){
+                req.session().attribute("guardarropa",optGuarda.get());
                 mapa.put("prendas",optGuarda.get().getPrendas());
+                mapa.put("ruta",req.url());
+            }
         }
 
         ModelAndView modelAndView = new ModelAndView(mapa, "ListarPrendas.hbs");
