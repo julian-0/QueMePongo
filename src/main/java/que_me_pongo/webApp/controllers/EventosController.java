@@ -1,10 +1,7 @@
 package que_me_pongo.webApp.controllers;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import com.google.common.base.Optional;
@@ -12,6 +9,10 @@ import com.google.gson.Gson;
 
 import que_me_pongo.evento.Evento;
 import que_me_pongo.evento.RepositorioEventos;
+import que_me_pongo.evento.listeners.EventoListener;
+import que_me_pongo.evento.repetidores.RepeticionDeEvento;
+import que_me_pongo.guardarropa.Guardarropa;
+import que_me_pongo.guardarropa.RepositorioGuardarropas;
 import que_me_pongo.usuario.Usuario;
 import spark.ModelAndView;
 import spark.Request;
@@ -80,5 +81,46 @@ public class EventosController {
 		
 		res.type("application/json");
 		return new Gson().toJson(list);
+	}
+
+	public String nuevo (Request request, Response response) {
+		Usuario usuario = request.session().attribute("usuario");
+
+		Set<Guardarropa> guardarropas = RepositorioGuardarropas.getInstance().buscarPorUsuario(usuario.getNombre());
+
+		Map<String, Object> mapa = new HashMap();
+		mapa.put("usuario", usuario);
+		mapa.put("guardarropas", guardarropas);
+		mapa.put("repeticiones", RepeticionDeEvento.values());
+
+		ModelAndView modelAndView = new ModelAndView(mapa,"NuevoEvento.hbs");
+		return new HandlebarsTemplateEngine().render(modelAndView);
+	}
+
+	public String create(Request request, Response response) {
+		String repeticion = request.queryParams("repeticion");
+		System.out.println("Repeticion seleccionada: " + repeticion);
+
+		Usuario usuario = request.session().attribute("usuario");
+		System.out.println("Usuario: " + usuario.getNombre());
+
+		String fecha = request.queryParams("fecha");
+		System.out.println("Fecha: " + fecha);
+
+		String guardarropaId = request.queryParams("guardarropa");
+		System.out.println("Guardarropa id: " + guardarropaId);
+
+		String descripcion = request.queryParams("descripcion");
+		System.out.println("Descripcion: " + descripcion);
+
+		response.redirect("/evento/nuevo");
+
+		Optional<Guardarropa> guardarropa = RepositorioGuardarropas.getInstance().buscarPorId(guardarropaId);
+
+		RepositorioEventos.getInstance().crearEvento(LocalDateTime.parse(fecha), usuario, guardarropa.get(), descripcion, null, RepeticionDeEvento.valueOf(repeticion));
+
+		Map<String, Object> mapa = new HashMap();
+		ModelAndView modelAndView = new ModelAndView(mapa,"NuevoEvento.hbs");
+		return new HandlebarsTemplateEngine().render(modelAndView);
 	}
 }
