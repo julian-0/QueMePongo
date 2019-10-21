@@ -9,7 +9,6 @@ import com.google.gson.Gson;
 
 import que_me_pongo.evento.Evento;
 import que_me_pongo.evento.RepositorioEventos;
-import que_me_pongo.evento.listeners.EventoListener;
 import que_me_pongo.evento.repetidores.RepeticionDeEvento;
 import que_me_pongo.guardarropa.Guardarropa;
 import que_me_pongo.guardarropa.RepositorioGuardarropas;
@@ -85,6 +84,10 @@ public class EventosController {
 
 	public String nuevo (Request request, Response response) {
 		Usuario usuario = request.session().attribute("usuario");
+		if(usuario == null) {
+			response.redirect("/login");
+			return null;
+		}
 
 		Set<Guardarropa> guardarropas = RepositorioGuardarropas.getInstance().buscarPorUsuario(usuario.getNombre());
 
@@ -99,19 +102,10 @@ public class EventosController {
 
 	public String create(Request request, Response response) {
 		String repeticion = request.queryParams("repeticion");
-		System.out.println("Repeticion seleccionada: " + repeticion);
-
 		Usuario usuario = request.session().attribute("usuario");
-		System.out.println("Usuario: " + usuario.getNombre());
-
 		String fecha = request.queryParams("fecha");
-		System.out.println("Fecha: " + fecha);
-
 		String guardarropaId = request.queryParams("guardarropa");
-		System.out.println("Guardarropa id: " + guardarropaId);
-
 		String descripcion = request.queryParams("descripcion");
-		System.out.println("Descripcion: " + descripcion);
 
 		//response.redirect("/eventos");
 
