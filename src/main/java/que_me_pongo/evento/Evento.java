@@ -33,10 +33,10 @@ public class Evento {
 		@Convert(converter = LocalDateTimeAttributeConverter.class)
     private LocalDateTime fecha;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+		@ManyToOne
     private Usuario usuario;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+		@ManyToOne
     private Guardarropa guardarropa;
 
     private String descripcion;

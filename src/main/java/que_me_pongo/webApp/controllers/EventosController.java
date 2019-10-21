@@ -113,7 +113,7 @@ public class EventosController {
 		String descripcion = request.queryParams("descripcion");
 		System.out.println("Descripcion: " + descripcion);
 
-		response.redirect("/eventos");
+		//response.redirect("/eventos");
 
 		Optional<Guardarropa> guardarropa = RepositorioGuardarropas.getInstance().buscarPorId(Integer.parseInt(guardarropaId));
 
