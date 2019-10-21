@@ -3,7 +3,15 @@
 <form name="listadoPrendas" method="get">
     <ul>
         {{#each prendas}}
-            <li>{{@index}}. <{{prendas}}</li>
+            <li>
+                <ul>
+                    <li>{{tipo}}</li>
+                    <li>{{categoria}}</li>
+                    <li>{{material}}</li>
+                    <li>{{colorPrimario}}</li>
+                    <li>{{colorSecundario}}</li>
+                </ul>
+            </li>
         {{/each}}
     </ul>
 </form>

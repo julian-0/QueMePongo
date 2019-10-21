@@ -40,11 +40,11 @@ public class GuardarropasController {
             res.redirect("/login");
         }
         else{
-            Optional<Guardarropa> optGuarda = RepositorioGuardarropas.getInstance().buscarPorId(req.queryParams("id"));
+            String id = req.params("id");
+            Optional<Guardarropa> optGuarda = RepositorioGuardarropas.getInstance().buscarPorId(Integer.parseInt(id));
+
             if(optGuarda.isPresent())
                 mapa.put("prendas",optGuarda.get().getPrendas());
-            else
-                mapa.put("resultado","No tiene prendas");
         }
 
         ModelAndView modelAndView = new ModelAndView(mapa, "ListarPrendas.hbs");

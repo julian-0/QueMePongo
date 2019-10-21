@@ -33,7 +33,7 @@ public class RepositorioGuardarropas implements WithGlobalEntityManager, Transac
 		return usuario.get().getGuardarropas();
 	}
 
-	public Optional<Guardarropa> buscarPorId(String id){
+	public Optional<Guardarropa> buscarPorId(int id){
 		return buscarUno("FROM Guardarropa WHERE id = :id", "id", id);
 	}
 }
