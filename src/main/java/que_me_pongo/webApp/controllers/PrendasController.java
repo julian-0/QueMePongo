@@ -44,7 +44,7 @@ public class PrendasController {
         String vista;
         switch (req.queryParams("paso")){
             case "tipo":
-                pb.buildTipo(TipoDePrenda.parse(req.queryParams("tipo")));
+             //   pb.buildTipo(TipoDePrenda.parse(req.queryParams("tipo")));
                 vista="PartialMaterial.hbs";
                 break;
             case "material":
