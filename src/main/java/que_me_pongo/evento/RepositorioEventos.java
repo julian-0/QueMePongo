@@ -17,7 +17,7 @@ import que_me_pongo.evento.repetidores.RepeticionDeEvento;
 import que_me_pongo.guardarropa.Guardarropa;
 import que_me_pongo.usuario.Usuario;
 
-public class RepositorioEventos implements QueriesInterfaces, TransactionalOps {
+public class RepositorioEventos implements QueriesInterfaces{
 
     public static RepositorioEventos instancia;
 
@@ -31,7 +31,7 @@ public class RepositorioEventos implements QueriesInterfaces, TransactionalOps {
     }
 
     public Evento agendar(Evento evento){//Agrega un evento
-        withTransaction(() -> entityManager().persist(evento));
+        entityManager().persist(evento);
         return evento;
     }
     
