@@ -15,9 +15,14 @@ public class PrendaBuilder {
 
     public void buildColorSecundario(Color colorSecundario){prenda.setColorSecundario(colorSecundario);}
 
-    public void buildImagen(String path){prenda.setImagen(path);}
+    public void buildImagen(String path){
+        try {
+            prenda.setImagen(path);
+        }catch(ImagenNoPudoRedimesionarseException e){
+        }
+    }
 
     public Prenda getPrenda() {return prenda; }
 
-    public void buildPrenda(){RepositorioPrendas.getInstance().createPrenda(prenda);}
+    public Prenda buildPrenda(){return RepositorioPrendas.getInstance().createPrenda(prenda);}
 }
