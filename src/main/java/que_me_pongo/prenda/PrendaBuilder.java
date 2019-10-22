@@ -4,11 +4,10 @@ import java.awt.*;
 
 public class PrendaBuilder {
     private Prenda prenda;
-    private String tipo;
 
     public PrendaBuilder() {this.prenda = new Prenda();}
 
-    public void buildTipo(String t){tipo=t;}
+    public void buildTipo(TipoDePrenda tipo){prenda.setTipo(tipo);}
 
     public void buildMaterial(Material material){prenda.setMaterial(material);}
 
@@ -20,12 +19,5 @@ public class PrendaBuilder {
 
     public Prenda getPrenda() {return prenda; }
 
-    public void buildPrenda(){
-        try {
-            prenda.setTipo(TipoDePrendaFactory.parse(this.tipo));
-            RepositorioPrendas.getInstance().createPrenda(prenda);
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-    }
+    public void buildPrenda(){RepositorioPrendas.getInstance().createPrenda(prenda);}
 }
