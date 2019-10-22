@@ -66,7 +66,7 @@ public class SugerenciasController {
 		if(rechazo) {
 			Map<String, Object> mapa = new HashMap();
 			evento.rechazarSugerencia();
-			if(evento.getSugerenciasPendientes().size() == 1) {
+			if(evento.sugerenciaEsUnica()) {
 				Atuendo proximo = evento.getProximaSugerenciaPendiente();
 				evento.aceptarSugerencia();
 				mapa.put("automatico", true);
