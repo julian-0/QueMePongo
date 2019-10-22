@@ -32,5 +32,8 @@ public class Router {
 		Spark.get("/evento/:id/atuendo", aceptadoController::show);
 		Spark.post("/evento/:id/atuendo", aceptadoController::edit);
 
+		MenuController menuController = new MenuController();
+		Spark.get("/menu", menuController::show);
+
 	}
 }

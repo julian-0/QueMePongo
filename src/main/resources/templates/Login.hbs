@@ -1,9 +1,20 @@
+<link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/cerulean/bootstrap.min.css" rel="stylesheet" integrity="sha384-C++cugH8+Uf86JbNOnQoBweHHAe/wVKN/mb0lTybu/NZ9sEYbd+BbbYtNpWYAsNP" crossorigin="anonymous">
 <b>{{ error }}</b>
 <form name="login" method="post">
-  <p><label>Nombre de Usuario:</label> 
-  <input type="text" name="usuario"></p>
-  <p><label>Contraseña:</label>
-  <input type="password" name="password"></p>
-  <input type="hidden" name="redirect_to" value="{{ redirect_to }}">
-  <input type="submit" value="Login">
+    <div class="list-group" align="center">
+        <a class="list-group-item list-group-item-action active">
+            Login
+        </a>
+        <a class="list-group-item list-group-item">
+            <p><label>Nombre de Usuario:</label>
+            <input type="text" name="usuario"></p>
+        </a>
+        <a class="list-group-item list-group-item">
+            <p><label>Contraseña:</label>
+            <input type="password" name="password"></p>
+        </a>
+        <input type="hidden" name="redirect_to" value="{{ redirect_to }}">
+        <a class="list-group-item list-group-item">
+            <input type="submit" value="Login"></a>
+    </div>
 </form>
