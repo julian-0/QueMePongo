@@ -1,6 +1,12 @@
 {{#partial "contenidoPaso" }}
+    Ingrese el material
     <div>
-        Ingrese el material <input name='material'/>
+        <select name="material">
+            <option selected disabled>Material</option>
+            {{#each validos }}
+                <option>{{ this }}</option>
+            {{/each }}
+        </select>
     </div>
     <input name='paso' value='material' type='hidden'>
 {{/partial}}
