@@ -2,7 +2,7 @@ package que_me_pongo.webApp.controllers;
 
 import que_me_pongo.prenda.Material;
 import que_me_pongo.prenda.PrendaBuilder;
-import que_me_pongo.prenda.TipoDePrenda;
+import que_me_pongo.prenda.TipoDePrendaFactory;
 import que_me_pongo.usuario.Usuario;
 import spark.ModelAndView;
 import spark.Request;
@@ -23,7 +23,8 @@ public class PrendasController {
         Map<String, Object> mapa = new HashMap();
         mapa.put("ruta",req.url());
 
-        ModelAndView modelAndView = new ModelAndView(mapa,"WizardPrendas.hbs");
+
+        ModelAndView modelAndView = new ModelAndView(mapa,"wizardPrenda/PartialTipo.hbs");
         return new HandlebarsTemplateEngine().render(modelAndView);
     }
 
@@ -40,31 +41,39 @@ public class PrendasController {
         ModelAndView modelAndView = new ModelAndView(mapa,vista);
         return new HandlebarsTemplateEngine().render(modelAndView);
     }
+
     public String construirPaso(PrendaBuilder pb,Request req){
         String vista;
+        if(req.queryParams("paso")==null)
+            return "wizardPrenda/PartialTipo.hbs";
+
         switch (req.queryParams("paso")){
             case "tipo":
-                pb.buildTipo(TipoDePrenda.parse(req.queryParams("tipo")));
-                vista="PartialMaterial.hbs";
+                try {
+                    pb.buildTipo(TipoDePrendaFactory.parse(req.queryParams("tipo")));
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                }
+                vista="wizardPrenda/PartialMaterial.hbs";
                 break;
             case "material":
                 pb.buildMaterial(Material.valueOf(req.queryParams("material")));
-                vista="PartialColorPrimario.hbs";
+                vista="wizardPrenda/PartialColorPrimario.hbs";
                 break;
-            case "colorPrimario":
+            case "wizardPrenda/colorPrimario":
                 pb.buildColorPrimario(Color.getColor(req.queryParams("colorPrimario")));
-                vista="PartialColorSecundario.hbs";
+                vista="wizardPrenda/PartialColorSecundario.hbs";
                 break;
-            case "colorSecundario":
+            case "wizardPrenda/colorSecundario":
                 pb.buildColorSecundario(Color.getColor(req.queryParams("colorSecundario")));
-                vista="PartialImagen.hbs";
+                vista="wizardPrenda/PartialImagen.hbs";
                 break;
             case "imagen":
                 pb.buildImagen(req.queryParams("pathImagen"));
-                vista="PartialFinal.hbs";
+                vista="wizardPrenda/PartialFinal.hbs";
                 break;
             default:
-                vista="PartialTipo.hbs";
+                vista="wizardPrenda/PartialTipo.hbs";
         }
         return vista;
     }
