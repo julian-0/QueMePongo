@@ -1,3 +1,5 @@
+{{#partial "contenidoPagina" }}
+
 <h1>Sus prendas</h1>
 <form method="get" action="{{ruta}}/prenda" >
     <button type='submit'>Agregar prenda</button>
@@ -18,3 +20,7 @@
         {{/each}}
     </ul>
 </form>
+
+{{/partial}}
+
+{{> navbar.hbs}}
