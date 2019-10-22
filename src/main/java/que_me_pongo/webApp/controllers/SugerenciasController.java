@@ -15,14 +15,11 @@ import spark.Request;
 import spark.Response;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-public class SugerenciasController {
+public class SugerenciasController implements ControllerInterface {
 	public String show(Request req, Response res) {
 		Usuario usuario = req.session().attribute("usuario");
-		if(usuario == null)
-		{
-			res.redirect("/login");
+		if(!requireLogin(usuario, req.uri(), res))
 			return null;
-		}
 		
 		String stringId = req.params("id");
 		Long id = Long.valueOf(stringId);
@@ -33,18 +30,16 @@ public class SugerenciasController {
 		}
 		Evento evento = talVezEvento.get();
 		
-		Map<String, Object> mapa = new HashMap();
-		ModelAndView modelAndView;
 		if(evento.sugerenciaAceptada()) {
 			res.redirect("/evento/" + evento.getId() + "/atuendo");
 			return null;
 		}
-		else {
-			Atuendo proximo = evento.getProximaSugerenciaPendiente();
-			mapa.put("prendas", proximo.getPrendas());
-			modelAndView = new ModelAndView(mapa, "Sugerencias.hbs");
-		}
 		
+		Map<String, Object> mapa = new HashMap();
+		ModelAndView modelAndView;
+		Atuendo proximo = evento.getProximaSugerenciaPendiente();
+		mapa.put("prendas", proximo.getPrendas());
+		modelAndView = new ModelAndView(mapa, "Sugerencias.hbs");
 		return new HandlebarsTemplateEngine().render(modelAndView);
 	}
 	
@@ -66,7 +61,7 @@ public class SugerenciasController {
 		if(rechazo) {
 			Map<String, Object> mapa = new HashMap();
 			evento.rechazarSugerencia();
-			if(evento.getSugerenciasPendientes().size() == 1) {
+			if(evento.sugerenciaEsUnica()) {
 				Atuendo proximo = evento.getProximaSugerenciaPendiente();
 				evento.aceptarSugerencia();
 				mapa.put("automatico", true);

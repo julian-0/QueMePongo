@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -41,4 +42,8 @@ public class Atuendo {
   		return cantidadPrendas() == otro.cantidadPrendas() && 
   				getPrendas().stream().allMatch(prenda -> otro.tienePrenda(prenda));
   	}
+    
+    public boolean estaDisponible(LocalDate fecha) {
+    	return prendas.stream().noneMatch(prenda -> prenda.getReserva(fecha));
+    }
 }

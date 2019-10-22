@@ -1,10 +1,7 @@
 package que_me_pongo.webApp.controllers;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -20,14 +17,11 @@ import spark.Request;
 import spark.Response;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-public class AtuendoAceptadoController {
+public class AtuendoAceptadoController implements ControllerInterface {
 	public String show(Request req, Response res) {
 		Usuario usuario = req.session().attribute("usuario");
-		if(usuario == null)
-		{
-			res.redirect("/login");
+		if(!requireLogin(usuario, req.uri(), res))
 			return null;
-		}
 		
 		String stringId = req.params("id");
 		Long id = Long.valueOf(stringId);

@@ -18,22 +18,19 @@ import spark.Request;
 import spark.Response;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-public class EventosController {
+public class EventosController implements ControllerInterface {
 
 	public String index(Request req, Response res) {
-		if(req.session().attribute("usuario") == null)
-			res.redirect("/login");
+		requireLogin(req.session().attribute("usuario"), req.uri(), res);
 		ModelAndView modelAndView = new ModelAndView(new HashMap<String, Object>(), "Eventos.hbs");
 		return new HandlebarsTemplateEngine().render(modelAndView);
 	}
 	
 	public String show(Request req, Response res) {
 		Usuario usuario = req.session().attribute("usuario"); 
-		if(usuario == null)
-		{
-			res.redirect("/login");
+		if(!requireLogin(usuario, req.uri(), res))
 			return null;
-		}
+
 		String stringId = req.params("id");
 		Long id = Long.valueOf(stringId);
 		Optional<Evento> talVezEvento = RepositorioEventos.getInstance().getEvento(id);
@@ -64,7 +61,7 @@ public class EventosController {
 		if(usuario == null)
 		{
 			res.status(401);
-			return "";
+			return null;
 		}
 		
 		String startString = req.queryParams("start"),
@@ -84,10 +81,8 @@ public class EventosController {
 
 	public String nuevo (Request request, Response response) {
 		Usuario usuario = request.session().attribute("usuario");
-		if(usuario == null) {
-			response.redirect("/login");
+		if(!requireLogin(usuario, request.uri(), response)) 
 			return null;
-		}
 
 		Set<Guardarropa> guardarropas = RepositorioGuardarropas.getInstance().buscarPorUsuario(usuario.getNombre());
 
@@ -101,20 +96,19 @@ public class EventosController {
 	}
 
 	public String create(Request request, Response response) {
-		String repeticion = request.queryParams("repeticion");
 		Usuario usuario = request.session().attribute("usuario");
+		
+		String repeticion = request.queryParams("repeticion");
 		String fecha = request.queryParams("fecha");
+		String hora = request.queryParams("hora") + ":00";
 		String guardarropaId = request.queryParams("guardarropa");
 		String descripcion = request.queryParams("descripcion");
 
-		//response.redirect("/eventos");
-
 		Optional<Guardarropa> guardarropa = RepositorioGuardarropas.getInstance().buscarPorId(Integer.parseInt(guardarropaId));
 
-		RepositorioEventos.getInstance().crearEvento(LocalDateTime.parse(fecha), usuario, guardarropa.get(), descripcion, null, RepeticionDeEvento.valueOf(repeticion));
+		RepositorioEventos.getInstance().crearEvento(LocalDateTime.parse(fecha + "T" + hora), usuario, guardarropa.get(), descripcion, Arrays.asList(), RepeticionDeEvento.valueOf(repeticion));
 
-		Map<String, Object> mapa = new HashMap();
-		ModelAndView modelAndView = new ModelAndView(mapa,"NuevoEvento.hbs");
-		return new HandlebarsTemplateEngine().render(modelAndView);
+		response.redirect("/eventos");
+		return null;
 	}
 }
