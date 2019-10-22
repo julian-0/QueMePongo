@@ -46,4 +46,8 @@ public class Atuendo {
     public boolean estaDisponible(LocalDate fecha) {
     	return prendas.stream().noneMatch(prenda -> prenda.getReserva(fecha));
     }
+
+		public long getId() {
+			return id;
+		}
 }
