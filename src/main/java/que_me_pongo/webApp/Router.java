@@ -11,8 +11,8 @@ public class Router {
 		Spark.post("/login", loginController::create);
 
 		GuardarropasController guardarropasController = new GuardarropasController();
-		Spark.get("/guardarropas", guardarropasController::show);
-		Spark.get("/guardarropas/:id", guardarropasController::listarPrendas);
+		Spark.get("/guardarropas", guardarropasController::index);
+		Spark.get("/guardarropas/:id", guardarropasController::show);
 
 		PrendasController prendasController = new PrendasController();
 		Spark.get("/guardarropas/:id/prenda", prendasController::show);

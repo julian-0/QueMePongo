@@ -15,7 +15,7 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class GuardarropasController implements ControllerInterface {
 
-    public String show(Request req, Response res) {
+    public String index(Request req, Response res) {
         Usuario user = req.session().attribute("usuario");
         Map<String, Object> mapa = new HashMap<String, Object>();
 
@@ -31,7 +31,7 @@ public class GuardarropasController implements ControllerInterface {
         return new HandlebarsTemplateEngine().render(modelAndView);
     }
 
-    public String listarPrendas(Request req, Response res){
+    public String show(Request req, Response res){
         Usuario user = req.session().attribute("usuario");
         Map<String, Object> mapa = new HashMap<String, Object>();
 
