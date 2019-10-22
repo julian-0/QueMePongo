@@ -2,8 +2,14 @@
     <div>
         <p>Bienvenido a la ventana de creacion de prendas</p>
     </div>
+    Seleccione el tipo de prenda
     <div>
-        Ingrese el tipo de prenda <input name='tipo'/>
+        <select name="tipo">
+            <option selected disabled>Tipo</option>
+            {{#each tipo }}
+                <option>{{ this }}</option>
+            {{/each }}
+        </select>
     </div>
     <input name='paso' value='tipo' type='hidden'>
 {{/partial}}
