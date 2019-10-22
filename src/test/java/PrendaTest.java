@@ -24,7 +24,7 @@ public class PrendaTest {
 		//PrendaFactory factory = new PrendaFactory();
 		//Prenda remera = factory.crearRemeraMangaCorta(Material.SEDA, Color.BLACK, null);
 
-		Assert.assertEquals(Tipo.REMERAMANGASCORTAS, remera.getTipo());
+		Assert.assertEquals(Tipo.REMERAMANGACORTA, remera.getTipo());
 		Assert.assertEquals(Categoria.SUPERIOR, remera.getCategoria());
 		Assert.assertEquals(Material.ALGODON, remera.getMaterial());
 		Assert.assertEquals(Color.BLACK, remera.getColorPrimario());
@@ -37,7 +37,7 @@ public class PrendaTest {
 		//PrendaFactory factory = new PrendaFactory();
 		//Prenda remera = factory.crearRemeraMangaCorta(Material.SEDA, Color.BLACK, Color.WHITE);
 
-		Assert.assertEquals(Tipo.REMERAMANGASCORTAS, remera.getTipo());
+		Assert.assertEquals(Tipo.REMERAMANGACORTA, remera.getTipo());
 		Assert.assertEquals(Categoria.SUPERIOR, remera.getCategoria());
 		Assert.assertEquals(Material.ALGODON, remera.getMaterial());
 		Assert.assertEquals(Color.BLACK, remera.getColorPrimario());
@@ -58,7 +58,7 @@ public class PrendaTest {
 	public void deberiaTirarExcepcionNullPointerPorCategoria() throws Exception {
 		expectedEx.expect(NullPointerException.class);
 		
-		new Prenda(new TipoDePrenda(Tipo.REMERAMANGASCORTAS, null, Arrays.asList(Material.ALGODON), 1,1), Material.ALGODON, Color.BLACK, null, null);
+		new Prenda(new TipoDePrenda(Tipo.REMERAMANGACORTA, null, Arrays.asList(Material.ALGODON), 1,1), Material.ALGODON, Color.BLACK, null, null);
 	}
 	
 	@Test

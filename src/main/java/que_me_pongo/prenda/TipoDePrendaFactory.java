@@ -7,10 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
-
-import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 
 public class TipoDePrendaFactory {
 	static TipoDePrendaFactory instance = new TipoDePrendaFactory();
@@ -66,7 +63,7 @@ public class TipoDePrendaFactory {
   	materiales.add(Material.ALGODON);
   	materiales.add(Material.SEDA);
   	materiales.add(Material.DRIFIT);
-  	return tipoGenerico(new TipoDePrenda(Tipo.REMERAMANGASCORTAS, Categoria.SUPERIOR, materiales, 0, 1));
+  	return tipoGenerico(new TipoDePrenda(Tipo.REMERAMANGACORTA, Categoria.SUPERIOR, materiales, 0, 1));
 	}
 	
 	public TipoDePrenda remeraMangaLarga() {
@@ -74,14 +71,14 @@ public class TipoDePrendaFactory {
   	materiales.add(Material.ALGODON);
   	materiales.add(Material.SEDA);
   	materiales.add(Material.DRIFIT);
-  	return tipoGenerico(new TipoDePrenda(Tipo.REMERAMANGASLARGAS, Categoria.SUPERIOR, materiales, 0, 1.5));
+  	return tipoGenerico(new TipoDePrenda(Tipo.REMERAMANGALARGA, Categoria.SUPERIOR, materiales, 0, 1.5));
 	}
 	
 	public TipoDePrenda shorts() {
 		List<Material> materiales = new LinkedList<Material>();
   	materiales.add(Material.ALGODON);
   	materiales.add(Material.DRIFIT);
-  	return tipoGenerico(new TipoDePrenda(Tipo.SHORT, Categoria.INFERIOR, materiales, 0, 1));
+  	return tipoGenerico(new TipoDePrenda(Tipo.SHORTS, Categoria.INFERIOR, materiales, 0, 1));
 	}
 	
 	public TipoDePrenda pantalon() {
