@@ -51,11 +51,7 @@ public class PrendasController implements ControllerInterface {
         }
         switch (req.queryParams("paso")){
             case "tipo":
-                try {
-                    pb.buildTipo(TipoDePrendaFactory.parse(req.queryParams("tipo")));
-                } catch (NoSuchMethodException e) {
-                    e.printStackTrace();
-                }
+                pb.buildTipo(req.queryParams("tipo"));
                 mapa.put("validos",pb.getPrenda().getTipoPrenda().getMaterialesValidos());
                 vista="wizardPrenda/PartialMaterial.hbs";
                 break;
