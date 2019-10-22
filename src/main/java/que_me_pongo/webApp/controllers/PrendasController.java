@@ -64,11 +64,11 @@ public class PrendasController implements ControllerInterface {
                 vista="wizardPrenda/PartialColorPrimario.hbs";
                 break;
             case "wizardPrenda/colorPrimario":
-                pb.buildColorPrimario(Color.getColor(req.queryParams("colorPrimario")));
+                pb.buildColorPrimario(Color.decode(req.queryParams("colorPrimario")));
                 vista="wizardPrenda/PartialColorSecundario.hbs";
                 break;
             case "wizardPrenda/colorSecundario":
-                pb.buildColorSecundario(Color.getColor(req.queryParams("colorSecundario")));
+                pb.buildColorSecundario(Color.decode(req.queryParams("colorSecundario")));
                 vista="wizardPrenda/PartialImagen.hbs";
                 break;
             case "imagen":
