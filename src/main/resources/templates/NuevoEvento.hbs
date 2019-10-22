@@ -11,23 +11,24 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
     <form method="post" action="/evento">
-        <input type="datetime-local" name="fecha">
+        <input type="date" name="fecha" required>
+        <input type="time" name="hora" required >
 
-        <select class="custom-select" name="repeticion">
-            <option selected>Open this select menu</option>
+        <select class="custom-select" name="repeticion" required >
+            <!-- <option selected>Open this select menu</option>-->
             {{#each repeticiones }}
             <option>{{ this }}</option>
             {{/each }}
         </select>
 
-        <select class="custom-select" name="guardarropa">
-            <option selected>Open this select menu</option>
+        <select class="custom-select" name="guardarropa" required>
+            <!-- <option selected>Open this select menu</option>-->
             {{#each guardarropas }}
-            <option>{{ this.id }}</option>
+            <option value="{{ this.id }}">{{ this.id }}</option>
             {{/each }}
         </select>
 
-        <input type="text" name="descripcion">
+        <input type="text" name="descripcion" required>
 
         <button type="submit">Crear</button>
     </form>

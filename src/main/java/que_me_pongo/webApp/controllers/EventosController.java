@@ -96,20 +96,19 @@ public class EventosController implements ControllerInterface {
 	}
 
 	public String create(Request request, Response response) {
-		String repeticion = request.queryParams("repeticion");
 		Usuario usuario = request.session().attribute("usuario");
+		
+		String repeticion = request.queryParams("repeticion");
 		String fecha = request.queryParams("fecha");
+		String hora = request.queryParams("hora") + ":00";
 		String guardarropaId = request.queryParams("guardarropa");
 		String descripcion = request.queryParams("descripcion");
 
-		//response.redirect("/eventos");
-
 		Optional<Guardarropa> guardarropa = RepositorioGuardarropas.getInstance().buscarPorId(Integer.parseInt(guardarropaId));
 
-		RepositorioEventos.getInstance().crearEvento(LocalDateTime.parse(fecha), usuario, guardarropa.get(), descripcion, null, RepeticionDeEvento.valueOf(repeticion));
+		RepositorioEventos.getInstance().crearEvento(LocalDateTime.parse(fecha + "T" + hora), usuario, guardarropa.get(), descripcion, Arrays.asList(), RepeticionDeEvento.valueOf(repeticion));
 
-		Map<String, Object> mapa = new HashMap();
-		ModelAndView modelAndView = new ModelAndView(mapa,"NuevoEvento.hbs");
-		return new HandlebarsTemplateEngine().render(modelAndView);
+		response.redirect("/eventos");
+		return null;
 	}
 }
