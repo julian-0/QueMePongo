@@ -34,7 +34,7 @@ public class Usuario {
 
 	private String passwordDigest;
 
-	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 	private Set<Guardarropa> guardarropas = new HashSet<Guardarropa>();
 
 	@Enumerated(EnumType.STRING)
