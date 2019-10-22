@@ -1,6 +1,8 @@
 package que_me_pongo.webApp.controllers;
 
+import com.google.common.base.Optional;
 import que_me_pongo.guardarropa.Guardarropa;
+import que_me_pongo.guardarropa.RepositorioGuardarropas;
 import que_me_pongo.prenda.Material;
 import que_me_pongo.prenda.PrendaBuilder;
 import que_me_pongo.prenda.Tipo;
@@ -74,8 +76,9 @@ public class PrendasController implements ControllerInterface {
                 break;
             case "imagen":
                 pb.buildImagen(req.queryParams("pathImagen"));
-                Guardarropa guarda = req.session().attribute("guardarropa");
-                guarda.agregarPrenda(pb.buildPrenda());
+                String id = req.params("id");
+                Optional<Guardarropa> optGuarda = RepositorioGuardarropas.getInstance().buscarPorId(Integer.parseInt(id));
+                optGuarda.get().agregarPrenda(pb.buildPrenda());
                 vista="wizardPrenda/PartialFinal.hbs";
                 break;
             default:
