@@ -30,6 +30,9 @@ public class SugerenciasController implements ControllerInterface {
 		}
 		Evento evento = talVezEvento.get();
 		
+		if(!requireAccess(usuario, evento.getUsuario(), res))
+			return null;
+		
 		if(evento.sugerenciaAceptada()) {
 			res.redirect("/evento/" + evento.getId() + "/atuendo");
 			return null;

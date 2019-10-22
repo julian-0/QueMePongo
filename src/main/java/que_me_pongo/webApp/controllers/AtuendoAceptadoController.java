@@ -32,6 +32,9 @@ public class AtuendoAceptadoController implements ControllerInterface {
 		}
 		Evento evento = talVezEvento.get();
 		
+		if(!requireAccess(usuario, evento.getUsuario(), res))
+			return null;
+		
 		Atuendo aceptado = evento.getAceptado();
 		Map<String, Object> mapa = new HashMap();
 		mapa.put("prendas", aceptado.getPrendas());
