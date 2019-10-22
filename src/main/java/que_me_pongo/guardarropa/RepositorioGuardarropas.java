@@ -10,7 +10,7 @@ import que_me_pongo.usuario.Usuario;
 import java.util.Set;
 
 
-public class RepositorioGuardarropas implements WithGlobalEntityManager, TransactionalOps, QueriesInterfaces {
+public class RepositorioGuardarropas implements QueriesInterfaces {
 	static private RepositorioGuardarropas instancia;
 	
 	static public RepositorioGuardarropas getInstance() {
@@ -22,7 +22,7 @@ public class RepositorioGuardarropas implements WithGlobalEntityManager, Transac
 	private RepositorioGuardarropas(){}
 	
 	public Guardarropa createGuardarropas(Guardarropa guardarropa) {
-		withTransaction(() -> entityManager().persist(guardarropa));
+		entityManager().persist(guardarropa);
 		return guardarropa;
 	}
 

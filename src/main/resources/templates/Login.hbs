@@ -3,22 +3,24 @@
 
 
 <form name="login" method="post">
-    <div class="container w-25">
-    <div class="list-group shadow p-3" align='center'>
+    <div class="container w-25 d-block">
+    <div class="list-group shadow p-3 mb-5 bg-white rounded" align='center'>
+
         <a class="list-group-item list-group-item-action active">
             Login
         </a>
         <a class="list-group-item list-group-item">
             <label for="exampleDropdownFormEmail2">Email address</label>
-            <input type="email" placeholder="email@example.com">
+            <input type="email" placeholder=" email@example.com">
         </a>
         <a class="list-group-item list-group-item">
             <p><label>Contraseña:</label>
-            <input type="password" name="password" placeholder="Password"></p>
+            <input type="password" name="password" placeholder=" Password"></p>
         </a>
+        <input type="hidden" name="redirect_to" value="{{ redirect_to }}">
         <a class="list-group-item list-group-item">
             <input type="submit" value="Login"></a>
-    </div>
-    </div>
 
+     </div>
+    </div>
 </form>

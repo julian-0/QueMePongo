@@ -3,13 +3,12 @@ package que_me_pongo.usuario;
 import javax.persistence.NoResultException;
 
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
-import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 
 import com.google.common.base.Optional;
 
 import que_me_pongo.QueriesInterfaces;
 
-public class RepositorioUsuarios implements QueriesInterfaces, TransactionalOps {
+public class RepositorioUsuarios implements QueriesInterfaces {
 	static private RepositorioUsuarios instancia;
 	
 	static public RepositorioUsuarios getInstance() {
@@ -21,7 +20,7 @@ public class RepositorioUsuarios implements QueriesInterfaces, TransactionalOps 
 	private RepositorioUsuarios() {}
 	
 	public Usuario createUsuario(Usuario usuario) {
-		withTransaction(() -> entityManager().persist(usuario));
+		entityManager().persist(usuario);
 		return usuario;
 	}
 	

@@ -13,20 +13,19 @@ import spark.Request;
 import spark.Response;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-public class GuardarropasController {
+public class GuardarropasController implements ControllerInterface {
 
     public String show(Request req, Response res) {
         Usuario user = req.session().attribute("usuario");
         Map<String, Object> mapa = new HashMap<String, Object>();
 
-        if(user==null) {
-            res.redirect("/login");
-        }
-        else{
-            Set<Guardarropa> guardarropas = user.getGuardarropas();
-            mapa.put("guardarropas", guardarropas);
-            mapa.put("link", req.url());
-        }
+        if(!requireLogin(user, req.uri(), res))
+            return null;
+        
+       
+        Set<Guardarropa> guardarropas = user.getGuardarropas();
+        mapa.put("guardarropas", guardarropas);
+        mapa.put("link", req.url());
 
         ModelAndView modelAndView = new ModelAndView(mapa, "ListarGuardarropas.hbs");
         return new HandlebarsTemplateEngine().render(modelAndView);
@@ -36,19 +35,18 @@ public class GuardarropasController {
         Usuario user = req.session().attribute("usuario");
         Map<String, Object> mapa = new HashMap<String, Object>();
 
-        if(user==null) {
-            res.redirect("/login");
-        }
-        else{
-            String id = req.params("id");
-            Optional<Guardarropa> optGuarda = RepositorioGuardarropas.getInstance().buscarPorId(Integer.parseInt(id));
+        if(!requireLogin(user, req.uri(), res))
+          return null;
+        
+        
+        String id = req.params("id");
+        Optional<Guardarropa> optGuarda = RepositorioGuardarropas.getInstance().buscarPorId(Integer.parseInt(id));
 
-            if(optGuarda.isPresent()){
-                req.session().attribute("guardarropa",optGuarda.get());
-                mapa.put("prendas",optGuarda.get().getPrendas());
-                mapa.put("ruta",req.url());
-            }
-        }
+        if(optGuarda.isPresent()){
+            req.session().attribute("guardarropa",optGuarda.get());
+            mapa.put("prendas",optGuarda.get().getPrendas());
+            mapa.put("ruta",req.url());
+        }        
 
         ModelAndView modelAndView = new ModelAndView(mapa, "ListarPrendas.hbs");
         return new HandlebarsTemplateEngine().render(modelAndView);

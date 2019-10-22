@@ -126,7 +126,10 @@ public class Evento {
 
     public List<Atuendo> getSugerenciasPendientes() { return sugerencias; }
     
-    public Atuendo getProximaSugerenciaPendiente() { return sugerencias.get(0); }
+    public Atuendo getProximaSugerenciaPendiente() { 
+    	Optional<Atuendo> posibleAtuendo = sugerencias.stream().filter(a -> a.estaDisponible(this.fecha.toLocalDate())).findFirst();
+    	return posibleAtuendo.orElse(null);
+    }
 
     public Collection<EventoListener> getListenersSugerir(){
     	return this.listenersSugerir;
@@ -144,7 +147,7 @@ public class Evento {
         aceptado = null;
         this.pronostico = pronostico;
         
-        if(sugerencias.size() == 1)
+        if(sugerenciaEsUnica())
         	this.aceptarSugerencia();
     }
 
@@ -171,7 +174,9 @@ public class Evento {
     public void aceptarSugerencia() {
     	validarExistenSugerencias();
     	validarNoAceptado();
-    	aceptado = sugerencias.remove(0);
+    	Atuendo aceptada = getProximaSugerenciaPendiente();
+    	sugerencias.remove(aceptada);
+    	aceptado = aceptada;
     	rechazados.addAll(sugerencias);
     	sugerencias.clear();
     	guardarropa.reservarAtuendo(fecha.toLocalDate(), aceptado);
@@ -222,7 +227,15 @@ public class Evento {
     }
     
     public boolean sugerenciasVacias() {
-    	return getSugirio() && sugerencias.isEmpty() && aceptado == null;
+    	return getSugirio() && (sugerencias.isEmpty() || haySugerenciasNoDisponibles()) && aceptado == null;
+    }
+    
+    public boolean haySugerenciasNoDisponibles() {
+    	return getSugirio() && sugerencias.stream().anyMatch(atuendo -> !atuendo.estaDisponible(fecha.toLocalDate()));
+    }
+    
+    public boolean sugerenciaEsUnica() {
+    	return sugerencias.stream().filter(atuendo -> atuendo.estaDisponible(fecha.toLocalDate())).count() == 1;
     }
     
     private void validarNoAceptado() {
