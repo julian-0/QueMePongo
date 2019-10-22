@@ -30,6 +30,9 @@ public class SugerenciasController implements ControllerInterface {
 		}
 		Evento evento = talVezEvento.get();
 		
+		if(!requireAccess(usuario, evento.getUsuario(), res))
+			return null;
+		
 		if(evento.sugerenciaAceptada()) {
 			res.redirect("/evento/" + evento.getId() + "/atuendo");
 			return null;
@@ -38,12 +41,13 @@ public class SugerenciasController implements ControllerInterface {
 		Map<String, Object> mapa = new HashMap();
 		ModelAndView modelAndView;
 		Atuendo proximo = evento.getProximaSugerenciaPendiente();
+		mapa.put("id", proximo.getId());
 		mapa.put("prendas", proximo.getPrendas());
 		modelAndView = new ModelAndView(mapa, "Sugerencias.hbs");
 		return new HandlebarsTemplateEngine().render(modelAndView);
 	}
 	
-	public String edit(Request req, Response res) {
+	public String move(Request req, Response res) {
 		String stringId = req.params("id");
 		Long id = Long.valueOf(stringId);
 		Optional<Evento> talVezEvento = RepositorioEventos.getInstance().getEvento(id);
@@ -52,34 +56,19 @@ public class SugerenciasController implements ControllerInterface {
 			return null;
 		}
 		Evento evento = talVezEvento.get();
-		
-		String rechazoString = req.queryParams("rechazo"); 
+		 
 		boolean rechazo = req.queryParams("rechazo") != null;
 		boolean acepto = req.queryParams("acepto") != null;
-		ModelAndView modelAndView = null;
 		
 		if(rechazo) {
-			Map<String, Object> mapa = new HashMap();
 			evento.rechazarSugerencia();
-			if(evento.sugerenciaEsUnica()) {
-				Atuendo proximo = evento.getProximaSugerenciaPendiente();
-				evento.aceptarSugerencia();
-				mapa.put("automatico", true);
-				mapa.put("prendas", proximo.getPrendas());
-				modelAndView = new ModelAndView(mapa, "SugerenciaAceptada.hbs");
-			}
-			else {
-				Atuendo proximo = evento.getProximaSugerenciaPendiente();
-				mapa.put("prendas", proximo.getPrendas());
-				modelAndView = new ModelAndView(mapa, "Sugerencias.hbs");
-			}
+			res.redirect(req.url());
 		}
 		else if(acepto) {
 			evento.aceptarSugerencia();
 			res.redirect("/evento/" + evento.getId() + "/atuendo");
-			return null;
 		}
-		return new HandlebarsTemplateEngine().render(modelAndView);
+		return null;
 	}
 
 }

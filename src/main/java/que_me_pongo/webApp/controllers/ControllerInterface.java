@@ -11,4 +11,12 @@ public interface ControllerInterface {
 		}
 		return true;
 	}
+	
+	default boolean requireAccess(Usuario user, Usuario expectedUser, Response res) {
+		if(!user.equals(expectedUser)) {
+			res.status(403);
+			return false;
+		}
+		return true;
+	}
 }

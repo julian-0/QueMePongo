@@ -167,8 +167,11 @@ public class Evento {
     public void rechazarSugerencia() {
     	validarExistenSugerencias();
     	validarNoAceptado();
-    	
-    	rechazados.add(sugerencias.remove(0));
+    	Atuendo rechazada = getProximaSugerenciaPendiente();
+    	sugerencias.remove(rechazada);
+    	rechazados.add(rechazada);
+    	if(sugerenciaEsUnica())
+    		aceptarSugerencia();
     }
     
     public void aceptarSugerencia() {
@@ -235,7 +238,9 @@ public class Evento {
     }
     
     public boolean sugerenciaEsUnica() {
-    	return sugerencias.stream().filter(atuendo -> atuendo.estaDisponible(fecha.toLocalDate())).count() == 1;
+    	return 1 == sugerencias.stream().
+    							filter(atuendo -> atuendo.estaDisponible(fecha.toLocalDate())).
+    							count();
     }
     
     private void validarNoAceptado() {

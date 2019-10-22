@@ -32,6 +32,9 @@ public class AtuendoAceptadoController implements ControllerInterface {
 		}
 		Evento evento = talVezEvento.get();
 		
+		if(!requireAccess(usuario, evento.getUsuario(), res))
+			return null;
+		
 		Atuendo aceptado = evento.getAceptado();
 		Map<String, Object> mapa = new HashMap();
 		mapa.put("prendas", aceptado.getPrendas());
@@ -63,10 +66,7 @@ public class AtuendoAceptadoController implements ControllerInterface {
 		}
 		evento.setOpiniones(aumentos, reducciones);
 		
-		Map<String, Object> mapa = new HashMap();
-		mapa.put("prendas", evento.getAceptado().getPrendas());
-		mapa.put("clasifico", true);
-		ModelAndView modelAndView = new ModelAndView(mapa, "SugerenciaAceptada.hbs");
-		return new HandlebarsTemplateEngine().render(modelAndView);
+		res.redirect(req.url());
+		return null;
 	}
 }
