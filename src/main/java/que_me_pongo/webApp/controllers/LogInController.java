@@ -15,7 +15,9 @@ public class LogInController {
 	public String show(Request req, Response res) {
 		if(req.session().attribute("usuario") != null)
 			res.redirect("/menu");
-		ModelAndView modelAndView = new ModelAndView(new HashMap<String, Object>(), "Login.hbs");
+		Map<String, Object> mapa = new HashMap<String, Object>();
+		mapa.put("redirect_to", req.queryParams("redirect_to"));
+		ModelAndView modelAndView = new ModelAndView(mapa, "Login.hbs");
 		return new HandlebarsTemplateEngine().render(modelAndView);
 	}
 	
@@ -28,16 +30,16 @@ public class LogInController {
 		optUser = optUser.or(RepositorioUsuarios.getInstance().buscarPorMail(nombreOMail));
 		Optional<Boolean> optPassValida = optUser.transform(usuario -> usuario.chequearPassword(password));
 		
-		Map<String, Object> mapa = new HashMap<String, Object>();
 		if(optPassValida.isPresent() && optPassValida.get())
 		{
 			req.session().attribute("usuario", optUser.get());
-			res.redirect("/menu");
+			String redirect_url = req.queryParams("redirect_to").isEmpty() ? "/menu" : req.queryParams("redirect_to"); 
+			res.redirect(redirect_url);
+			return null;
 		}
-		else
-		{
-			mapa.put("error", "Usuario o contraseña invalidos");
-		}
+		
+		Map<String, Object> mapa = new HashMap<String, Object>();
+		mapa.put("error", "Usuario o contraseña invalidos");
 		ModelAndView modelAndView = new ModelAndView(mapa, "Login.hbs");
 		return new HandlebarsTemplateEngine().render(modelAndView);
 	}

@@ -18,11 +18,10 @@ import spark.Request;
 import spark.Response;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-public class EventosController {
+public class EventosController implements ControllerInterface {
 
 	public String index(Request req, Response res) {
-		if(req.session().attribute("usuario") == null)
-			res.redirect("/login");
+		requireLogin(req.session().attribute("usuario"), req.uri(), res);
 		ModelAndView modelAndView = new ModelAndView(new HashMap<String, Object>(), "Eventos.hbs");
 		return new HandlebarsTemplateEngine().render(modelAndView);
 	}
