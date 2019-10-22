@@ -13,7 +13,7 @@ public interface ControllerInterface {
 	}
 	
 	default boolean requireAccess(Usuario user, Usuario expectedUser, Response res) {
-		if(!user.equals(expectedUser)) {
+		if(user.getId() != expectedUser.getId()) {
 			res.status(403);
 			return false;
 		}
