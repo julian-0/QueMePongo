@@ -13,12 +13,12 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PrendasController {
+public class PrendasController implements ControllerInterface {
 
     public String show (Request req, Response res) {
         Usuario usuario = req.session().attribute("usuario");
-        if(usuario==null)
-            res.redirect("/login");
+        if(!requireLogin(usuario, req.uri(), res))
+            return null;
 
         Map<String, Object> mapa = new HashMap();
         mapa.put("ruta",req.url());

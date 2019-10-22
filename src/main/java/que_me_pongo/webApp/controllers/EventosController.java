@@ -28,11 +28,9 @@ public class EventosController implements ControllerInterface {
 	
 	public String show(Request req, Response res) {
 		Usuario usuario = req.session().attribute("usuario"); 
-		if(usuario == null)
-		{
-			res.redirect("/login");
+		if(!requireLogin(usuario, req.uri(), res))
 			return null;
-		}
+
 		String stringId = req.params("id");
 		Long id = Long.valueOf(stringId);
 		Optional<Evento> talVezEvento = RepositorioEventos.getInstance().getEvento(id);
@@ -63,7 +61,7 @@ public class EventosController implements ControllerInterface {
 		if(usuario == null)
 		{
 			res.status(401);
-			return "";
+			return null;
 		}
 		
 		String startString = req.queryParams("start"),
@@ -83,10 +81,8 @@ public class EventosController implements ControllerInterface {
 
 	public String nuevo (Request request, Response response) {
 		Usuario usuario = request.session().attribute("usuario");
-		if(usuario == null) {
-			response.redirect("/login");
+		if(!requireLogin(usuario, request.uri(), response)) 
 			return null;
-		}
 
 		Set<Guardarropa> guardarropas = RepositorioGuardarropas.getInstance().buscarPorUsuario(usuario.getNombre());
 
