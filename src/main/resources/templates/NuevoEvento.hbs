@@ -15,14 +15,14 @@
         <input type="time" name="hora" required >
 
         <select class="custom-select" name="repeticion" required >
-            <!-- <option selected>Open this select menu</option>-->
+            <option selected disabled>Seleccionar tipo de repeticion</option>
             {{#each repeticiones }}
-            <option>{{ this }}</option>
+            <option value="{{ this }}">{{ this }}</option>
             {{/each }}
         </select>
 
         <select class="custom-select" name="guardarropa" required>
-            <!-- <option selected>Open this select menu</option>-->
+            <option selected disabled>Seleccionar el guardarropas asignado</option>
             {{#each guardarropas }}
             <option value="{{ this.id }}">{{ this.id }}</option>
             {{/each }}
