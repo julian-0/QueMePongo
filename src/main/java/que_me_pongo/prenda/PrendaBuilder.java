@@ -17,5 +17,7 @@ public class PrendaBuilder {
 
     public void buildImagen(String path){prenda.setImagen(path);}
 
+    public Prenda getPrenda() {return prenda; }
+
     public void buildPrenda(){RepositorioPrendas.getInstance().createPrenda(prenda);}
 }

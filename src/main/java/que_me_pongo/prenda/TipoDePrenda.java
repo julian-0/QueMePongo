@@ -60,5 +60,7 @@ public class TipoDePrenda {
     public double getNivelAbrigo() {
         return this.nivelAbrigo;
     }
+
+    public List<Material> getMaterialesValidos() {return materialesValidos;}
 }
 

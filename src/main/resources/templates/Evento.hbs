@@ -1,4 +1,7 @@
-<h1>{{ titulo }}</h1>
+{{#partial "contenidoPagina" }}
+
+
+    <h1>{{ titulo }}</h1>
 {{#if sugirio}}
 <a href="{{linkSugerencias}}">Ver sugerencias</a>
 {{else }}
@@ -8,3 +11,8 @@
   Aun no se han generado las sugerencias
   {{/if }}
 {{/if }}
+
+
+{{/partial}}
+
+{{> navbar.hbs}}

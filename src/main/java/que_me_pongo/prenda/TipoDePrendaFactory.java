@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -19,7 +20,7 @@ public class TipoDePrendaFactory {
 	}
 	
 	public static TipoDePrenda parse(String nombre) throws NoSuchMethodException {
-		Method metodoPrenda = TipoDePrendaFactory.class.getMethod(nombre);
+		Method metodoPrenda = getMethodsIgnoreCase(nombre);
 		try {
 			return (TipoDePrenda) metodoPrenda.invoke(TipoDePrendaFactory.getInstance());
 		} catch (IllegalAccessException e) {
@@ -34,7 +35,11 @@ public class TipoDePrendaFactory {
 		}
 		
 	}
-	
+	public static Method getMethodsIgnoreCase(String methodName) {
+		return Arrays.stream(TipoDePrendaFactory.class.getMethods())
+				.filter(m -> m.getName().equalsIgnoreCase(methodName))
+				.collect(Collectors.toList()).get(0);
+	}
 	private TipoDePrenda tipoGenerico(TipoDePrenda retornoEnFallo) {
 		RepositorioPrendas repo = RepositorioPrendas.getInstance();
 		try {

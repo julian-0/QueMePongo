@@ -2,6 +2,7 @@ package que_me_pongo.webApp.controllers;
 
 import que_me_pongo.prenda.Material;
 import que_me_pongo.prenda.PrendaBuilder;
+import que_me_pongo.prenda.Tipo;
 import que_me_pongo.prenda.TipoDePrendaFactory;
 import que_me_pongo.usuario.Usuario;
 import spark.ModelAndView;
@@ -23,7 +24,7 @@ public class PrendasController implements ControllerInterface {
         Map<String, Object> mapa = new HashMap();
         mapa.put("ruta",req.url());
 
-
+        mapa.put("tipo",Tipo.values());
         ModelAndView modelAndView = new ModelAndView(mapa,"wizardPrenda/PartialTipo.hbs");
         return new HandlebarsTemplateEngine().render(modelAndView);
     }
@@ -36,17 +37,18 @@ public class PrendasController implements ControllerInterface {
 
         PrendaBuilder pb = req.session().attribute("prendaBuilder");
 
-        String vista = construirPaso(pb,req);
+        String vista = construirPaso(pb,req,mapa);
 
         ModelAndView modelAndView = new ModelAndView(mapa,vista);
         return new HandlebarsTemplateEngine().render(modelAndView);
     }
 
-    public String construirPaso(PrendaBuilder pb,Request req){
+    public String construirPaso(PrendaBuilder pb,Request req,Map<String, Object> mapa){
         String vista;
-        if(req.queryParams("paso")==null)
+        if(req.queryParams("paso")==null) {
+            mapa.put("tipo", Tipo.values());
             return "wizardPrenda/PartialTipo.hbs";
-
+        }
         switch (req.queryParams("paso")){
             case "tipo":
                 try {
@@ -54,18 +56,19 @@ public class PrendasController implements ControllerInterface {
                 } catch (NoSuchMethodException e) {
                     e.printStackTrace();
                 }
+                mapa.put("validos",pb.getPrenda().getTipoPrenda().getMaterialesValidos());
                 vista="wizardPrenda/PartialMaterial.hbs";
                 break;
             case "material":
                 pb.buildMaterial(Material.valueOf(req.queryParams("material")));
                 vista="wizardPrenda/PartialColorPrimario.hbs";
                 break;
-            case "wizardPrenda/colorPrimario":
-                pb.buildColorPrimario(Color.getColor(req.queryParams("colorPrimario")));
+            case "colorPrimario":
+                pb.buildColorPrimario(Color.decode(req.queryParams("colorPrimario")));
                 vista="wizardPrenda/PartialColorSecundario.hbs";
                 break;
-            case "wizardPrenda/colorSecundario":
-                pb.buildColorSecundario(Color.getColor(req.queryParams("colorSecundario")));
+            case "colorSecundario":
+                pb.buildColorSecundario(Color.decode(req.queryParams("colorSecundario")));
                 vista="wizardPrenda/PartialImagen.hbs";
                 break;
             case "imagen":
@@ -73,6 +76,7 @@ public class PrendasController implements ControllerInterface {
                 vista="wizardPrenda/PartialFinal.hbs";
                 break;
             default:
+                mapa.put("tipo",Tipo.values());
                 vista="wizardPrenda/PartialTipo.hbs";
         }
         return vista;

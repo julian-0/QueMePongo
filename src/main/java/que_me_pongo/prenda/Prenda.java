@@ -132,7 +132,9 @@ public class Prenda {
 	public double getNivelAbrigo() {
 		return this.tipo.getNivelAbrigo();
 	}
-	
+
+	public TipoDePrenda getTipoPrenda() {return tipo;}
+
 	public void addReserva(LocalDate fecha) {
 		if(getReserva(fecha))
 			throw new PrendaYaReservadaException();
