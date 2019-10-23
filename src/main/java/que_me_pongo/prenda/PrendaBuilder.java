@@ -3,26 +3,50 @@ package que_me_pongo.prenda;
 import java.awt.*;
 
 public class PrendaBuilder {
-    private Prenda prenda;
+		TipoDePrenda tipo;
+		Material material;
+		Color colorPrimario, colorSecundario;
+		String imagen;
 
-    public PrendaBuilder() {this.prenda = new Prenda();}
+		public TipoDePrenda getTipo() {
+			return tipo;
+		}
 
-    public void buildTipo(TipoDePrenda tipo){prenda.setTipo(tipo);}
+		public void setTipo(TipoDePrenda tipo) {
+			this.tipo = tipo;
+		}
 
-    public void buildMaterial(Material material){prenda.setMaterial(material);}
+		public Material getMaterial() {
+			return material;
+		}
 
-    public void buildColorPrimario(Color colorPrimario){prenda.setColorPrimario(colorPrimario);}
+		public void setMaterial(Material material) {
+			this.material = material;
+		}
 
-    public void buildColorSecundario(Color colorSecundario){prenda.setColorSecundario(colorSecundario);}
+		public Color getColorPrimario() {
+			return colorPrimario;
+		}
 
-    public void buildImagen(String path){
-        try {
-            prenda.setImagen(path);
-        }catch(ImagenNoPudoRedimesionarseException e){
-        }
-    }
+		public void setColorPrimario(Color colorPrimario) {
+			this.colorPrimario = colorPrimario;
+		}
 
-    public Prenda getPrenda() {return prenda; }
+		public Color getColorSecundario() {
+			return colorSecundario;
+		}
 
-    public Prenda buildPrenda(){return RepositorioPrendas.getInstance().createPrenda(prenda);}
+		public void setColorSecundario(Color colorSecundario) {
+			this.colorSecundario = colorSecundario;
+		}
+
+		public String getImagen() {
+			return imagen;
+		}
+
+		public void setImagen(String imagen) {
+			this.imagen = imagen;
+		}
+
+		public Prenda getPrenda() { return new Prenda(tipo, material, colorPrimario, colorSecundario, imagen); }
 }
