@@ -5,6 +5,7 @@ import que_me_pongo.guardarropa.Guardarropa;
 import que_me_pongo.guardarropa.RepositorioGuardarropas;
 import que_me_pongo.prenda.Material;
 import que_me_pongo.prenda.PrendaBuilder;
+import que_me_pongo.prenda.RepositorioPrendas;
 import que_me_pongo.prenda.Tipo;
 import que_me_pongo.prenda.TipoDePrendaFactory;
 import que_me_pongo.usuario.RepositorioUsuarios;
@@ -28,16 +29,7 @@ public class PrendasController implements ControllerInterface {
         if(!requireLogin(usuario, req.uri(), res))
             return null;
         
-        int id;
-        try {
-        	id = Integer.parseInt(req.params("id"));
-        }
-        catch(NumberFormatException e) {
-        	res.status(404);
-        	return null;
-        }
-        
-        Optional<Guardarropa> optGuarda = RepositorioGuardarropas.getInstance().buscarPorId(id);
+        Optional<Guardarropa> optGuarda = validarGuardarropa(req.params("id"));
         if(!optGuarda.isPresent()) {
         	res.status(404);
         	return null;
@@ -64,7 +56,7 @@ public class PrendasController implements ControllerInterface {
         String paso = req.queryParams("paso");
         List<String> errores = construirPaso(req, res);
         if(errores.isEmpty()) {
-        	String siguiente = getSiguientePaso("paso");
+        	String siguiente = getSiguientePaso(paso);
         	String redirect_to = siguiente == null? "/guardarropas/" + req.params("id") : req.url() + "?paso=" + siguiente; 
           res.redirect(redirect_to);
           return null;
@@ -123,7 +115,8 @@ public class PrendasController implements ControllerInterface {
     	PrendaBuilder pb = req.session().attribute("builder");
         switch (req.queryParams("paso")){
             case "Tipo":
-            		req.session().attribute("builder", new PrendaBuilder());
+            		pb = new PrendaBuilder();
+            		req.session().attribute("builder", pb);
                 try {
                     pb.setTipo(TipoDePrendaFactory.parse(req.queryParams("tipo")));
                 } catch (NoSuchMethodException e) {
@@ -143,7 +136,12 @@ public class PrendasController implements ControllerInterface {
                 pb.setColorSecundario(secundario);
                 break;
             case "Imagen":
-                //TODO Rellenar
+                //TODO Rellenar logica de imagen
+            		Optional<Guardarropa> optGuarda = validarGuardarropa(req.params("id"));
+            		if(!optGuarda.isPresent())
+            			res.status(400);
+            		else
+            			optGuarda.get().agregarPrenda(pb.getPrenda());
                 break;
         }
         return Arrays.asList();
@@ -151,5 +149,16 @@ public class PrendasController implements ControllerInterface {
     
     private String getFileName(String paso) {
     	return "wizardPrenda/Partial" + paso + ".hbs";
+    }
+    
+    private Optional<Guardarropa> validarGuardarropa(String paramId){
+    	int id;
+      try {
+      	id = Integer.parseInt(paramId);
+      }
+      catch(NumberFormatException e) {
+      	return Optional.absent();
+      }
+      return RepositorioGuardarropas.getInstance().buscarPorId(id);
     }
 }

@@ -30,7 +30,7 @@ public class Guardarropa implements WithGlobalEntityManager{
 
 	@Id @GeneratedValue
 	private int id;
-	@OneToMany(fetch = FetchType.EAGER) @JoinColumn(name = "guardarropa_id")
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.EAGER) @JoinColumn(name = "guardarropa_id")
 	private Set<Prenda> prendas;
 
 	public Guardarropa() {
