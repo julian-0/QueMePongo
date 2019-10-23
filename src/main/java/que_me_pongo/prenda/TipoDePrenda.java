@@ -9,6 +9,7 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -21,7 +22,7 @@ public class TipoDePrenda {
     private Tipo tipo;
     private Categoria categoria;
 
-    @ElementCollection(targetClass = Material.class)
+    @ElementCollection(targetClass = Material.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "materiales_validos", joinColumns = @JoinColumn(name = "id_tipo_de_prenda"))
     @Column(name = "material", nullable = false)
     @Enumerated(EnumType.STRING)
