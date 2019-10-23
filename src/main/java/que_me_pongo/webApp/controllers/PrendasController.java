@@ -14,9 +14,12 @@ import spark.Request;
 import spark.Response;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.awt.*;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import java.awt.Color;
 
 public class PrendasController implements ControllerInterface {
 
@@ -47,22 +50,36 @@ public class PrendasController implements ControllerInterface {
         
         String paso = req.queryParams("paso") == null ? "tipo" : req.queryParams("paso"); 
 
-        Map<String, Object> mapa = new HashMap();
+        Map<String, Object> mapa = setValues(req, paso);
         mapa.put("ruta",req.url());
-        mapa.put("tipos",Tipo.values());
+        mapa.put("paso", paso);
         
         ModelAndView modelAndView = new ModelAndView(mapa, getFileName(paso));
         return new HandlebarsTemplateEngine().render(modelAndView);
     }
 
     public String create (Request req, Response res) {
-        Map<String, Object> mapa = new HashMap();
         Usuario usuario = req.session().attribute("usuario");
         
-        String vista = construirPaso(req,mapa);
-
-        ModelAndView modelAndView = new ModelAndView(mapa,vista);
-        return new HandlebarsTemplateEngine().render(modelAndView);
+        String paso = req.queryParams("paso");
+        List<String> errores = construirPaso(req, res);
+        if(errores.isEmpty()) {
+        	String siguiente = getSiguientePaso("paso");
+        	String redirect_to = siguiente == null? "/guardarropas/" + req.params("id") : req.url() + "?paso=" + siguiente; 
+          res.redirect(redirect_to);
+          return null;
+        }
+        else
+        {
+        	Map<String, Object> mapa = setValues(req, paso);
+          mapa.put("ruta",req.url());
+          mapa.put("paso", paso);
+          mapa.put("errores", errores);
+          
+          ModelAndView modelAndView = new ModelAndView(mapa, getFileName(paso));
+          return new HandlebarsTemplateEngine().render(modelAndView);
+        }
+        
     }
     
     private Map<String, Object> setValues(Request req, String paso) {
@@ -73,69 +90,63 @@ public class PrendasController implements ControllerInterface {
           break;
       case "Material":
       		PrendaBuilder builder = req.session().attribute("builder");
-          mapa.put("validos", )
+          mapa.put("validos", builder.getTipo().getMaterialesValidos());
           break;
       case "ColorPrimario":
-          pb.buildColorPrimario(Color.decode(req.queryParams("colorPrimario")));
-          vista="wizardPrenda/PartialColorSecundario.hbs";
           break;
       case "ColorSecundario":
-          pb.buildColorSecundario(Color.decode(req.queryParams("colorSecundario")));
-          vista="wizardPrenda/PartialImagen.hbs";
           break;
       case "Imagen":
-          pb.buildImagen(req.queryParams("pathImagen"));
-          String id = req.params("id");
-          Optional<Guardarropa> optGuarda = RepositorioGuardarropas.getInstance().buscarPorId(Integer.parseInt(id));
-          optGuarda.get().agregarPrenda(pb.buildPrenda());
-          vista="wizardPrenda/PartialFinal.hbs";
           break;
+    	}
+    	return mapa;
+    }
+    
+    private String getSiguientePaso(String paso) {
+    	switch (paso){
+      case "Tipo":
+      		return "Material";
+      case "Material":
+      		return "ColorPrimario";
+      case "ColorPrimario":
+      		return "ColorSecundario";
+      case "ColorSecundario":
+      		return "Imagen";
+      case "Imagen":
+      		return null;
       default:
-          mapa.put("tipo",Tipo.values());
-          vista="wizardPrenda/PartialTipo.hbs";
-  }
+      	return null;
+    	}
     }
 
-    public String construirPaso(Request req, Map<String, Object> mapa){
-        String vista;
-        
+    private List<String> construirPaso(Request req, Response res) {
+    	PrendaBuilder pb = req.session().attribute("builder");
         switch (req.queryParams("paso")){
             case "Tipo":
-            		mapa.put("tipo", Tipo.values());
-              	return "wizardPrenda/PartialTipo.hbs";
+            		req.session().attribute("builder", new PrendaBuilder());
                 try {
-                	
-                    pb.buildTipo(TipoDePrendaFactory.parse(req.queryParams("tipo")));
+                    pb.setTipo(TipoDePrendaFactory.parse(req.queryParams("tipo")));
                 } catch (NoSuchMethodException e) {
-                    e.printStackTrace();
+                	return Arrays.asList("No es un tipo de prenda valido");
                 }
-                mapa.put("validos",pb.getPrenda().getTipoPrenda().getMaterialesValidos());
-                vista="wizardPrenda/PartialMaterial.hbs";
                 break;
             case "Material":
-                pb.buildMaterial(Material.valueOf(req.queryParams("material")));
-                vista="wizardPrenda/PartialColorPrimario.hbs";
+                pb.setMaterial(Material.valueOf(req.queryParams("material")));
                 break;
             case "ColorPrimario":
-                pb.buildColorPrimario(Color.decode(req.queryParams("colorPrimario")));
-                vista="wizardPrenda/PartialColorSecundario.hbs";
+                pb.setColorPrimario(Color.decode(req.queryParams("colorPrimario")));
                 break;
             case "ColorSecundario":
-                pb.buildColorSecundario(Color.decode(req.queryParams("colorSecundario")));
-                vista="wizardPrenda/PartialImagen.hbs";
+            		Color secundario = Color.decode(req.queryParams("colorSecundario"));
+            		if(pb.getColorPrimario().equals(secundario))
+            			return Arrays.asList("Los colores no pueden ser iguales");
+                pb.setColorSecundario(secundario);
                 break;
             case "Imagen":
-                pb.buildImagen(req.queryParams("pathImagen"));
-                String id = req.params("id");
-                Optional<Guardarropa> optGuarda = RepositorioGuardarropas.getInstance().buscarPorId(Integer.parseInt(id));
-                optGuarda.get().agregarPrenda(pb.buildPrenda());
-                vista="wizardPrenda/PartialFinal.hbs";
+                //TODO Rellenar
                 break;
-            default:
-                mapa.put("tipo",Tipo.values());
-                vista="wizardPrenda/PartialTipo.hbs";
         }
-        return vista;
+        return Arrays.asList();
     }
     
     private String getFileName(String paso) {
