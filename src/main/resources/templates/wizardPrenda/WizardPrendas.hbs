@@ -5,11 +5,11 @@
 </head>
 <body>
 <h1>Creacion de prenda</h1>
-	<li>
+	<ul>
         {{#each errores }}
-		<ul>{{ this }}</ul>
+		<li>{{ this }}</li>
 		{{/each }}
-	</li>
+	</ul>
     <form method="post">
         <div>
             {{#block "contenidoPaso"}}
