@@ -5,6 +5,10 @@
 </head>
 <body>
 <h1>Creacion de prenda</h1>
+	<li>
+        {{#each errores }}
+		<ul>{{ this }}</ul>
+	</li>
     <form method="post">
         <div>
             {{#block "contenidoPaso"}}
