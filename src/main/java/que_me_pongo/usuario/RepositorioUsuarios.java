@@ -1,9 +1,5 @@
 package que_me_pongo.usuario;
 
-import javax.persistence.NoResultException;
-
-import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
-
 import com.google.common.base.Optional;
 
 import que_me_pongo.QueriesInterfaces;
@@ -30,5 +26,9 @@ public class RepositorioUsuarios implements QueriesInterfaces {
 	
 	public Optional<Usuario> buscarPorMail(String mail) {
 		return buscarUno("FROM Usuario WHERE mail = :mail", "mail", mail);				 
+	}
+	
+	public Optional<Usuario> buscarPorGuardarropa(int id){
+		return buscarUno("FROM Usuario WHERE Usuario.Guardarropas.id = :id", ":id", id);
 	}
 }
