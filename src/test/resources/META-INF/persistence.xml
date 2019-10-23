@@ -8,7 +8,6 @@
     <persistence-unit name="db" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>que_me_pongo.evento.Evento</class>
-
         <class>que_me_pongo.proveedorClima.PronosticoClima</class>
         <class>que_me_pongo.usuario.Usuario</class>
         <class>que_me_pongo.guardarropa.Guardarropa</class>
@@ -16,7 +15,7 @@
         <class>que_me_pongo.prenda.Prenda</class>
         <class>que_me_pongo.prenda.TipoDePrenda</class>
         <class>que_me_pongo.atuendo.Atuendo</class>
-        <class>que_me_pongo.Reserva</class>
+        <class>que_me_pongo.prenda.Reserva</class>
       
         <properties>
             <property name="hibernate.archive.autodetection" value="class"/>
