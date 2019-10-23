@@ -84,9 +84,7 @@ public class PrendasController implements ControllerInterface {
       		PrendaBuilder builder = req.session().attribute("builder");
           mapa.put("validos", builder.getTipo().getMaterialesValidos());
           break;
-      case "ColorPrimario":
-          break;
-      case "ColorSecundario":
+      case "Color":
           break;
       case "Imagen":
           break;
@@ -99,10 +97,8 @@ public class PrendasController implements ControllerInterface {
       case "Tipo":
       		return "Material";
       case "Material":
-      		return "ColorPrimario";
-      case "ColorPrimario":
-      		return "ColorSecundario";
-      case "ColorSecundario":
+      		return "Color";
+      case "Color":
       		return "Imagen";
       case "Imagen":
       		return null;
@@ -126,11 +122,9 @@ public class PrendasController implements ControllerInterface {
             case "Material":
                 pb.setMaterial(Material.valueOf(req.queryParams("material")));
                 break;
-            case "ColorPrimario":
+            case "Color":
                 pb.setColorPrimario(Color.decode(req.queryParams("colorPrimario")));
-                break;
-            case "ColorSecundario":
-            		if(req.queryParams("saltearSecundario") == null) {
+                if(req.queryParams("saltearSecundario") == null) {
             			Color secundario = Color.decode(req.queryParams("colorSecundario"));
               		if(pb.getColorPrimario().equals(secundario))
               			return Arrays.asList("Los colores no pueden ser iguales");
