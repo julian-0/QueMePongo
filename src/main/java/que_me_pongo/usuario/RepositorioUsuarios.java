@@ -1,5 +1,7 @@
 package que_me_pongo.usuario;
 
+import java.util.List;
+
 import com.google.common.base.Optional;
 
 import que_me_pongo.QueriesInterfaces;
@@ -28,7 +30,10 @@ public class RepositorioUsuarios implements QueriesInterfaces {
 		return buscarUno("FROM Usuario WHERE mail = :mail", "mail", mail);				 
 	}
 	
-	public Optional<Usuario> buscarPorGuardarropa(int id){
-		return buscarUno("FROM Usuario WHERE Usuario.Guardarropas.id = :id", ":id", id);
+	public List<Usuario> buscarPorGuardarropa(int id){
+		 return entityManager().
+			 createQuery("SELECT u FROM Usuario u JOIN u.guardarropas g WHERE g.id = :id", Usuario.class).
+			 setParameter("id", id).
+			 getResultList();
 	}
 }

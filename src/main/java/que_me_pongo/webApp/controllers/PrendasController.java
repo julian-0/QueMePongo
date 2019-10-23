@@ -43,12 +43,12 @@ public class PrendasController implements ControllerInterface {
         	return null;
         }
         
-        Optional<Usuario> optDuenio = RepositorioUsuarios.getInstance().buscarPorGuardarropa(optGuarda.get().getId());
+        List<Usuario> duenios = RepositorioUsuarios.getInstance().buscarPorGuardarropa(optGuarda.get().getId());
         
-        if(!requireAccess(usuario, optDuenio.get(), res))
+        if(!duenios.stream().anyMatch(duenio -> requireAccess(usuario, duenio, res)))
         	return null;
         
-        String paso = req.queryParams("paso") == null ? "tipo" : req.queryParams("paso"); 
+        String paso = req.queryParams("paso") == null ? "Tipo" : req.queryParams("paso"); 
 
         Map<String, Object> mapa = setValues(req, paso);
         mapa.put("ruta",req.url());
@@ -150,6 +150,6 @@ public class PrendasController implements ControllerInterface {
     }
     
     private String getFileName(String paso) {
-    	return "wizardPrenda/" + paso + ".hbs";
+    	return "wizardPrenda/Partial" + paso + ".hbs";
     }
 }
