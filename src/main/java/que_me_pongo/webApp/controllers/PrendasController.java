@@ -130,10 +130,12 @@ public class PrendasController implements ControllerInterface {
                 pb.setColorPrimario(Color.decode(req.queryParams("colorPrimario")));
                 break;
             case "ColorSecundario":
-            		Color secundario = Color.decode(req.queryParams("colorSecundario"));
-            		if(pb.getColorPrimario().equals(secundario))
-            			return Arrays.asList("Los colores no pueden ser iguales");
-                pb.setColorSecundario(secundario);
+            		if(req.queryParams("saltearSecundario") == null) {
+            			Color secundario = Color.decode(req.queryParams("colorSecundario"));
+              		if(pb.getColorPrimario().equals(secundario))
+              			return Arrays.asList("Los colores no pueden ser iguales");
+                  pb.setColorSecundario(secundario);
+            		}
                 break;
             case "Imagen":
                 //TODO Rellenar logica de imagen
