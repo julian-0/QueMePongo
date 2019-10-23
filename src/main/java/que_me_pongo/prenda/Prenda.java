@@ -1,7 +1,6 @@
 package que_me_pongo.prenda;
 
 import que_me_pongo.ColoresAttributeConverter;
-import que_me_pongo.Reserva;
 
 import javax.persistence.*;
 import java.awt.*;

@@ -1,9 +1,12 @@
-package que_me_pongo;
+package que_me_pongo.prenda;
 
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+
+import que_me_pongo.LocalDateAttributeConverter;
+
 import java.time.LocalDate;
 
 @Entity
