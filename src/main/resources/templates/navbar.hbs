@@ -17,6 +17,9 @@
                 <a class="nav-link" href="/eventos">Eventos<span class="sr-only">(current)</span></a>
             </li>
         </ul>
+        {{#if usuario}}
+        <label class="">Usuario: {{usuario.nombre}}</label>
+        {{/if}}
     </div>
 
 </nav>
