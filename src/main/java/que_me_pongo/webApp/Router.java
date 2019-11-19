@@ -23,7 +23,7 @@ public class Router {
 		Spark.post("/evento", eventosController::create);
 		Spark.get("/evento/nuevo", eventosController::nuevo);
 		Spark.get("/evento/:id", eventosController::show);
-		Spark.get("/eventosJson", eventosController::entradasCalendario);
+		Spark.get("/api/eventos", eventosController::entradasCalendario);
 
 		SugerenciasController sugerenciasController = new SugerenciasController();
 		Spark.get("/evento/:id/sugerencias", sugerenciasController::show);
