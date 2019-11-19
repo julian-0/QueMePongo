@@ -25,7 +25,6 @@ import que_me_pongo.usuario.Usuario;
 public class ExampleDataCreator implements WithGlobalEntityManager, TransactionalOps{ 
 
 	public void createData() {
-		InstanciaProveedorClima.setInstancia(new ClimaOpenWeather());
     Usuario usuario = RepositorioUsuarios.getInstance().createUsuario(new Usuario("Julian",null, TipoUsuario.PREMIUM, "password"));
     
     RepositorioPrendas repoPrendas = RepositorioPrendas.getInstance();
