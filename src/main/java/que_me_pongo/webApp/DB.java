@@ -1,8 +1,10 @@
 package que_me_pongo.webApp;
 
+import javax.persistence.RollbackException;
 import javax.transaction.TransactionalException;
 
 import org.hibernate.TransactionException;
+import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 
@@ -29,11 +31,12 @@ public class DB implements WithGlobalEntityManager, TransactionalOps{
 			try{
 				commitTransaction();
 			}
-			catch(TransactionalException e) {
-				rollbackTransaction();
+			catch(RollbackException e) {
 			}
 			finally {
 				entityManager().clear();
+				PerThreadEntityManagers.getEntityManager(); 
+			  PerThreadEntityManagers.closeEntityManager();
 			}
 		}
 	}
