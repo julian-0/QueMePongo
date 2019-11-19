@@ -25,6 +25,14 @@ import que_me_pongo.usuario.Usuario;
 public class ExampleDataCreator implements WithGlobalEntityManager, TransactionalOps{ 
 
 	public void createData() {
+		TipoDePrendaFactory.getInstance().remeraMangaCorta();
+		TipoDePrendaFactory.getInstance().shorts();
+		TipoDePrendaFactory.getInstance().zapatosDeTacon();
+		
+		beginTransaction();
+  		entityManager().flush();
+  	commitTransaction();
+		
     Usuario usuario = RepositorioUsuarios.getInstance().createUsuario(new Usuario("Julian",null, TipoUsuario.PREMIUM, "password"));
     
     RepositorioPrendas repoPrendas = RepositorioPrendas.getInstance();

@@ -7,6 +7,7 @@ import que_me_pongo.prenda.Material;
 import que_me_pongo.prenda.PrendaBuilder;
 import que_me_pongo.prenda.RepositorioPrendas;
 import que_me_pongo.prenda.Tipo;
+import que_me_pongo.prenda.TipoDePrenda;
 import que_me_pongo.prenda.TipoDePrendaFactory;
 import que_me_pongo.usuario.RepositorioUsuarios;
 import que_me_pongo.usuario.Usuario;
@@ -82,7 +83,9 @@ public class PrendasController implements ControllerInterface {
           break;
       case "Material":
       		PrendaBuilder builder = req.session().attribute("builder");
-          mapa.put("validos", builder.getTipo().getMaterialesValidos());
+      		TipoDePrenda tipo = builder.getTipo();
+      		List<Material> materialesValidos = tipo.getMaterialesValidos(); 
+          mapa.put("validos", materialesValidos);
           break;
       case "Color":
           break;
