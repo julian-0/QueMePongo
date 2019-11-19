@@ -30,7 +30,7 @@ public class Prenda {
 	private Color colorSecundario;
 
 	@Lob
-	private BufferedImage imagen = null;
+	private String linkImagen = null;
 
 	@OneToMany(cascade = CascadeType.ALL) @JoinColumn(name="prenda_id")
 	private Set<Reserva> reservas = new LinkedHashSet<Reserva>();
@@ -44,12 +44,12 @@ public class Prenda {
 				material == prenda.material &&
 				colorPrimario.equals(prenda.colorPrimario) &&
 				Objects.equals(colorSecundario, prenda.colorSecundario) &&
-				Objects.equals(imagen, prenda.imagen);
+				Objects.equals(linkImagen, prenda.linkImagen);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(tipo, material, colorPrimario, colorSecundario, imagen);
+		return Objects.hash(tipo, material, colorPrimario, colorSecundario, linkImagen);
 	}
 
 	@Override
@@ -73,8 +73,7 @@ public class Prenda {
 		this.colorPrimario = Objects.requireNonNull(colorPrimario, "es obligatorio introducir un color primario");
 		this.validarColor(colorPrimario, colorSecundario);
 		this.colorSecundario = colorSecundario;
-		if(path != null)
-			this.imagen = RedimensionadorImagen.getInstance().redimensionar(path);
+		this.linkImagen = path;
 	}
 
 
@@ -98,8 +97,8 @@ public class Prenda {
 		return colorSecundario;
 	}
 
-	public BufferedImage getImagen() {
-		return imagen;
+	public String getLinkImagen() {
+		return linkImagen;
 	}
 
 	public int getCapa() {

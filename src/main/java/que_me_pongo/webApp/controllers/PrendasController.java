@@ -132,7 +132,7 @@ public class PrendasController implements ControllerInterface {
             		}
                 break;
             case "Imagen":
-                //TODO Rellenar logica de imagen
+                pb.setImagen(req.queryParams("pathImagen"));
             		Optional<Guardarropa> optGuarda = validarGuardarropa(req.params("id"));
             		if(!optGuarda.isPresent())
             			res.status(400);
