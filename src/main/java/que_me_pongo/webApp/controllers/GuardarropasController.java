@@ -18,11 +18,7 @@ public class GuardarropasController implements ControllerInterface {
     public String index(Request req, Response res) {
         Usuario user = req.session().attribute("usuario");
         Map<String, Object> mapa = new HashMap<String, Object>();
-
-        if(!requireLogin(user, req.uri(), res))
-            return null;
         
-       
         Set<Guardarropa> guardarropas = user.getGuardarropas();
         mapa.put("guardarropas", guardarropas);
         mapa.put("link", req.url());
@@ -34,9 +30,6 @@ public class GuardarropasController implements ControllerInterface {
     public String show(Request req, Response res){
         Usuario user = req.session().attribute("usuario");
         Map<String, Object> mapa = new HashMap<String, Object>();
-
-        if(!requireLogin(user, req.uri(), res))
-          return null;
         
         
         String id = req.params("id");

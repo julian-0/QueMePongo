@@ -27,8 +27,6 @@ public class PrendasController implements ControllerInterface {
 
     public String nuevo (Request req, Response res) {
         Usuario usuario = req.session().attribute("usuario");
-        if(!requireLogin(usuario, req.uri(), res))
-            return null;
         
         Optional<Guardarropa> optGuarda = validarGuardarropa(req.params("id"));
         if(!optGuarda.isPresent()) {

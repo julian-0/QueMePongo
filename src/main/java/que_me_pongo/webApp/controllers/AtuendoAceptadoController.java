@@ -20,8 +20,6 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 public class AtuendoAceptadoController implements ControllerInterface {
 	public String show(Request req, Response res) {
 		Usuario usuario = req.session().attribute("usuario");
-		if(!requireLogin(usuario, req.uri(), res))
-			return null;
 		
 		String stringId = req.params("id");
 		Long id = Long.valueOf(stringId);

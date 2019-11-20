@@ -21,15 +21,12 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 public class EventosController implements ControllerInterface {
 
 	public String index(Request req, Response res) {
-		requireLogin(req.session().attribute("usuario"), req.uri(), res);
 		ModelAndView modelAndView = new ModelAndView(new HashMap<String, Object>(), "Eventos.hbs");
 		return new HandlebarsTemplateEngine().render(modelAndView);
 	}
 	
 	public String show(Request req, Response res) {
 		Usuario usuario = req.session().attribute("usuario"); 
-		if(!requireLogin(usuario, req.uri(), res))
-			return null;
 
 		String stringId = req.params("id");
 		Long id = Long.valueOf(stringId);
@@ -39,9 +36,8 @@ public class EventosController implements ControllerInterface {
 			return null;
 		}
 		Evento evento = talVezEvento.get();
-		if(usuario.getId() != evento.getUsuario().getId())
+		if(requireAccess(usuario, evento.getUsuario(), res))
 		{
-			res.status(401);
 			return null;
 		}
 		
@@ -81,8 +77,6 @@ public class EventosController implements ControllerInterface {
 
 	public String nuevo (Request request, Response response) {
 		Usuario usuario = request.session().attribute("usuario");
-		if(!requireLogin(usuario, request.uri(), response)) 
-			return null;
 
 		Set<Guardarropa> guardarropas = RepositorioGuardarropas.getInstance().buscarPorUsuario(usuario.getNombre());
 
