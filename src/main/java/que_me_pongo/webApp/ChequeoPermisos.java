@@ -6,14 +6,14 @@ import spark.Response;
 import spark.Spark;
 
 public class ChequeoPermisos {
-	static public void configurar() {
-		Spark.before("/eventos", ChequeoPermisos::chequearLogin);
-		Spark.before("/evento/*", ChequeoPermisos::chequearLogin);
-		Spark.before("/guardarropas", ChequeoPermisos::chequearLogin);
-		Spark.before("/guardarropas/*", ChequeoPermisos::chequearLogin);
+	public void configurar() {
+		Spark.before("/eventos", this::chequearLogin);
+		Spark.before("/evento/*", this::chequearLogin);
+		Spark.before("/guardarropas", this::chequearLogin);
+		Spark.before("/guardarropas/*", this::chequearLogin);
 	}
 	
-	static private void chequearLogin(Request req, Response res) {
+	private void chequearLogin(Request req, Response res) {
 		Usuario user = req.session().attribute("usuario");
 		if(user == null) {
 			res.redirect("/login?redirect_to=" + req.uri());

@@ -23,7 +23,7 @@ import java.util.Map;
 
 import java.awt.Color;
 
-public class PrendasController implements ControllerInterface {
+public class PrendasController extends ControllerInterface {
 
     public String nuevo (Request req, Response res) {
         Usuario usuario = req.session().attribute("usuario");
@@ -36,8 +36,7 @@ public class PrendasController implements ControllerInterface {
         
         List<Usuario> duenios = RepositorioUsuarios.getInstance().buscarPorGuardarropa(optGuarda.get().getId());
         
-        if(!duenios.stream().anyMatch(duenio -> requireAccess(usuario, duenio, res)))
-        	return null;
+        duenios.forEach(duenio -> requireAccess(usuario, duenio, res));
         
         String paso = req.queryParams("paso") == null ? "Tipo" : req.queryParams("paso"); 
 

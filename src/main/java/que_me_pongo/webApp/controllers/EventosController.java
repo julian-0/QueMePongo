@@ -16,9 +16,10 @@ import que_me_pongo.usuario.Usuario;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
+import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-public class EventosController implements ControllerInterface {
+public class EventosController extends ControllerInterface {
 
 	public String index(Request req, Response res) {
 		ModelAndView modelAndView = new ModelAndView(new HashMap<String, Object>(), "Eventos.hbs");
@@ -32,14 +33,10 @@ public class EventosController implements ControllerInterface {
 		Long id = Long.valueOf(stringId);
 		Optional<Evento> talVezEvento = RepositorioEventos.getInstance().getEvento(id);
 		if(!talVezEvento.isPresent()) {
-			res.status(404);
-			return null;
+			Spark.halt(404);
 		}
 		Evento evento = talVezEvento.get();
-		if(requireAccess(usuario, evento.getUsuario(), res))
-		{
-			return null;
-		}
+		requireAccess(usuario, evento.getUsuario(), res);
 		
 		Map<String, Object> mapa = new HashMap();
 		mapa.put("titulo", evento.getDescripcion());
