@@ -6,15 +6,25 @@
 </form>
 <b>{{ resultado }}</b>
 <form name="listadoPrendas" method="get">
-    <ul>
+    <ul class="list-group">
         {{#each prendas}}
-            <li>
-                <ul>
-                    <li>{{tipo}}</li>
-                    <li>{{categoria}}</li>
-                    <li>{{material}}</li>
-                    <li>{{colorPrimario}}</li>
-                    <li>{{colorSecundario}}</li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        {{tipo}}
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        {{categoria}}
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        {{material}}
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        {{colorPrimario}}
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        {{colorSecundario}}
+                    </li>
                 </ul>
             </li>
         {{/each}}
