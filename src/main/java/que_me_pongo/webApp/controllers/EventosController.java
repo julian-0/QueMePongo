@@ -16,34 +16,27 @@ import que_me_pongo.usuario.Usuario;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
+import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-public class EventosController implements ControllerInterface {
+public class EventosController extends ControllerInterface {
 
 	public String index(Request req, Response res) {
-		requireLogin(req.session().attribute("usuario"), req.uri(), res);
 		ModelAndView modelAndView = new ModelAndView(new HashMap<String, Object>(), "Eventos.hbs");
 		return new HandlebarsTemplateEngine().render(modelAndView);
 	}
 	
 	public String show(Request req, Response res) {
 		Usuario usuario = req.session().attribute("usuario"); 
-		if(!requireLogin(usuario, req.uri(), res))
-			return null;
 
 		String stringId = req.params("id");
 		Long id = Long.valueOf(stringId);
 		Optional<Evento> talVezEvento = RepositorioEventos.getInstance().getEvento(id);
 		if(!talVezEvento.isPresent()) {
-			res.status(404);
-			return null;
+			Spark.halt(404);
 		}
 		Evento evento = talVezEvento.get();
-		if(usuario.getId() != evento.getUsuario().getId())
-		{
-			res.status(401);
-			return null;
-		}
+		requireAccess(usuario, evento.getUsuario(), res);
 		
 		Map<String, Object> mapa = new HashMap();
 		mapa.put("titulo", evento.getDescripcion());
@@ -81,8 +74,6 @@ public class EventosController implements ControllerInterface {
 
 	public String nuevo (Request request, Response response) {
 		Usuario usuario = request.session().attribute("usuario");
-		if(!requireLogin(usuario, request.uri(), response)) 
-			return null;
 
 		Set<Guardarropa> guardarropas = RepositorioGuardarropas.getInstance().buscarPorUsuario(usuario.getNombre());
 

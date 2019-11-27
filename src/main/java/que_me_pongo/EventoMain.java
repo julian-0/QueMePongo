@@ -44,7 +44,8 @@ public class EventoMain {
         // Registro dentro del Scheduler
         scheduler.scheduleJob(jobDetail, trigger);
         
-        new ExampleDataCreator().createData();
+        InstanciaProveedorClima.setInstancia(new ClimaOpenWeather());
+        //new ExampleDataCreator().createData();
     }
 
 }

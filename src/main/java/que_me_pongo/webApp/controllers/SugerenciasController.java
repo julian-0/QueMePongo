@@ -13,13 +13,12 @@ import que_me_pongo.usuario.Usuario;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
+import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-public class SugerenciasController implements ControllerInterface {
+public class SugerenciasController extends ControllerInterface {
 	public String show(Request req, Response res) {
 		Usuario usuario = req.session().attribute("usuario");
-		if(!requireLogin(usuario, req.uri(), res))
-			return null;
 		
 		String stringId = req.params("id");
 		Long id = Long.valueOf(stringId);
@@ -30,12 +29,11 @@ public class SugerenciasController implements ControllerInterface {
 		}
 		Evento evento = talVezEvento.get();
 		
-		if(!requireAccess(usuario, evento.getUsuario(), res))
-			return null;
+		requireAccess(usuario, evento.getUsuario(), res);
 		
 		if(evento.sugerenciaAceptada()) {
 			res.redirect("/evento/" + evento.getId() + "/atuendo");
-			return null;
+			Spark.halt();
 		}
 		
 		Map<String, Object> mapa = new HashMap();

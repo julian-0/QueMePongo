@@ -35,7 +35,7 @@ public class LogInController {
 			Usuario user = optUser.get();
 			user.getGuardarropas().size();
 			req.session().attribute("usuario", user);
-			String redirect_url = req.queryParams("redirect_to").isEmpty() ? "/menu" : req.queryParams("redirect_to"); 
+			String redirect_url = req.queryParams("redirect_to").isEmpty() ? "/" : req.queryParams("redirect_to"); 
 			res.redirect(redirect_url);
 			return null;
 		}

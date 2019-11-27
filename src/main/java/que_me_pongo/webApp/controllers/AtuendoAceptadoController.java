@@ -17,11 +17,9 @@ import spark.Request;
 import spark.Response;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-public class AtuendoAceptadoController implements ControllerInterface {
+public class AtuendoAceptadoController extends ControllerInterface {
 	public String show(Request req, Response res) {
 		Usuario usuario = req.session().attribute("usuario");
-		if(!requireLogin(usuario, req.uri(), res))
-			return null;
 		
 		String stringId = req.params("id");
 		Long id = Long.valueOf(stringId);
@@ -32,8 +30,7 @@ public class AtuendoAceptadoController implements ControllerInterface {
 		}
 		Evento evento = talVezEvento.get();
 		
-		if(!requireAccess(usuario, evento.getUsuario(), res))
-			return null;
+		requireAccess(usuario, evento.getUsuario(), res);
 		
 		Atuendo aceptado = evento.getAceptado();
 		Map<String, Object> mapa = new HashMap();

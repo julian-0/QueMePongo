@@ -15,6 +15,7 @@ public class WebAppMain {
 		Spark.port(9000);
 		DebugScreen.enableDebugScreen();
 		Router.configurar();
+		new ChequeoPermisos().configurar();
 		new DB().configurarTransacciones();
 		EventoMain.main(args);
 	}

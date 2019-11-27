@@ -7,6 +7,7 @@ import que_me_pongo.prenda.Material;
 import que_me_pongo.prenda.PrendaBuilder;
 import que_me_pongo.prenda.RepositorioPrendas;
 import que_me_pongo.prenda.Tipo;
+import que_me_pongo.prenda.TipoDePrenda;
 import que_me_pongo.prenda.TipoDePrendaFactory;
 import que_me_pongo.usuario.RepositorioUsuarios;
 import que_me_pongo.usuario.Usuario;
@@ -22,12 +23,10 @@ import java.util.Map;
 
 import java.awt.Color;
 
-public class PrendasController implements ControllerInterface {
+public class PrendasController extends ControllerInterface {
 
     public String nuevo (Request req, Response res) {
         Usuario usuario = req.session().attribute("usuario");
-        if(!requireLogin(usuario, req.uri(), res))
-            return null;
         
         Optional<Guardarropa> optGuarda = validarGuardarropa(req.params("id"));
         if(!optGuarda.isPresent()) {
@@ -37,8 +36,7 @@ public class PrendasController implements ControllerInterface {
         
         List<Usuario> duenios = RepositorioUsuarios.getInstance().buscarPorGuardarropa(optGuarda.get().getId());
         
-        if(!duenios.stream().anyMatch(duenio -> requireAccess(usuario, duenio, res)))
-        	return null;
+        duenios.forEach(duenio -> requireAccess(usuario, duenio, res));
         
         String paso = req.queryParams("paso") == null ? "Tipo" : req.queryParams("paso"); 
 
@@ -82,7 +80,9 @@ public class PrendasController implements ControllerInterface {
           break;
       case "Material":
       		PrendaBuilder builder = req.session().attribute("builder");
-          mapa.put("validos", builder.getTipo().getMaterialesValidos());
+      		TipoDePrenda tipo = builder.getTipo();
+      		List<Material> materialesValidos = tipo.getMaterialesValidos(); 
+          mapa.put("validos", materialesValidos);
           break;
       case "Color":
           break;
@@ -132,7 +132,7 @@ public class PrendasController implements ControllerInterface {
             		}
                 break;
             case "Imagen":
-                //TODO Rellenar logica de imagen
+                pb.setImagen(req.queryParams("pathImagen"));
             		Optional<Guardarropa> optGuarda = validarGuardarropa(req.params("id"));
             		if(!optGuarda.isPresent())
             			res.status(400);

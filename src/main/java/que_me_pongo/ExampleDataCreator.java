@@ -25,7 +25,15 @@ import que_me_pongo.usuario.Usuario;
 public class ExampleDataCreator implements WithGlobalEntityManager, TransactionalOps{ 
 
 	public void createData() {
-		InstanciaProveedorClima.setInstancia(new ClimaOpenWeather());
+		beginTransaction();
+		TipoDePrendaFactory.getInstance().remeraMangaCorta();
+		TipoDePrendaFactory.getInstance().shorts();
+		TipoDePrendaFactory.getInstance().zapatosDeTacon();
+		commitTransaction();
+  	
+		entityManager().clear();
+		
+		beginTransaction();
     Usuario usuario = RepositorioUsuarios.getInstance().createUsuario(new Usuario("Julian",null, TipoUsuario.PREMIUM, "password"));
     
     RepositorioPrendas repoPrendas = RepositorioPrendas.getInstance();
@@ -52,9 +60,7 @@ public class ExampleDataCreator implements WithGlobalEntityManager, Transactiona
     RepositorioEventos.getInstance().crearEvento(ahora.plusDays(1), usuario, guardarropa,"Cumpleaños", new ArrayList<EventoListener>(), RepeticionDeEvento.DIARIO);
     RepositorioEventos.getInstance().crearEvento(ahora.plusDays(4), usuario, guardarropa,"Casamiento", new ArrayList<EventoListener>(), RepeticionDeEvento.NOREPITE);
     RepositorioEventos.getInstance().crearEvento(ahora.plusDays(5), usuario, guardarropa,"Bautismo", new ArrayList<EventoListener>(), RepeticionDeEvento.NOREPITE);
-    
-    beginTransaction();
-    	entityManager().flush();
     commitTransaction();
+    entityManager().clear();
 	}
 }

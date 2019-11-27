@@ -23,7 +23,7 @@ public class Router {
 		Spark.post("/evento", eventosController::create);
 		Spark.get("/evento/nuevo", eventosController::nuevo);
 		Spark.get("/evento/:id", eventosController::show);
-		Spark.get("/eventosJson", eventosController::entradasCalendario);
+		Spark.get("/api/eventos", eventosController::entradasCalendario);
 
 		SugerenciasController sugerenciasController = new SugerenciasController();
 		Spark.get("/evento/:id/sugerencias", sugerenciasController::show);
@@ -32,9 +32,7 @@ public class Router {
 		Spark.get("/evento/:id/atuendo", aceptadoController::show);
 		Spark.post("/evento/:id/atuendo", aceptadoController::edit);
 
-		MenuController menuController = new MenuController();
-		Spark.get("/menu", menuController::show);
-		Spark.get("/", menuController::show);
-
+		Spark.get("/", eventosController::index);
+		Spark.get("/ExampleData", new ExampleDataController()::crear);
 	}
 }
