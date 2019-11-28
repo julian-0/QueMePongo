@@ -2,7 +2,6 @@ package que_me_pongo.usuario;
 
 import que_me_pongo.guardarropa.Guardarropa;
 import que_me_pongo.prenda.Prenda;
-import scala.Int;
 
 public enum TipoUsuario {
 	
