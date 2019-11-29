@@ -7,6 +7,7 @@ import spark.Spark;
 
 public class ChequeoPermisos {
 	public void configurar() {
+		Spark.before("/", this::chequearLogin);
 		Spark.before("/eventos", this::chequearLogin);
 		Spark.before("/evento/*", this::chequearLogin);
 		Spark.before("/guardarropas", this::chequearLogin);

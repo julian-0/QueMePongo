@@ -1,3 +1,4 @@
+/*
 package que_me_pongo.window;
 
 import org.quartz.SchedulerException;
@@ -107,3 +108,4 @@ public class EventosWindow extends MainWindow<FiltradorDeEventos> {
         new EventosWindow().startApplication();
     }
 }
+*/

@@ -31,7 +31,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>src.main.java-que_me_pongo.webApp.WebAppMain</mainClass>
+                            <mainClass>que_me_pongo.webApp.WebAppMain</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -42,11 +42,11 @@
                 <configuration>
                     <jdkVersion>1.8</jdkVersion>
                     <!-- Use your own application name -->
-                    <appName>quemepongo12</appName>
+                    <appName>qmpongo</appName>
                     <processTypes>
                         <!-- Tell Heroku how to launch your application -->
                         <!-- You might have to remove the ./ in front   -->
-                        <web>java -jar target/que_me_pongo-with-dependencies.jar</web>
+                        <web>java -jar target/que_me_pongo-jar-with-dependencies.jar</web>
                     </processTypes>
                 </configuration>
             </plugin>
@@ -92,6 +92,7 @@
             <artifactId>quartz</artifactId>
             <version>2.3.1</version>
         </dependency>
+        <!--
         <dependency>
             <groupId>org.uqbar-project</groupId>
             <artifactId>arena-jface</artifactId>
@@ -101,8 +102,9 @@
             <groupId>org.javassist</groupId>
                 <artifactId>javassist</artifactId>
        		</exclusion>
-    	</exclusions>    
+    	</exclusions>
         </dependency>
+        -->
         <dependency>
 		    <groupId>org.javassist</groupId>
 		    <artifactId>javassist</artifactId>
@@ -118,7 +120,7 @@
             <artifactId>javax.mail</artifactId>
             <version>1.6.2</version>
         </dependency>
-        
+
 	    <!-- JPA Persistence Dependencies -->
 	    <dependency>
 	      <groupId>org.uqbar-project</groupId>
