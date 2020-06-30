@@ -1,5 +1,7 @@
 # QueMePongo
 
+[Spanish Readme](https://github.com/julian-0/QueMePongo/blob/master/ReadmeES.md)
+
 [qmpongo.herokuapp.com](http://qmpongo.herokuapp.com/)
 
 "Que me pongo" (What to wear) is the annual practical work of the subject Systems Design, which integrates knowledge of:
