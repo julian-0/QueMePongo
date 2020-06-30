@@ -1,28 +1,28 @@
 # QueMePongo
 
-qmpongo.herokuapp.com
+[qmpongo.herokuapp.com](http://qmpongo.herokuapp.com/)
 
-Qué me pongo es el trabajo práctico anual de la materia Diseño de sistemas, el cual integra conocimientos de:
-* Programacion orientada a objetos
-* Cualidades de diseño
-* Patrones de diseño
-* Ingracion con APIs
-* Patrón de Arquitectura MVC
-* Persistencia en base de datos relacional
+"Que me pongo" (What to wear) is the annual practical work of the subject Systems Design, which integrates knowledge of:
+* Object-oriented programming
+* Design qualities
+* Design patterns
+* Ingration with APIs
+* MVC Architecture Pattern
+* Persistence in relational database
 * ORM
-* Diseño web
-* Experiencia de usuario
-* Arquitectura web (Deployment)
+* Web design
+* User experience
+* Web architecture (Deployment)
 * Testing
 
-## Contexto
-QuéMePongo es una empresa dedicada al armado de atuendos adecuados a las condiciones climáticas y preferencias de sus clientes. El servicio que provee se basa en tomar las prendas del guardarropas de un usuario y generar diferentes combinaciones posibles que cubran las necesidades de los mismos en términos de distintos factores climáticos tales como temperatura, viento, sol, lluvia, etc. Asimismo, se busca que estos atuendos se adecuen de la mejor forma a las sensibilidades particulares respecto de dichos factores de cada usuario y a sus gustos en el aspecto estético.
+## Context
+QuéMePongo is a company dedicated to making outfits suitable for the climatic conditions and preferences of its clients. The service it provides is based on taking the clothes from a user's wardrobe and generating different possible combinations that meet their needs in terms of different climatic factors such as temperature, wind, sun, rain, etc. Likewise, it is sought that these outfits adapt to the particular sensitivities regarding said factors of each user and to their tastes in the aesthetic aspect.
 
-Los usuarios pueden agregar eventos para los cuales recibiran notificaciones con sugerencias de atuendos unos dias antes del evento en funcion de las condiciones climaticas que haran ese dia
+Users can add events for which they will receive notifications with outfit suggestions a few days before the date of the event, adapted to the weather conditions of that day
 
-[Requerimientos de cada entrega](https://drive.google.com/drive/u/0/folders/1TZUdaKLzJtMg-aAjCeTp5DDfoo94hyQR?fbclid=IwAR0x3BdrRZ4IXw6VaHKEDlsgPtY7jeGjlcsSF02lPYsC6z4jPJsmFo_Ry18)
+[All the requirements](https://drive.google.com/drive/u/0/folders/1TZUdaKLzJtMg-aAjCeTp5DDfoo94hyQR?fbclid=IwAR0x3BdrRZ4IXw6VaHKEDlsgPtY7jeGjlcsSF02lPYsC6z4jPJsmFo_Ry18)
 
-## Tecnologias usadas:
+## Used technologies
 * Java
 * Maven
 * JUnit
